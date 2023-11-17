@@ -69,7 +69,7 @@ public class Main extends Application {
     private Timeline tickTimeline;
 
     /**
-     * Setup the new application.
+     * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) {
@@ -123,7 +123,7 @@ public class Main extends Application {
         // Redraw game as the player may have moved.
         drawGame();
 
-        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc) responding to it.
+        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
     }
 
@@ -202,9 +202,9 @@ public class Main extends Application {
 
         // Draw an icon at the dropped location.
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        // Draw the the image so the top-left corner is where we dropped.
+        // Draw the image so the top-left corner is where we dropped.
         gc.drawImage(iconImage, x, y);
-        // Draw the the image so the center is where we dropped.
+        // Draw the image so the center is where we dropped.
         // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y - iconImage.getHeight() / 2.0);
     }
 
@@ -233,7 +233,7 @@ public class Main extends Application {
         Button resetPlayerLocationButton = new Button("Reset Player");
         toolbar.getChildren().add(resetPlayerLocationButton);
 
-        // Setup the behaviour of the button.
+        // Set up the behaviour of the button.
         resetPlayerLocationButton.setOnAction(e -> {
             // We keep this method short and use a method for the bulk of the work.
             resetPlayerLocation();
@@ -243,7 +243,7 @@ public class Main extends Application {
         Button centerPlayerLocationButton = new Button("Center Player");
         toolbar.getChildren().add(centerPlayerLocationButton);
 
-        // Setup the behaviour of the button.
+        // Set up the behaviour of the button.
         centerPlayerLocationButton.setOnAction(e -> {
             // We keep this method short and use a method for the bulk of the work.
             movePlayerToCenter();
@@ -257,7 +257,7 @@ public class Main extends Application {
         // Stop button is disabled by default
         stopTickTimelineButton.setDisable(true);
 
-        // Setup the behaviour of the buttons.
+        // Set up the behaviour of the buttons.
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
             startTickTimelineButton.setDisable(true);
