@@ -62,6 +62,7 @@ public class Main extends Application {
     private Image iconImage;
 
     // X and Y coordinate of player on the grid.
+    //smile:)
     private int playerX = 0;
     private int playerY = 0;
 
