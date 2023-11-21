@@ -116,6 +116,18 @@ public class Main extends Application {
                 // Right key was pressed. So move the player right by one cell.
                 playerX = playerX + 1;
                 break;
+            case LEFT:
+                // Right key was pressed. So move the player right by one cell.
+                playerX = playerX - 1;
+                break;
+            case UP:
+                // Right key was pressed. So move the player right by one cell.
+                playerY = playerY - 1;
+                break;
+            case DOWN:
+                // Right key was pressed. So move the player right by one cell.
+                playerY = playerY + 1;
+                break;
             default:
                 // Do nothing for all other keys.
                 break;
