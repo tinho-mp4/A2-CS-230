@@ -24,16 +24,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-public class Game {
     /**javadoc for chips challenge main goes here
      */
-    static final int WINDOW_WIDTH = 1000;
-    static final int WINDOW_LENGTH = 1000;
 
-    static final int CANVAS_WIDTH = 800;
-    static final int CANVAS_HEIGHT = 800;
-    public static void main(String[] args) {
+    public class Game extends Application {
+        static final int WINDOW_WIDTH = 1000;
+        static final int WINDOW_LENGTH = 1000;
 
+        static final int CANVAS_WIDTH = 800;
+        static final int CANVAS_HEIGHT = 800;
         Canvas canvas;
+
+        
+        public void start(Stage stage) throws Exception {
+
+        }
     }
-}
