@@ -9,7 +9,6 @@ class PathTile extends Tile {
     public PathTile(Image pathImage) {
         this.pathImage = new Image(getClass().getResourceAsStream("/tiles/path.png"));
 
-
     }
     @Override
     void draw(GraphicsContext gc, double x, double y, double size) {
