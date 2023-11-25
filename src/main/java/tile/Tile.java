@@ -1,4 +1,4 @@
-package com.example._cs250a2;
+package tile;
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -8,49 +8,14 @@ abstract class Tile {
     abstract void draw(GraphicsContext gc, double x, double y, double size);
 }
 
-class PathTile extends Tile {
-    @Override
-    void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.setFill(javafx.scene.paint.Color.GREEN);
-        gc.fillRect(x, y, size, size);
-    }
-    String getText() {
-        return "path";
-    }
-}
 
-class DirtTile extends Tile {
-    @Override
-    void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.setFill(javafx.scene.paint.Color.BROWN);
-        gc.fillRect(x, y, size, size);
-    }
-    String getText() {
-        return "dirt";
-    }
-}
 
-class WallTile extends Tile {
-    @Override
-    void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.setFill(javafx.scene.paint.Color.GRAY);
-        gc.fillRect(x, y, size, size);
-    }
-    String getText() {
-        return "wall";
-    }
-}
 
-class ExitTile extends Tile {
-    @Override
-    void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.setFill(javafx.scene.paint.Color.YELLOW);
-        gc.fillRect(x, y, size, size);
-    }
-    String getText() {
-        return "exit";
-    }
-}
+
+
+
+
+/*
 
 class ButtonTile extends Tile {
 
@@ -140,4 +105,4 @@ class PlayerTile extends Tile {
         gc.setFill(javafx.scene.paint.Color.PLUM);
         gc.fillRect(x, y, size, size);
     }
-}
+}*/
