@@ -1,11 +1,11 @@
-package tile;
+package com.example._cs250a2.tile;
 
 import javafx.scene.canvas.GraphicsContext;
 
-class ChipSocketTile extends Tile {
+class ComputerChipTile extends Tile {
     @Override
     void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.setFill(javafx.scene.paint.Color.LIGHTGRAY);
+        gc.setFill(javafx.scene.paint.Color.SILVER);
         gc.fillRect(x, y, size, size);
     }
 }

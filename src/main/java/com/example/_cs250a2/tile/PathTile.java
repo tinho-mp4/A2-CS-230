@@ -1,4 +1,4 @@
-package tile;
+package com.example._cs250a2.tile;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

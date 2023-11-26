@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.io.InputStream;
 import java.util.Scanner;
+import com.example._cs250a2.tile.*;
 
 public class LevelLoader {
 
@@ -60,15 +61,15 @@ public class LevelLoader {
     }
 
     /**
-     *  Processes a line of tile information and draws the tiles on the specified GraphicsContext.
-     *  Each character in the line represents a tile, and the tiles are drawn on the specified
+     *  Processes a line of com.example._cs250a2.tile information and draws the tiles on the specified GraphicsContext.
+     *  Each character in the line represents a com.example._cs250a2.tile, and the tiles are drawn on the specified
      *  GraphicsContext at the corresponding positions.
      * @param gc The GraphicsContext used for drawing.
-     * @param line The line containing tile information.
+     * @param line The line containing com.example._cs250a2.tile information.
      * @param lineNumber The line number in the level grid.
      */
     private static void processTileLine(GraphicsContext gc, String line, int lineNumber) {
-        double tileSize = 50; // Assuming default tile size is 50x50 -- use tile
+        double tileSize = 50; // Assuming default com.example._cs250a2.tile size is 50x50 -- use com.example._cs250a2.tile
         for (int i = 0; i < line.length(); i++) {
             char currentChar = line.charAt(i);
             char nextChar = (i < line.length() - 1) ? line.charAt(i + 1) : ' ';
@@ -87,14 +88,14 @@ public class LevelLoader {
     }
 
     /**
-     *  Draws a tile on the specified GraphicsContext at the given position with the specified size,
-     *  based on the provided tile type and optional paired number.
+     *  Draws a com.example._cs250a2.tile on the specified GraphicsContext at the given position with the specified size,
+     *  based on the provided com.example._cs250a2.tile type and optional paired number.
      * @param gc The GraphicsContext used for drawing.
-     * @param x The x-coordinate of the top-left corner of the tile.
-     * @param y The y-coordinate of the top-left corner of the tile.
-     * @param size size The size of the tile (assumed to be square).
-     * @param tileType tileType The type of the tile (character representing the type).
-     * @param pairedNumber pairedNumber The paired number associated with certain tile types (e.g., ButtonTile, TrapTile).
+     * @param x The x-coordinate of the top-left corner of the com.example._cs250a2.tile.
+     * @param y The y-coordinate of the top-left corner of the com.example._cs250a2.tile.
+     * @param size size The size of the com.example._cs250a2.tile (assumed to be square).
+     * @param tileType tileType The type of the com.example._cs250a2.tile (character representing the type).
+     * @param pairedNumber pairedNumber The paired number associated with certain com.example._cs250a2.tile types (e.g., ButtonTile, TrapTile).
      */
     private static void drawTile(GraphicsContext gc, double x, double y, double size, char tileType, int pairedNumber) {
         Tile tile = null;
@@ -113,7 +114,7 @@ public class LevelLoader {
         }
 
         if (tile != null) {
-            tile.draw(gc, x, y, size);
+            //tile.draw(gc, x, y, size);
         }
     }
 
@@ -136,7 +137,7 @@ public class LevelLoader {
 
             // Add cases for other entity types...
             default:
-                // Handle unknown tile types or leave empty if not needed
+                // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
                 break;
         }
     }

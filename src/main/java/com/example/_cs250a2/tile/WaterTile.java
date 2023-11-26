@@ -1,14 +1,17 @@
-package tile;
+package com.example._cs250a2.tile;
 
 import javafx.scene.canvas.GraphicsContext;
 
-class WallTile extends Tile {
+class WaterTile extends Tile {
     @Override
     void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.setFill(javafx.scene.paint.Color.GRAY);
+        gc.setFill(javafx.scene.paint.Color.BLUE);
         gc.fillRect(x, y, size, size);
     }
+
     String getText() {
-        return "wall";
+        return "water";
     }
 }
+
+
