@@ -35,7 +35,6 @@ import javafx.util.Duration;
         static final int CANVAS_HEIGHT = 800;
         Canvas canvas;
 
-        
         public void start(Stage stage) throws Exception {
 
         }
