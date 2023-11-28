@@ -1,12 +1,14 @@
 package com.example._cs250a2.tile;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
  * Enumeration list for each corner of the wall on an ice block
  */
 enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
 class IceTile extends Tile {
+    private static final Image ICE_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
     /**
      * Instantiation of the corner variable
      */
