@@ -60,40 +60,40 @@ public class Player {
     }
 
     private void interact(int newX, int newY) {
-//        Tile currentTile = Level.checkTile(X, Y);
-//        switch(currentTile.getName) {
-//            case "Dirt":
-//                Dirt.event();
-//            case "Exit":
-//                Level.nextLevel();
-//            case "Button":
-//                Button.event();
-//            case "Trap":
-//                Trap.event();
-//            case "Water":
-//                GameOver.playerDeathDrown();
-//            case "Chip Socket":
-//                ChipSocket.event(inventory);
-//            case "Locked Door":
-//                LockedDoor.event(inventory);
-//            case "Ice":
-//                Ice.event();
-//            default:
-////            Path
-//                break;
-//        }
-//
-//        if (Level.isOnitem) {
-//            addItemToInventory(Item.getItemName);
-//        }
-//
-//        if(Level.isOnMonster) {
-//            GameOver.playerDeathMonster();
-//        }
-//
-//        if(Level.isOnBlock) {
-//            Block.pushBlock(newX, newY);
-//        }
+        Tile currentTile = Level.checkTile(X, Y);
+        switch(currentTile.getName()) {
+            case "Dirt":
+                Dirt.event();
+            case "Exit":
+                Level.nextLevel();
+            case "Button":
+                Button.event();
+            case "Trap":
+                Trap.event();
+            case "Water":
+                GameOver.playerDeathDrown();
+            case "Chip Socket":
+                ChipSocket.event(inventory);
+            case "Locked Door":
+                LockedDoor.event(inventory);
+            case "Ice":
+                Ice.event();
+            default:
+//            Path
+                break;
+        }
+
+        if (Level.isOnitem()) {
+            addToInventory(Item.getItemName);
+        }
+
+        if(Level.isOnMonster()) {
+            GameOver.playerDeathMonster();
+        }
+
+        if(Level.isOnBlock()) {
+            Block.pushBlock(newX, newY);
+        }
     }
 
     public void addToInventory(String item){
