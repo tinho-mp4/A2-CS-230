@@ -43,6 +43,7 @@ class IceTile extends Tile {
                 break;
             default:
                 gc.drawImage(ICE_IMAGE, x, y, size, size);
+                break;
         }
     }
     String getText() {
