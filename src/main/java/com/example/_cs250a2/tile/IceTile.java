@@ -9,6 +9,10 @@ import javafx.scene.image.Image;
 enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
 class IceTile extends Tile {
     private static final Image ICE_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_TOP_LEFT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_TOP_RIGHT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_BOTTOM_LEFT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_BOTTOM_RIGHT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
     /**
      * Instantiation of the corner variable
      */
@@ -24,8 +28,22 @@ class IceTile extends Tile {
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.setFill(javafx.scene.paint.Color.LIGHTBLUE);
-        gc.fillRect(x, y, size, size);
+        switch (this.blockedCorner) {
+            case TOP_LEFT:
+                gc.drawImage(ICE_TOP_LEFT_IMAGE, x, y, size,size);
+                break;
+            case TOP_RIGHT:
+                gc.drawImage(ICE_TOP_RIGHT_IMAGE, x, y, size,size);
+                break;
+            case BOTTOM_LEFT:
+                gc.drawImage(ICE_BOTTOM_LEFT_IMAGE, x, y, size,size);
+                break;
+            case BOTTOM_RIGHT:
+                gc.drawImage(ICE_BOTTOM_RIGHT_IMAGE, x, y, size,size);
+                break;
+            default:
+                gc.drawImage(ICE_IMAGE, x, y, size, size);
+        }
     }
     String getText() {
         return "ice";
