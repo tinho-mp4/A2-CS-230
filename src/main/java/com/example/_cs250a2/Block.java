@@ -3,6 +3,8 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Block extends Tile {
+    private int X;
+    private int Y;
     private boolean pushableBlock;
     public Block(int X, int Y) {
         super("block", X, Y);
@@ -22,6 +24,12 @@ public class Block extends Tile {
             //this.setY(newY);
         }
     }
+// temporary method
+    public void moveBlock(int X, int Y) {
+        setX(X);
+        setY(Y);
+    }
+
 
     /**
      * Checks if a block can be moved onto a position by checking if the tile in the new position allows for a block
@@ -35,5 +43,13 @@ public class Block extends Tile {
         //     return true;
         // }
         return false;
+    }
+
+    public void setX(int x) {
+        X = x;
+    }
+
+    public void setY(int y) {
+        Y = y;
     }
 }

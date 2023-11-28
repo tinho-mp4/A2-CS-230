@@ -92,7 +92,8 @@ public class Player {
         }
 
         if(Level.isOnBlock()) {
-            Block.pushBlock(newX, newY);
+            Block block = new Block(X,Y);
+            block.moveBlock(newX, newY);
         }
     }
 

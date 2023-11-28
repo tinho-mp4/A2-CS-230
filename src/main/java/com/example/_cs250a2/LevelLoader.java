@@ -98,24 +98,24 @@ public class LevelLoader {
      * @param pairedNumber pairedNumber The paired number associated with certain com.example._cs250a2.tile types (e.g., ButtonTile, TrapTile).
      */
     private static void drawTile(GraphicsContext gc, double x, double y, double size, char tileType, int pairedNumber) {
-        Tile tile = null;
-
-        switch (tileType) {
-            case 'D':
-                tile = new DirtTile();
-                break;
-            case 'U':
-                tile = new WallTile();
-                break;
-            //Add cases for other tile types...
-            default:
-                // Handle unknown tile types or leave empty if not needed
-                break;
-        }
-
-        if (tile != null) {
-            tile.draw(gc, x, y, size);
-        }
+//        Tile tile = null;
+//
+//        switch (tileType) {
+//            case 'D':
+//                tile = new DirtTile();
+//                break;
+//            case 'U':
+//                tile = new WallTile();
+//                break;
+//            //Add cases for other tile types...
+//            default:
+//                // Handle unknown tile types or leave empty if not needed
+//                break;
+//        }
+//
+//        if (tile != null) {
+//            tile.draw(gc, x, y, size);
+//        }
     }
 
 
