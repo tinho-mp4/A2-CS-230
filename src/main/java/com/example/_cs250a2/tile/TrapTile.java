@@ -11,7 +11,7 @@ class TrapTile extends Tile {
 
 
     @Override
-    void draw(GraphicsContext gc, double x, double y, double size) {
+    public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.setFill(javafx.scene.paint.Color.RED);
         gc.fillRect(x, y, size, size);
         // Additional logic to use the number (n) associated with the trap

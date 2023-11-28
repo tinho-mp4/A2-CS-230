@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Tile {
 
-    abstract void draw(GraphicsContext gc, double x, double y, double size);
+    public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }
 
 
