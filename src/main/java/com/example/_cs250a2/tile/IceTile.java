@@ -8,11 +8,11 @@ import javafx.scene.image.Image;
  */
 enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
 class IceTile extends Tile {
-    private static final Image ICE_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
-    private static final Image ICE_TOP_LEFT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
-    private static final Image ICE_TOP_RIGHT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
-    private static final Image ICE_BOTTOM_LEFT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
-    private static final Image ICE_BOTTOM_RIGHT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_IMAGE = new Image(IceTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_TOP_LEFT_IMAGE = new Image(IceTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_TOP_RIGHT_IMAGE = new Image(IceTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_BOTTOM_LEFT_IMAGE = new Image(IceTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
+    private static final Image ICE_BOTTOM_RIGHT_IMAGE = new Image(IceTile.class.getResourceAsStream("/com/example/_cs250a2/Ice.png"));
     /**
      * Instantiation of the corner variable
      */
