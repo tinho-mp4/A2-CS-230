@@ -61,13 +61,12 @@ public class Main extends Application {
     private Image dirtImage;
     private Image iconImage;
 
-    // X and Y coordinate of player on the grid.
-    //smile:)
-    private int playerX = 0;
-    private int playerY = 0;
+    // Create Player
+    Player player = new Player(0,0);
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
+
 
     /**
      * Set up the new application.
@@ -110,28 +109,7 @@ public class Main extends Application {
      * @param event The key event that was pressed.
      */
     public void processKeyEvent(KeyEvent event) {
-        // We change the behaviour depending on the actual key that was pressed.
-        switch (event.getCode()) {
-            case RIGHT:
-                // Right key was pressed. So move the player right by one cell.
-                playerX = playerX + 1;
-                break;
-            case LEFT:
-                // Right key was pressed. So move the player right by one cell.
-                playerX = playerX - 1;
-                break;
-            case UP:
-                // Right key was pressed. So move the player right by one cell.
-                playerY = playerY - 1;
-                break;
-            case DOWN:
-                // Right key was pressed. So move the player right by one cell.
-                playerY = playerY + 1;
-                break;
-            default:
-                // Do nothing for all other keys.
-                break;
-        }
+        player.move(event);
 
         // Redraw game as the player may have moved.
         drawGame();
@@ -162,15 +140,15 @@ public class Main extends Application {
         }
 
         // Draw player at current location
-        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
+        gc.drawImage(playerImage, player.getX() * GRID_CELL_WIDTH, player.getY() * GRID_CELL_HEIGHT);
     }
 
     /**
      * Reset the player's location and move them back to (0,0).
      */
     public void resetPlayerLocation() {
-        playerX = 0;
-        playerY = 0;
+        player.setX(0);
+        player.setY(0);
         drawGame();
     }
 
@@ -179,8 +157,8 @@ public class Main extends Application {
      */
     public void movePlayerToCenter() {
         // We just move the player to cell (5, 2)
-        playerX = 5;
-        playerY = 2;
+        player.setX(5);
+        player.setY(2);
         drawGame();
     }
 
@@ -193,9 +171,11 @@ public class Main extends Application {
     public void tick() {
         // Here we move the player right one cell and teleport
         // them back to the left side when they reach the right side.
-        playerX = playerX + 1;
+        int playerX = player.getX();
+
+        player.setX(playerX + 1);
         if (playerX > 11) {
-            playerX = 0;
+            player.setX(0);
         }
         // We then redraw the whole canvas.
         drawGame();
