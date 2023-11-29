@@ -1,7 +1,7 @@
 package com.example._cs250a2;
 
 import java.util.ArrayList;
-
+//TODO kill player on move, write tileChecker
 /**
  * javadoc to go here
  */
