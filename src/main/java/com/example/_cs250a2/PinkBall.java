@@ -18,7 +18,7 @@ public class PinkBall extends Monster {
     }
 
     //pink ball move method to be called by tick
-    @Override
+    
     public void move() {
         //w is up
         if (direction == 'w') {
