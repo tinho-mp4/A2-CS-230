@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public class PathTile extends Tile {
 
 
-    Private static final Image PATH_IMAGE = new Image(BlockTile.class.getResourceAsStream("/com/example/_cs250a2/Block.png"));
+    private static final Image PATH_IMAGE = new Image(BlockTile.class.getResourceAsStream("/com/example/_cs250a2/Block.png"));
 
 
     @Override
