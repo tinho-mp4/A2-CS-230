@@ -1,6 +1,7 @@
 package com.example._cs250a2;
 
 public class Trap {
+    public int pairedNumber;
     private static boolean isActive;
     public static void Trap() {
         isActive = true;

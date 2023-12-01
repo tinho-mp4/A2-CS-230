@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Button {
+    public int pairedNumber;
     private static boolean isPressed;
     private static List<Trap> linkedTraps;
 
