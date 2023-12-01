@@ -8,9 +8,9 @@ public class PathTile extends Tile {
 
     private static final Image PATH_IMAGE = new Image(BlockTile.class.getResourceAsStream("/com/example/_cs250a2/Block.png"));
 
-    public PathTile(boolean solid) {
-        super(false);
-    }
+//    public PathTile(boolean solid) {
+//        super(false);
+//    }
 
 
     @Override
