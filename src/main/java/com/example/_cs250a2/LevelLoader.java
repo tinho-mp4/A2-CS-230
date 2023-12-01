@@ -37,7 +37,7 @@ public class LevelLoader {
      * @param gc The GraphicsContext used for drawing.
      * @param inputStream The InputStream containing the level information.
      */
-    static void readAndDraw(GraphicsContext gc, InputStream inputStream) {
+    public static void readAndDraw(GraphicsContext gc, InputStream inputStream) {
         try (Scanner scanner = new Scanner(inputStream)) {
             // Read level information
             String levelName = scanner.nextLine();
@@ -69,12 +69,10 @@ public class LevelLoader {
      * @param lineNumber The line number in the level grid.
      */
     private static void processTileLine(GraphicsContext gc, String line, int lineNumber) {
-        double tileSize = 50; // Assuming default com.example._cs250a2.tile size is 50x50 -- use com.example._cs250a2.tile
+        double tileSize = 50; // Assuming default tile size is 50x50
         for (int i = 0; i < line.length(); i++) {
             char currentChar = line.charAt(i);
             char nextChar = (i < line.length() - 1) ? line.charAt(i + 1) : ' ';
-
-            //not working
 
             // Check if the currentChar is 'B' or 'T' and the nextChar is a digit
             if ((currentChar == 'B' || currentChar == 'T') && Character.isDigit(nextChar)) {
@@ -85,6 +83,7 @@ public class LevelLoader {
                 drawTile(gc, i * tileSize, lineNumber * tileSize, tileSize, currentChar, -1);
             }
         }
+
     }
 
     /**
