@@ -7,6 +7,10 @@ public class WallTile extends Tile {
 
     private static final Image WALL_IMAGE = new Image(WallTile.class.getResourceAsStream("/com/example/_cs250a2/wall.png"));
 
+    public WallTile(boolean solid) {
+        super(true);
+    }
+
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {

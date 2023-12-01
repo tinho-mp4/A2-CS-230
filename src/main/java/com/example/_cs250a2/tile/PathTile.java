@@ -8,6 +8,10 @@ public class PathTile extends Tile {
 
     private static final Image PATH_IMAGE = new Image(BlockTile.class.getResourceAsStream("/com/example/_cs250a2/Block.png"));
 
+    public PathTile(boolean solid) {
+        super(false);
+    }
+
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
