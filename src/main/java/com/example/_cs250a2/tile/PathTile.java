@@ -3,16 +3,19 @@ package com.example._cs250a2.tile;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-class PathTile extends Tile {
-    private final Image pathImage;
+public class PathTile extends Tile {
 
-    public PathTile(Image pathImage) {
-        this.pathImage = new Image(getClass().getResourceAsStream("/tiles/path.png"));
 
+    private static final Image PATH_IMAGE = new Image(BlockTile.class.getResourceAsStream("/com/example/_cs250a2/Block.png"));
+
+    public PathTile(boolean solid) {
+        super(false);
     }
+
+
     @Override
-    void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(pathImage, x, y, size, size);
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(PATH_IMAGE, x, y, size, size);
     }
     String getText() {
         return "path";

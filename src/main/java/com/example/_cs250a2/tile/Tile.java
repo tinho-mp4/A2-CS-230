@@ -4,7 +4,21 @@ import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Tile {
 
-    abstract void draw(GraphicsContext gc, double x, double y, double size);
+    public boolean solid;
+
+    public boolean isSolid() {
+        return solid;
+    }
+
+    public void setSolid(boolean solid) {
+        this.solid = solid;
+    }
+
+    public Tile (boolean solid) {
+        this.solid = solid;
+    }
+
+    public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }
 
 

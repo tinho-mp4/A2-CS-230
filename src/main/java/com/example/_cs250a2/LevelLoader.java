@@ -1,12 +1,13 @@
 package com.example._cs250a2;
 
 import javafx.scene.canvas.GraphicsContext;
-
 import java.io.InputStream;
 import java.util.Scanner;
 import com.example._cs250a2.tile.*;
 
 public class LevelLoader {
+
+
 
     /**
      * Represents the time limit for completing the level.
@@ -74,6 +75,7 @@ public class LevelLoader {
             char currentChar = line.charAt(i);
             char nextChar = (i < line.length() - 1) ? line.charAt(i + 1) : ' ';
 
+            //not working
             // Check if the currentChar is 'B' or 'T' and the nextChar is a digit
             if ((currentChar == 'B' || currentChar == 'T') && Character.isDigit(nextChar)) {
                 int buttonNumber = Character.getNumericValue(nextChar);
@@ -83,7 +85,6 @@ public class LevelLoader {
                 drawTile(gc, i * tileSize, lineNumber * tileSize, tileSize, currentChar, -1);
             }
         }
-
     }
 
     /**
@@ -97,24 +98,24 @@ public class LevelLoader {
      * @param pairedNumber pairedNumber The paired number associated with certain com.example._cs250a2.tile types (e.g., ButtonTile, TrapTile).
      */
     private static void drawTile(GraphicsContext gc, double x, double y, double size, char tileType, int pairedNumber) {
-        Tile tile = null;
-
-        switch (tileType) {
-            /* add classes look like
-            case 'P':
-                tile = new PathTile();
-                break;
-             */
-
-            //Add cases for other tile types...
-            default:
-                // Handle unknown tile types or leave empty if not needed
-                break;
-        }
-
-        if (tile != null) {
-            //tile.draw(gc, x, y, size);
-        }
+//        Tile tile = null;
+//
+//        switch (tileType) {
+//            case 'D':
+//                tile = new DirtTile();
+//                break;
+//            case 'U':
+//                tile = new WallTile();
+//                break;
+//            //Add cases for other tile types...
+//            default:
+//                // Handle unknown tile types or leave empty if not needed
+//                break;
+//        }
+//
+//        if (tile != null) {
+//            tile.draw(gc, x, y, size);
+//        }
     }
 
 
