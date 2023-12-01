@@ -73,7 +73,8 @@ public class Player {
             case "Water":
                 GameOver.playerDeathDrown();
             case "Chip Socket":
-                ChipSocket.event(inventory);
+                ChipSocket chipSocket = new ChipSocket(0);
+                chipSocket.event(inventory);
             case "Locked Door":
                 LockedDoor.event(inventory);
             case "Ice":

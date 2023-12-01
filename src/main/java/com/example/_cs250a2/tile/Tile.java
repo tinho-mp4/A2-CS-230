@@ -14,9 +14,9 @@ public abstract class Tile {
         this.solid = solid;
     }
 
-    public Tile (boolean solid) {
-        this.solid = solid;
-    }
+//    public Tile (boolean solid) {
+//        this.solid = solid;
+//    }
 
     public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }

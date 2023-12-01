@@ -6,6 +6,9 @@ public class Trap {
         isActive = true;
     }
 
+    public static void event() {
+    }
+
     public void setActive(boolean isActive) {
         this.isActive = isActive;
     }

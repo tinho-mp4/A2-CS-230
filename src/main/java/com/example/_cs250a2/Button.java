@@ -12,6 +12,9 @@ public class Button {
         linkedTraps = new ArrayList<>();
     }
 
+    public static void event() {
+    }
+
     public void linkTrap(Trap trap) {
         linkedTraps.add(trap);
     }

@@ -7,9 +7,9 @@ public class DirtTile extends Tile {
 
     private static final Image DIRT_IMAGE = new Image(DirtTile.class.getResourceAsStream("/com/example/_cs250a2/dirt.png"));
 
-    public DirtTile(boolean solid) {
-        super(false);
-    }
+//    public DirtTile(boolean solid) {
+//        super(false);
+//    }
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
