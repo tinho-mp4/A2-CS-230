@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Button {
-    private boolean isPressed;
-    private final List<Trap> linkedTraps;
+    private static boolean isPressed;
+    private static List<Trap> linkedTraps;
 
-    public Button() {
+    public static void Button() {
         isPressed = false;
         linkedTraps = new ArrayList<>();
     }
@@ -20,7 +20,7 @@ public class Button {
     }
 
     public void setPressed(boolean isPressed) {
-        this.isPressed = isPressed;
+        Button.isPressed = isPressed;
         for (Trap trap : linkedTraps) {
             trap.setActive(!isPressed);
         }

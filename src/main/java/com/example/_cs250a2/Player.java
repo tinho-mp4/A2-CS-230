@@ -67,9 +67,9 @@ public class Player {
             case "Exit":
                 Level.nextLevel();
             case "Button":
-                Button.event();
+                Button.Button();
             case "Trap":
-                Trap.event();
+                Trap.Trap();
             case "Water":
                 GameOver.playerDeathDrown();
             case "Chip Socket":
