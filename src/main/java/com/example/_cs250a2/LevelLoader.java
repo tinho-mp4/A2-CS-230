@@ -75,17 +75,18 @@ public class LevelLoader {
             char currentChar = line.charAt(i);
             char nextChar = (i < line.length() - 1) ? line.charAt(i + 1) : ' ';
 
-            //not working
             // Check if the currentChar is 'B' or 'T' and the nextChar is a digit
             if ((currentChar == 'B' || currentChar == 'T') && Character.isDigit(nextChar)) {
                 int buttonNumber = Character.getNumericValue(nextChar);
                 drawTile(gc, i * tileSize, lineNumber * tileSize, tileSize, currentChar, buttonNumber);
-                i++; // Skip the next character (the digit) since we've paired it with 'B' or 'T'
+                i++; // Skip the next character (the digit) since its paired it with 'B' or 'T'
             } else {
                 drawTile(gc, i * tileSize, lineNumber * tileSize, tileSize, currentChar, -1);
             }
         }
+
     }
+
 
     /**
      *  Draws a com.example._cs250a2.tile on the specified GraphicsContext at the given position with the specified size,
