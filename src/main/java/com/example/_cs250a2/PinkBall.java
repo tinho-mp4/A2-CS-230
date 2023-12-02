@@ -28,6 +28,7 @@ public class PinkBall extends Monster {
             //method to check the tile is legal
             if (checkTile(locationNext)) {
                 monsterY++;
+
             } else {
                 direction = 's';
                 move();

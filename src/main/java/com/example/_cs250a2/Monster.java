@@ -33,4 +33,10 @@ public class Monster {
    protected boolean checkTile(int[] tile) {
       return true;
    }
+
+   protected void playerKill() {
+      if (monsterX == Player.getPlayerX() && monsterY == Player.getPlayerY()) {
+         GameOver.playerDeathMonster();
+      }
+   }
 }
