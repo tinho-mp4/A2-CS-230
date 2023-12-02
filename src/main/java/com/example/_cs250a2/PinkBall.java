@@ -42,6 +42,7 @@ public class PinkBall extends Monster {
             //check tile legality
             if (checkTile(locationNext)) {
                 monsterY--;
+                playerKill();
             } else {
                 direction = 'w';
                 move();
@@ -51,6 +52,7 @@ public class PinkBall extends Monster {
             int[] locationNext = {monsterX--, monsterY};
             if (checkTile(locationNext)) {
                 monsterX--;
+                playerKill();
             } else {
                 direction = 'd';
                 move();
@@ -60,6 +62,7 @@ public class PinkBall extends Monster {
             int[] locationNext = {monsterX++, monsterY};
             if (checkTile(locationNext)) {
                 monsterX++;
+                playerKill();
             } else {
                 direction = 'a';
                 move();

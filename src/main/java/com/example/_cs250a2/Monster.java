@@ -2,6 +2,7 @@ package com.example._cs250a2;
 import java.util.ArrayList;
 
 //TODO write tile checker, check playerkill works later, write checklocation method
+//TODO test all methods when level working
 /**
  * javadoc to go here
  */
