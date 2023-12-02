@@ -1,7 +1,7 @@
 package com.example._cs250a2;
 
 import java.util.ArrayList;
-//TODO kill player on move, write tileChecker
+
 /**
  * javadoc to go here
  */
@@ -15,6 +15,8 @@ public class PinkBall extends Monster {
         location = startingLocation;
         monsterX = location[0];
         monsterY = location[1];
+        checkDirection();
+        checkLocation();
     }
 
     //pink ball move method to be called by tick
