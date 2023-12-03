@@ -22,7 +22,8 @@ public class Player {
 //                if (Level.checkTile(x+1, y) != "Wall"
 //                        && !(Level.checkTile(x+1, y) == "Block"
 //                        && Block.isBlocked(x+1, y, x+2, y))):
-//                setY(x+1)
+//                setX(x+1)
+//                Globals.setPlayerX(x+1);
 //                interact(x+1, y)
                 X = X + 1;
                 break;
@@ -31,7 +32,8 @@ public class Player {
 //                if (Level.checkTile(x-1, y) != "Wall"
 //                        && !(Level.checkTile(x-1, y) == "Block"
 //                        && Block.isBlocked(x-1, y, x-2, y))):
-//                setY(x-1)
+//                setX(x-1)
+//                Globals.setPlayerX(x-1);
 //                interact(x-1, y)
                 X = X - 1;
                 break;
@@ -41,6 +43,7 @@ public class Player {
 //                        && !(Level.checkTile(x, y+1) == "Block"
 //                        && Block.isBlocked(x, y+1, x, y+2))):
 //                setY(y+1)
+//                Globals.setPlayerY(y+1);
 //                interact(x, y+1)
                 Y = Y - 1;
                 break;
@@ -50,6 +53,7 @@ public class Player {
 //                        && !(Level.checkTile(x, y-1) == "Block"
 //                        && Block.isBlocked(x, y-1, x, y-2))):
 //                setY(y-1)
+//                Globals.setPlayerY(y-1);
 //                interact(x, y-1)
                 Y = Y + 1;
                 break;
@@ -111,6 +115,7 @@ public class Player {
     }
 
     public void setX(int x) {
+        Globals.setPlayerX(x);
         X = x;
     }
 
@@ -119,6 +124,7 @@ public class Player {
     }
 
     public void setY(int y) {
+        Globals.setPlayerY(y);
         Y = y;
     }
 }
