@@ -1,8 +1,9 @@
 package com.example._cs250a2;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-//TODO write tile checker, check playerkill works later, write checklocation method
-//TODO test all methods when level working
+//TODO write tile checker, write checklocation method
+//TODO test all methods when level working, check playerkill works later
 /**
  * javadoc to go here
  */
@@ -10,7 +11,7 @@ public class Monster {
 
     //tile still needs to be created
     //Arraylist of tiles the monster cannot move onto
-   protected ArrayList<Tile> blockingTiles = new ArrayList<Tile>();
+   protected ArrayList<String> allowedTiles = new ArrayList<>(Arrays.asList("Path","Button","Trap"));
 
    //speed decided based on how many ticks between moves
    protected int speed;

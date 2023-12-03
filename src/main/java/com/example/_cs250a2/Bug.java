@@ -9,8 +9,7 @@ public class Bug extends Monster {
     //which wall to 'hug' when it moves
     private final boolean left;
 
-    public Bug(ArrayList<Tile> tiles, int speed, char startingDirection, int[] startingLocation, boolean side) {
-        blockingTiles = tiles;
+    public Bug(int speed, char startingDirection, int[] startingLocation, boolean side) {
         this.speed = speed;
         direction = startingDirection;
         location = startingLocation;
