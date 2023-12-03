@@ -3,20 +3,51 @@ package com.example._cs250a2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code Button} class represents a button object that can be pressed and linked to traps.
+ * It allows you to set its pressed state and link it to traps that can respond to its state.
+ *
+ * @author Juned Miah
+ */
 public class Button {
+    /**
+     * The number paired with this button.
+     */
     public int pairedNumber;
+
+    /**
+     * A flag indicating whether the button is currently pressed.
+     */
     private static boolean isPressed;
+
+    /**
+     * A list of traps linked to this button.
+     */
     private static List<Trap> linkedTraps;
 
-    public static void Button() {
+    /**
+     * Initializes a new instance of the {@code Button} class.
+     * The button is initially not pressed, and no traps are linked to it.
+     */
+    public Button() {
         isPressed = false;
         linkedTraps = new ArrayList<>();
     }
 
+    /**
+     * Links a trap to this button. When the button's state changes, linked traps will respond accordingly.
+     *
+     * @param trap The trap to be linked to this button.
+     */
     public void linkTrap(Trap trap) {
         linkedTraps.add(trap);
     }
 
+    /**
+     * Sets the pressed state of the button and triggers linked traps accordingly.
+     *
+     * @param isPressed {@code true} if the button is pressed, {@code false} otherwise.
+     */
     public void setPressed(boolean isPressed) {
         Button.isPressed = isPressed;
         for (Trap trap : linkedTraps) {
@@ -24,8 +55,14 @@ public class Button {
         }
     }
 
+    /**
+     * Checks whether the button is currently pressed.
+     *
+     * @return {@code true} if the button is pressed, {@code false} otherwise.
+     */
     public boolean isPressed() {
         return isPressed;
     }
 }
+
 
