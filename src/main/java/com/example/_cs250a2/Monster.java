@@ -42,8 +42,9 @@ public class Monster {
       return true;
    }
 
+   //TODO have a look here (and in frog but im working on that rn)
    protected void playerKill() {
-      if (monsterX == Globals.getPlayerX() && monsterY == Globals.getPlayerY()) {
+      if (monsterX == Player.getX() && monsterY == Player.getY()) {
          GameOver.playerDeathMonster();
       }
    }

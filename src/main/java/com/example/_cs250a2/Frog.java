@@ -17,12 +17,11 @@ public class Frog extends Monster {
         checkLocation();
     }
 
-    //pathfind will tell the move method where to go
-    private void pathFind() {
-
-    }
-
+    //this move method will try and make the frog x equal to player x then do the same with y
     public void move() {
+        int[] checkLeft = {monsterX--,monsterY};
+        if (monsterX > Player.getX() && checkTile(checkLeft)) {
 
+        }
     }
 }
