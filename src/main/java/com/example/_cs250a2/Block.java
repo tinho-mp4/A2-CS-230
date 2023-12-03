@@ -3,8 +3,6 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Block extends Tile {
-    private int X;
-    private int Y;
     private boolean pushableBlock;
     public Block(int X, int Y) {
         super("block", X, Y);
@@ -16,12 +14,11 @@ public class Block extends Tile {
      * @param gc The graphics context used to draw the new block tile
      * @param newX The new X position of the block tile
      * @param newY The new Y position of the block tile
-     * @param size The original size of the block tile
      */
-    private void pushBlock(GraphicsContext gc, double newX, double newY, double size) {
+    private void pushBlock(GraphicsContext gc, int newX, int newY) {
         if (verifyNewPosition(newX, newY)) {
-            //this.setX(newX); // This will function once Tile.java is finished
-            //this.setY(newY);
+            this.setX(newX);
+            this.setY(newY);
         }
     }
 // temporary method
@@ -43,13 +40,5 @@ public class Block extends Tile {
         //     return true;
         // }
         return false;
-    }
-
-    public void setX(int x) {
-        X = x;
-    }
-
-    public void setY(int y) {
-        Y = y;
     }
 }
