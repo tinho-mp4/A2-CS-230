@@ -42,7 +42,7 @@ public class Monster {
    }
 
    protected void playerKill() {
-      if (monsterX == Player.getPlayerX() && monsterY == Player.getPlayerY()) {
+      if (monsterX == Globals.getPlayerX() && monsterY == Globals.getPlayerY()) {
          GameOver.playerDeathMonster();
       }
    }
