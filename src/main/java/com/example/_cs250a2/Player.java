@@ -112,7 +112,6 @@ public class Player {
     }
 
     public static void setX(int x) {
-        Globals.setPlayerX(x);
         X = x;
     }
 
@@ -121,7 +120,6 @@ public class Player {
     }
 
     public static void setY(int y) {
-        Globals.setPlayerY(y);
         Y = y;
     }
 }
