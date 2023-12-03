@@ -1,15 +1,14 @@
 package com.example._cs250a2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * javadoc to go here
  */
 public class PinkBall extends Monster {
 
-    //pinkBall's own constructor
-    public PinkBall(ArrayList<Tile> tiles, int speed, char startingDirection, int[] startingLocation) {
-        blockingTiles = tiles;
+    public PinkBall(int speed, char startingDirection, int[] startingLocation) {
         this.speed = speed;
         direction = startingDirection;
         location = startingLocation;
@@ -19,10 +18,7 @@ public class PinkBall extends Monster {
         checkLocation();
     }
 
-    //pink ball move method to be called by tick
-
     public void move() {
-
         //w is up, s is down, a is left and d is right
         if (direction == 'w') {
             //next location is 1 tile above current position
@@ -30,12 +26,10 @@ public class PinkBall extends Monster {
             //method to check the tile is legal
             if (checkTile(locationNext)) {
                 monsterY++;
-
             } else {
                 direction = 's';
                 move();
             }
-
         } else if (direction == 's') {
             //next location is 1 tile below current position
             int[] locationNext = {monsterX, monsterY--};
@@ -47,7 +41,6 @@ public class PinkBall extends Monster {
                 direction = 'w';
                 move();
             }
-
         } else if (direction == 'a') {
             int[] locationNext = {monsterX--, monsterY};
             if (checkTile(locationNext)) {
@@ -57,7 +50,6 @@ public class PinkBall extends Monster {
                 direction = 'd';
                 move();
             }
-
         } else if (direction == 'd') {
             int[] locationNext = {monsterX++, monsterY};
             if (checkTile(locationNext)) {
@@ -67,6 +59,6 @@ public class PinkBall extends Monster {
                 direction = 'a';
                 move();
             }
-    }
+        }
     }
 }
