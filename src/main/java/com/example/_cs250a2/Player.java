@@ -115,7 +115,7 @@ public class Player {
     }
 
     public void setX(int x) {
-        Globals.setPlayerY(x);
+        Globals.setPlayerX(x);
         X = x;
     }
 
