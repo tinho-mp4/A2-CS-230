@@ -23,8 +23,8 @@ public class Frog extends Monster {
         int[] checkRight = {monsterX++, monsterY};
         int[] checkBelow = {monsterX, monsterY--};
         int[] checkAbove = {monsterX, monsterY++};
-        int playerX = Player.getX;
-        int playerY = Player.getY;
+        int playerX = Player.getX();
+        int playerY = Player.getY();
         if (monsterX > playerX && checkTile(checkLeft)) {
             monsterX--;
             direction = 'a';

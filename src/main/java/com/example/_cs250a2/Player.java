@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Player {
     // X and Y coordinate of player on the grid.
-    private int X;
-    private int Y;
+    private static int X;
+    private static int Y;
     private ArrayList<String> inventory;
 
     public Player(int x, int y) {
@@ -15,6 +15,7 @@ public class Player {
         Y = y;
     }
 
+    // TODO: When this is finished, removed all occurrences of X = X +- n, and Y = Y +- n
     public void move(KeyEvent event) {
         switch (event.getCode()) {
             case RIGHT:
@@ -23,7 +24,6 @@ public class Player {
 //                        && !(Level.checkTile(x+1, y) == "Block"
 //                        && Block.isBlocked(x+1, y, x+2, y))):
 //                setX(x+1)
-//                Globals.setPlayerX(x+1);
 //                interact(x+1, y)
                 X = X + 1;
                 break;
@@ -33,7 +33,6 @@ public class Player {
 //                        && !(Level.checkTile(x-1, y) == "Block"
 //                        && Block.isBlocked(x-1, y, x-2, y))):
 //                setX(x-1)
-//                Globals.setPlayerX(x-1);
 //                interact(x-1, y)
                 X = X - 1;
                 break;
@@ -43,7 +42,6 @@ public class Player {
 //                        && !(Level.checkTile(x, y+1) == "Block"
 //                        && Block.isBlocked(x, y+1, x, y+2))):
 //                setY(y+1)
-//                Globals.setPlayerY(y+1);
 //                interact(x, y+1)
                 Y = Y - 1;
                 break;
@@ -53,7 +51,6 @@ public class Player {
 //                        && !(Level.checkTile(x, y-1) == "Block"
 //                        && Block.isBlocked(x, y-1, x, y-2))):
 //                setY(y-1)
-//                Globals.setPlayerY(y-1);
 //                interact(x, y-1)
                 Y = Y + 1;
                 break;
@@ -110,20 +107,20 @@ public class Player {
 //        inventory.add(item);
 //    }
 
-    public int getX() {
+    public static int getX() {
         return X;
     }
 
-    public void setX(int x) {
+    public static void setX(int x) {
         Globals.setPlayerX(x);
         X = x;
     }
 
-    public int getY() {
+    public static int getY() {
         return Y;
     }
 
-    public void setY(int y) {
+    public static void setY(int y) {
         Globals.setPlayerY(y);
         Y = y;
     }
