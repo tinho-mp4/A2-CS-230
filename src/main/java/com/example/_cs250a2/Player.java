@@ -103,9 +103,9 @@ public class Player {
         inventory.add(item);
     }
 
-//    public void removeToInventory(String item){
-//        inventory.add(item);
-//    }
+    public void removeToInventory(String item){
+        inventory.add(item);
+    }
 
     public static int getX() {
         return X;

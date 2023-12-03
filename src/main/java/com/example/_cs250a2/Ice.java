@@ -26,49 +26,38 @@ public class Ice {
             if (!LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) {
                 // Corner checking
                 if (LevelLoader.getTile(newPlayerX, newPlayerY).getName() == "ice") {
-                    switch (LevelLoader.getTile(newPlayerX, newPlayerY).getBlockedCorner()) {
-                        Player.setX(newPlayerX);
-                        Player.setY(newPlayerY);
-                        case Corner.TOP_LEFT:
-                            if (deltaX == -1) {
-                                event(newPlayerX, newPlayerY, newPlayerX, newPlayerY - 1);
-                            }
-                            if (deltaY == 1) {
-                                event(newPlayerX, newPlayerY, newPlayerX + 1, newPlayerY);
-                                return;
-                            }
+                    Player.setX(newPlayerX);
+                    Player.setY(newPlayerY);
+
+                    Corner blockedCorner = LevelLoader.getTile(newPlayerX, newPlayerY).getBlockedCorner();
+
+                    int targetX = newPlayerX;
+                    int targetY = newPlayerY;
+
+                    switch (blockedCorner) {
+                        case TOP_LEFT:
+                            targetY -= (deltaX == -1) ? 1 : 0;
+                            targetX += (deltaY == 1) ? 1 : 0;
                             break;
-                        case Corner.TOP_RIGHT:
-                            if (deltaX == 1) {
-                                event(newPlayerX, newPlayerY, newPlayerX, newPlayerY - 1);
-                            }
-                            if (deltaY == 1) {
-                                event(newPlayerX, newPlayerY, newPlayerX - 1, newPlayerY);
-                                return;
-                            }
+                        case TOP_RIGHT:
+                            targetY -= (deltaX == 1) ? 1 : 0;
+                            targetX -= (deltaY == 1) ? 1 : 0;
                             break;
-                        case Corner.BOTTOM_LEFT:
-                            if (deltaX == -1) {
-                                event(newPlayerX, newPlayerY, newPlayerX, newPlayerY + 1);
-                            }
-                            if (deltaY == -1) {
-                                event(newPlayerX, newPlayerY, newPlayerX + 1, newPlayerY);
-                                return;
-                            }
+                        case BOTTOM_LEFT:
+                            targetY += (deltaX == -1) ? 1 : 0;
+                            targetX += (deltaY == -1) ? 1 : 0;
                             break;
-                        case Corner.BOTTOM_RIGHT:
-                            if (deltaX == 1) {
-                                event(newPlayerX, newPlayerY, newPlayerX, newPlayerY + 1);
-                            }
-                            if (deltaY == -1) {
-                                event(newPlayerX, newPlayerY, newPlayerX - 1, newPlayerY);
-                                return;
-                            }
+                        case BOTTOM_RIGHT:
+                            targetY += (deltaX == 1) ? 1 : 0;
+                            targetX -= (deltaY == -1) ? 1 : 0;
                             break;
-                        case Corner.NONE:
-                            event(newPlayerX, newPlayerY, newPlayerX + deltaX, newPlayerY + deltaY);
+                        default:
+                            targetX += deltaX;
+                            targetY += deltaY;
                             break;
                     }
+
+                    event(newPlayerX, newPlayerY, targetX, targetY);
                 }
             } else if (LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) {
                 Player.setX(playerX - deltaX);
