@@ -10,7 +10,7 @@ public class Level {
     }
 
     public static Tile checkTile(int x, int y){
-        Tile tile = new Tile("test",x,y);
+        Tile tile = new Tile("test",x,y, false);
         return tile;
     }
 

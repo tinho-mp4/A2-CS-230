@@ -79,7 +79,7 @@ public class Player {
             case "Locked Door":
                 LockedDoor.event(inventory);
             case "Ice":
-                Ice.event();
+                Ice.event(X, Y, newX, newY);
             default:
 //            Path
                 break;
