@@ -1,8 +1,15 @@
 package com.example._cs250a2;
 
-enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, NONE};
-public class Ice {
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
+enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, NONE};
+public class Ice extends Tile {
+    private static final Image ICE_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
+    private static final Image ICE_TOP_LEFT_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
+    private static final Image ICE_TOP_RIGHT_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
+    private static final Image ICE_BOTTOM_LEFT_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
+    private static final Image ICE_BOTTOM_RIGHT_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
     /**
      * Instantiation of the corner variable
      */
@@ -12,7 +19,8 @@ public class Ice {
      * Sets the variable for the corner of which a wall is placed
      * @param blockedCorner the blocked corner enum variable (can be null)
      */
-    public Ice(Corner blockedCorner) {
+    public Ice(int x, int y, Corner blockedCorner) {
+        super("ice", x, y, false);
         this.blockedCorner = blockedCorner;
     }
 
@@ -64,6 +72,27 @@ public class Ice {
                 Player.setY(playerY - deltaY);
                 event(playerX - deltaX, playerY - deltaY, playerX - 2*deltaX, playerY - 2*deltaY);
             }
+        }
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        switch (this.blockedCorner) {
+            case TOP_LEFT:
+                gc.drawImage(ICE_TOP_LEFT_IMAGE, x, y, size,size);
+                break;
+            case TOP_RIGHT:
+                gc.drawImage(ICE_TOP_RIGHT_IMAGE, x, y, size,size);
+                break;
+            case BOTTOM_LEFT:
+                gc.drawImage(ICE_BOTTOM_LEFT_IMAGE, x, y, size,size);
+                break;
+            case BOTTOM_RIGHT:
+                gc.drawImage(ICE_BOTTOM_RIGHT_IMAGE, x, y, size,size);
+                break;
+            default:
+                gc.drawImage(ICE_IMAGE, x, y, size, size);
+                break;
         }
     }
 
