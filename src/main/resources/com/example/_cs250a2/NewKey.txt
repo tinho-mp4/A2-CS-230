@@ -1,0 +1,37 @@
+Path: P
+Dirt: D
+Wall: U
+Exit: E
+Button: B(n)
+Trap: T
+Water: W
+Chip Socket: S
+Ice: I(n)
+Block: O
+Locked Door: L - maybe n not sure yet
+Frog: F
+Pink Ball: G
+Bug: E
+Player:?
+Computer Chip: C
+Key: K - maybe n not sure yet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
