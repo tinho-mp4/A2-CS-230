@@ -53,10 +53,10 @@ public class LevelLoader {
 
         levelGrid = new ArrayList<>();
         // Process tiles
-        for (int i = 0; i < width; i++) {
+        for (int i = 0; i < height; i++) {
             String line = scanner.nextLine();
             ArrayList<Tile> levelRow = new ArrayList<>();
-            for (int j = 0; j < height; j++) {
+            for (int j = 0; j < width; j++) {
                 char currentChar = line.charAt(j);
                 levelRow.add(processTile(gc, currentChar, j, i));
             }
