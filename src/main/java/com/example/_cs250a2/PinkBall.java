@@ -14,8 +14,8 @@ public class PinkBall extends Monster {
         location = startingLocation;
         monsterX = location[0];
         monsterY = location[1];
-        checkDirection();
-        checkLocation();
+        checkDirection(startingDirection);
+        checkLocation(startingLocation);
     }
 
     public void move() {

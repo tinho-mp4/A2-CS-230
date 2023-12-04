@@ -2,12 +2,12 @@ package com.example._cs250a2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO write tile checker, write checklocation method
+//TODO write tile checker
 //TODO test all methods when level working, check playerkill works later
 /**
  * javadoc to go here
  */
-public class Monster {
+public abstract class Monster {
 
     //tile still needs to be created
     //Arraylist of tiles the monster cannot move onto
@@ -26,11 +26,13 @@ public class Monster {
    //starting location given as an array of two integers (coordinates)
    protected int[] location = {monsterX, monsterY};
 
-   protected void checkLocation() {
-      throw new IllegalArgumentException("the monster has to start within the coordinates of the game space");
+   protected void checkLocation(int[] location) {
+      if (location[0] > LevelLoader.getWidth() || location[1] > LevelLoader.getHeight()) {
+         throw new IllegalArgumentException("the monster has to start within the coordinates of the game space");
+      }
    }
 
-   protected void checkDirection() {
+   protected void checkDirection(char direction) {
       if (!(direction == 'w' || direction == 'a' || direction == 's' || direction == 'd')) {
          throw new IllegalArgumentException("starting direction must be a character w, a, s or d");
       }
@@ -39,10 +41,9 @@ public class Monster {
    //method to check if monster move is legal
    //not done just returns true!!!
    protected boolean checkTile(int[] tile) {
-      return true;
+
    }
 
-   //TODO have a look here (and in frog but im working on that rn)
    protected void playerKill() {
       if (monsterX == Player.getX() && monsterY == Player.getY()) {
          GameOver.playerDeathMonster();
