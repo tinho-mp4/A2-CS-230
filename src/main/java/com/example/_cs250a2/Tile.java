@@ -7,6 +7,7 @@ public abstract class Tile {
     protected int x;
     protected int y;
     protected boolean solid;
+    protected boolean pushableBlock;
 
     public Tile(String name, int x, int y) {
         this.name = name;
@@ -34,8 +35,16 @@ public abstract class Tile {
         return solid;
     }
 
-    public void setSolid(boolean isSolid) {
-        this.solid = isSolid;
+    public void setSolid(boolean solid) {
+        this.solid = solid;
+    }
+
+    public boolean isPushableBlock() {
+        return pushableBlock;
+    }
+
+    public void setPushableBlock(boolean pushableBlock) {
+        this.pushableBlock = pushableBlock;
     }
 
     public String getName() {
