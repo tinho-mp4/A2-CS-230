@@ -52,9 +52,5 @@ public abstract class Tile {
         return this.name;
     }
 
-    public Corner getBlockedCorner() {
-        return Corner.TOP_LEFT;
-    }
-
     public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }

@@ -55,8 +55,10 @@ public class LevelLoader {
         // Process tiles
         for (int i = 0; i < height; i++) {
             String line = scanner.nextLine();
+            String[] splitLine = line.split("([A-Z])(\\d)");
             ArrayList<Tile> levelRow = new ArrayList<>();
             for (int j = 0; j < width; j++) {
+
                 char currentChar = line.charAt(j);
                 levelRow.add(processTile(gc, currentChar, j, i));
             }
