@@ -37,7 +37,7 @@ public class Ice extends Tile {
                     Player.setX(newPlayerX);
                     Player.setY(newPlayerY);
 
-                    Corner blockedCorner = LevelLoader.getTile(newPlayerX, newPlayerY).getBlockedCorner();
+                    Corner blockedCorner = ((Ice)LevelLoader.getTile(newPlayerX, newPlayerY)).getBlockedCorner();
 
                     int targetX = newPlayerX;
                     int targetY = newPlayerY;
@@ -94,6 +94,10 @@ public class Ice extends Tile {
                 gc.drawImage(ICE_IMAGE, x, y, size, size);
                 break;
         }
+    }
+
+    private Corner getBlockedCorner() {
+        return Corner.TOP_LEFT;
     }
 
     public String getName() {
