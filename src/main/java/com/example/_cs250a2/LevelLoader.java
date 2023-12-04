@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -50,36 +51,70 @@ public class LevelLoader {
         String levelName = scanner.nextLine().split(": ")[1];
         int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
-        int height = Integer.parseInt(dimensions[0]);
-        int width = Integer.parseInt(dimensions[1]);
+        int width = Integer.parseInt(dimensions[0]);
+        int height = Integer.parseInt(dimensions[1]);
         scanner.nextLine(); // Skip empty line
 
 
         levelGrid = new ArrayList<>();
+        ArrayList<String> lines = new ArrayList<>();
+
         // Process tiles
-        for (int i = 0; i < height; i++) {
-            while(scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
-                Matcher matcher = pattern.matcher(line);
-                ArrayList<String> matchesList = new ArrayList<>();
+        while(scanner.hasNextLine()) {
+            lines.add(scanner.nextLine());
+        }
+        ArrayList<String> newLines = flipStringsVertically(rotateStringsCounterClockwise(lines));
+        // why does this work 😭
 
-                while (matcher.find()) {
-                    String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "");
-                    matchesList.add(match);
-                }
-                String[] matchesArray = matchesList.toArray(new String[0]);
-                ArrayList<Tile> levelRow = new ArrayList<>();
-                for (int j = 0; j < width; j++) {
+        int i = 0;
+        while(i < width) {
+            String line = newLines.get(i);
+            Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
+            Matcher matcher = pattern.matcher(line);
+            ArrayList<String> matchesList = new ArrayList<>();
 
-                    String currentTile = matchesArray[j];
-                    levelRow.add(processTile(gc, currentTile.toCharArray(), j, i));
+            while (matcher.find()) {
+                String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "");
+                matchesList.add(match);
+            }
+            String[] matchesArray = matchesList.toArray(new String[0]); // example : [P, D, U, E]
+            ArrayList<Tile> levelRow = new ArrayList<>();
+            try {
+                for (int j = 0; j < matchesArray.length; j++) {
+                    levelRow.add(processTile(gc, matchesArray[j].toCharArray(), i, j));
                 }
-                levelGrid.add(levelRow);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Index out of bounds");
             }
 
+            levelGrid.add(levelRow);
+            i++;
         }
         drawLevel(gc);
+    }
+
+    public static ArrayList<String> rotateStringsCounterClockwise(ArrayList<String> strings) {
+        int rows = strings.size();
+        int cols = strings.get(0).length();
+
+        ArrayList<String> result = new ArrayList<>();
+        for (int col = cols - 1; col >= 0; col--) {
+            StringBuilder newRow = new StringBuilder();
+            for (int row = 0; row < rows; row++) {
+                try {
+                    newRow.append(strings.get(row).charAt(col));
+                } catch (StringIndexOutOfBoundsException e) {
+                    newRow.append("W");
+                }
+            }
+            result.add(newRow.toString());
+        }
+        return result;
+    }
+
+    public static ArrayList<String> flipStringsVertically(ArrayList<String> strings) {
+        Collections.reverse(strings);
+        return strings;
     }
 
     /**
@@ -154,7 +189,7 @@ public class LevelLoader {
     }
 
     public static void drawLevel(GraphicsContext gc) {;
-        for (ArrayList<Tile> row : levelGrid) {
+        for (ArrayList<Tile> row : getLevelGrid()) {
             for (Tile tile : row) {
                 tile.draw(gc, tile.getX(), tile.getY(), 35);
             }
@@ -163,7 +198,11 @@ public class LevelLoader {
 
 
     public static Tile getTile(int x, int y) {
-        return levelGrid.get(x).get(y); // y might have to be reversed (height-y), since canvas y is flipped?
+        try {
+            return levelGrid.get(x).get(y); // y might have to be reversed (height-y), since canvas y is flipped?
+        } catch (IndexOutOfBoundsException e) {
+            return new Wall(x, y);
+        }
     }
 
     public static int getHeight() {
@@ -171,5 +210,9 @@ public class LevelLoader {
     }
     public static int getWidth() {
         return width;
+    }
+
+    public static ArrayList<ArrayList<Tile>> getLevelGrid() {
+        return levelGrid;
     }
 }

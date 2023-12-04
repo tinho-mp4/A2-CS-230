@@ -52,12 +52,12 @@ public class Game extends Application {
     private Image iconImage;
 
     // Create Player
-    Player player = new Player(0,0);
+    Player player = new Player(1,1);
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
 
-    private Color bgColor = Color.PURPLE;
+    private Color bgColor = Color.LIGHTBLUE;
 
     /**
      * Set up the new application.
@@ -88,6 +88,7 @@ public class Game extends Application {
 
         // load the level
         GraphicsContext gc = canvas.getGraphicsContext2D();
+
         LevelLoader.loadLevel(gc,getClass().getResourceAsStream("level1.txt"));
     }
 

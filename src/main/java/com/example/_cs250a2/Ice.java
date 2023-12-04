@@ -113,7 +113,7 @@ public class Ice extends Tile {
     }
 
     private Corner getBlockedCorner() {
-        return Corner.TOP_LEFT;
+        return this.blockedCorner;
     }
 
     public String getName() {
