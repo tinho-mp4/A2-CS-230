@@ -7,7 +7,7 @@ public class Exit extends Tile{
     private static final Image EXIT_IMAGE = new Image(Exit.class.getResourceAsStream("exit.png"));
 
     public Exit(int x, int y) {
-        super("exit", x, y);
+        super("exit", x, y, false);
     }
 
     @Override

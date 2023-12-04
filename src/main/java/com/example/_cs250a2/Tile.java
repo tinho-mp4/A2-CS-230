@@ -9,10 +9,11 @@ public abstract class Tile {
     protected boolean solid;
     protected boolean pushableBlock;
 
-    public Tile(String name, int x, int y) {
+    public Tile(String name, int x, int y, boolean solid) {
         this.name = name;
         this.x = x;
         this.y = y;
+        this.solid = solid;
     }
 
     public int getX() {
