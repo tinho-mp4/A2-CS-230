@@ -6,10 +6,9 @@ import javafx.scene.image.Image;
 public class Block extends Tile {
     private static final Image BLOCK_IMAGE = new Image(Block.class.getResourceAsStream("block.png"));
 
-    private boolean pushableBlock;
     public Block(int x, int y) {
-        super("block",x, y);
-        pushableBlock = true;
+        super("block",x, y, true);
+        this.setPushableBlock(true);
     }
 
     /**

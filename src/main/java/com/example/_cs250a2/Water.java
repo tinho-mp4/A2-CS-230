@@ -7,7 +7,7 @@ public class Water extends Tile{
     private static final Image WATER_TILE = new Image(Water.class.getResourceAsStream("water.png"));
 
     public Water(int x, int y) {
-        super("water",x, y);
+        super("water",x, y, false);
     }
 
     @Override
