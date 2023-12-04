@@ -27,7 +27,7 @@ public class Trap extends Tile{
      * The trap is initially active.
      */
     public Trap(int x, int y) {
-        super("trap",x,y);
+        super("trap",x,y, false);
         isActive = true;
     }
 

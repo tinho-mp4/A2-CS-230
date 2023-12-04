@@ -11,7 +11,7 @@ public class ChipSocket extends Tile{
     private final int chipsNeeded;
 
     public ChipSocket(int chipsNeeded, int x, int y) {
-        super("chipSocket", x, y);
+        super("chipSocket", x, y, false);
         this.chipsNeeded = chipsNeeded;
     }
 

@@ -36,7 +36,7 @@ public class Button extends Tile{
      * The button is initially not pressed, and no traps are linked to it.
      */
     public Button(int x, int y) {
-        super("button", x, y);
+        super("button", x, y, false);
         isPressed = false;
         linkedTraps = new ArrayList<>();
     }

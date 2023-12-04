@@ -7,7 +7,7 @@ public class Door extends Tile{
     private static final Image DOOR_IMAGE = new Image(Door.class.getResourceAsStream("door.png"));
 
     public Door(int x, int y) {
-        super("door", x, y);
+        super("door", x, y, true);
     }
 
     @Override

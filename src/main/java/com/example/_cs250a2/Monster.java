@@ -41,7 +41,7 @@ public abstract class Monster {
    //method to check if monster move is legal
    //not done just returns true!!!
    protected boolean checkTile(int[] tile) {
-
+      return true;
    }
 
    protected void playerKill() {

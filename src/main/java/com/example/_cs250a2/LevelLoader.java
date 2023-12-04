@@ -58,23 +58,26 @@ public class LevelLoader {
         levelGrid = new ArrayList<>();
         // Process tiles
         for (int i = 0; i < height; i++) {
-            String line = scanner.nextLine();
-            Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
-            Matcher matcher = pattern.matcher(line);
-            ArrayList<String> matchesList = new ArrayList<>();
+            while(scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
+                Matcher matcher = pattern.matcher(line);
+                ArrayList<String> matchesList = new ArrayList<>();
 
-            while (matcher.find()) {
-                String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "");
-                matchesList.add(match);
-            }
-            String[] matchesArray = matchesList.toArray(new String[0]);
-            ArrayList<Tile> levelRow = new ArrayList<>();
-            for (int j = 0; j < width; j++) {
+                while (matcher.find()) {
+                    String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "");
+                    matchesList.add(match);
+                }
+                String[] matchesArray = matchesList.toArray(new String[0]);
+                ArrayList<Tile> levelRow = new ArrayList<>();
+                for (int j = 0; j < width; j++) {
 
-                String currentTile = matchesArray[j];
-                levelRow.add(processTile(gc, currentTile.toCharArray(), j, i));
+                    String currentTile = matchesArray[j];
+                    levelRow.add(processTile(gc, currentTile.toCharArray(), j, i));
+                }
+                levelGrid.add(levelRow);
             }
-            levelGrid.add(levelRow);
+
         }
         drawLevel(gc);
     }
@@ -128,8 +131,9 @@ public class LevelLoader {
                     return new Ice(x, y, tile[1]);
                 case 'O':
                     return new Block(x, y);
-//                case 'L':
-//                    return new LockedDoor(x, y, tile[1]);
+               case 'L':
+                    return new LockedDoor(x, y);
+                    // return new LockedDoor(x, y, tile[1]);
 //                case 'F':
 //                    return new Frog(x, y);
 //                case 'G':
