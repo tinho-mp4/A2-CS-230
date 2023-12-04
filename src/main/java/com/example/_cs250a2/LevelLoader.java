@@ -5,6 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LevelLoader {
     /**
@@ -44,23 +47,32 @@ public class LevelLoader {
     public static void loadLevel(GraphicsContext gc, InputStream inputStream) {
         Scanner scanner = new Scanner(inputStream);
         // Read level information
-        String levelName = scanner.nextLine();
-        int timeLimit = Integer.parseInt(scanner.nextLine());
-        String[] dimensions = scanner.nextLine().split(" ");
+        String levelName = scanner.nextLine().split(": ")[1];
+        int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
+        String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int height = Integer.parseInt(dimensions[0]);
         int width = Integer.parseInt(dimensions[1]);
         scanner.nextLine(); // Skip empty line
+
 
         levelGrid = new ArrayList<>();
         // Process tiles
         for (int i = 0; i < height; i++) {
             String line = scanner.nextLine();
-            String[] splitLine = line.split("([A-Z])(\\d*)");
+            Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
+            Matcher matcher = pattern.matcher(line);
+            ArrayList<String> matchesList = new ArrayList<>();
+
+            while (matcher.find()) {
+                String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "");
+                matchesList.add(match);
+            }
+            String[] matchesArray = matchesList.toArray(new String[0]);
             ArrayList<Tile> levelRow = new ArrayList<>();
             for (int j = 0; j < width; j++) {
 
-                char currentChar = line.charAt(j);
-                levelRow.add(processTile(gc, currentChar, j, i));
+                String currentTile = matchesArray[j];
+                levelRow.add(processTile(gc, currentTile.toCharArray(), j, i));
             }
             levelGrid.add(levelRow);
         }
@@ -73,18 +85,63 @@ public class LevelLoader {
      *  GraphicsContext at the corresponding positions.
      * @param gc The GraphicsContext used for drawing.
      */
-    private static Tile processTile(GraphicsContext gc, char c, int x, int y) {
-        switch (c){
-                case '#':
-                    return new Wall(x, y);
-                case '.':
+
+    /** KEY
+     * Path: P
+     * Dirt: D
+     * Wall: U
+     * Exit: E
+     * Button: B(n)
+     * Trap: T
+     * Water: W
+     * Chip Socket: S
+     * Ice: I(n)
+     * Block: O
+     * Locked Door: L - maybe n not sure yet
+     * Frog: F
+     * Pink Ball: G
+     * Bug: E
+     * Player:?
+     * Computer Chip: C
+     * Key: K - maybe n not sure yet
+     */
+    private static Tile processTile(GraphicsContext gc, char[] tile, int x, int y) {
+        switch (tile[0]){
+                case 'P':
                     return new Path(x, y);
-                case ':':
+                case 'D':
                     return new Dirt(x, y);
-                case '~':
-                    return new Water(x, y);
+                case 'U':
+                    return new Wall(x, y);
                 case 'E':
                     return new Exit(x, y);
+                case 'B':
+                    return new Button(x, y);
+                    // return new Button(x, y, tile[1]);
+                case 'T':
+                    return new Trap(x, y);
+                case 'W':
+                    return new Water(x, y);
+                case 'S':
+                    return new ChipSocket(0, x, y);
+                case 'I':
+                    return new Ice(x, y, tile[1]);
+                case 'O':
+                    return new Block(x, y);
+//                case 'L':
+//                    return new LockedDoor(x, y, tile[1]);
+//                case 'F':
+//                    return new Frog(x, y);
+//                case 'G':
+//                    return new PinkBall(x, y);
+//                case 'E':
+//                    return new Bug(x, y);
+//                case 'Q':
+//                    return new Player(x, y);
+//                case 'C':
+//                    return new Chip(x, y);
+//                case 'K':
+//                    return new Key(x, y, tile[1]);
                 default:
                     // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
                     return null;
@@ -101,8 +158,8 @@ public class LevelLoader {
     }
 
 
-    public static Tile getTile(int playerX, int playerY) {
-        return null;
+    public static Tile getTile(int x, int y) {
+        return levelGrid.get(x).get(y); // y might have to be reversed (height-y), since canvas y is flipped?
     }
 
     public static int getHeight() {

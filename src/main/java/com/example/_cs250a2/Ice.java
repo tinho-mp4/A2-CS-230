@@ -19,9 +19,25 @@ public class Ice extends Tile {
      * Sets the variable for the corner of which a wall is placed
      * @param blockedCorner the blocked corner enum variable (can be null)
      */
-    public Ice(int x, int y, Corner blockedCorner) {
+    public Ice(int x, int y, int blockedCorner) {
         super("ice", x, y, false);
-        this.blockedCorner = blockedCorner;
+        switch (blockedCorner-'0') {
+            case 0:
+                this.blockedCorner = Corner.NONE;
+                break;
+            case 1:
+                this.blockedCorner = Corner.TOP_LEFT;
+                break;
+            case 2:
+                this.blockedCorner = Corner.TOP_RIGHT;
+                break;
+            case 3:
+                this.blockedCorner = Corner.BOTTOM_LEFT;
+                break;
+            case 4:
+                this.blockedCorner = Corner.BOTTOM_RIGHT;
+                break;
+        }
     }
 
     public static void event(int playerX, int playerY, int newPlayerX, int newPlayerY) {
