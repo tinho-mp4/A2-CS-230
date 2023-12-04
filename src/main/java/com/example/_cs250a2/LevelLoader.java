@@ -102,4 +102,11 @@ public class LevelLoader {
     public static Tile getTile(int playerX, int playerY) {
         return null;
     }
+
+    public int getHeight() {
+        return height;
+    }
+    public int getWidth() {
+        return width;
+    }
 }
