@@ -17,12 +17,12 @@ public class LevelLoader {
      * Represents the height of the level grid.
      * This value is set during the level loading process.
      */
-    private int height;
+    private static int height;
     /**
      * Represents the width of the level grid.
      * This value is set during the level loading process.
      */
-    private int width;
+    private static int width;
     /**
      * Represents the name of the level.
      * This value is set during the level loading process.
@@ -103,5 +103,12 @@ public class LevelLoader {
 
     public static Tile getTile(int playerX, int playerY) {
         return null;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+    public static int getWidth() {
+        return width;
     }
 }
