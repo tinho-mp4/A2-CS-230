@@ -191,7 +191,7 @@ public class LevelLoader {
     public static void drawLevel(GraphicsContext gc) {;
         for (ArrayList<Tile> row : getLevelGrid()) {
             for (Tile tile : row) {
-                tile.draw(gc, tile.getX(), tile.getY(), 35);
+                tile.draw(gc, tile.getX(), tile.getY(), 32);
             }
         }
     }
