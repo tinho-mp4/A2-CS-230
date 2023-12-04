@@ -1,14 +1,12 @@
 package com.example._cs250a2;
 
 import javafx.scene.canvas.GraphicsContext;
+
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
-import com.example._cs250a2.tile.*;
 
 public class LevelLoader {
-
-
-
     /**
      * Represents the time limit for completing the level.
      * This value is set during the level loading process.
@@ -31,6 +29,11 @@ public class LevelLoader {
      */
     private String levelName;
 
+    /**
+     * Represents the level grid.
+     * This value is set during the level loading process.
+     */
+    private static ArrayList<ArrayList<Tile>> levelGrid = new ArrayList<>();
 
     /**
      * Reads level information to draw the level. The InputStream is expected to contain structured data representing
@@ -38,27 +41,28 @@ public class LevelLoader {
      * @param gc The GraphicsContext used for drawing.
      * @param inputStream The InputStream containing the level information.
      */
-    public static void readAndDraw(GraphicsContext gc, InputStream inputStream) {
-        try (Scanner scanner = new Scanner(inputStream)) {
-            // Read level information
-            String levelName = scanner.nextLine();
-            int timeLimit = Integer.parseInt(scanner.nextLine());
-            String[] dimensions = scanner.nextLine().split(" ");
-            int height = Integer.parseInt(dimensions[0]);
-            int width = Integer.parseInt(dimensions[1]);
+    public static void loadLevel(GraphicsContext gc, InputStream inputStream) {
+        Scanner scanner = new Scanner(inputStream);
+        // Read level information
+        String levelName = scanner.nextLine();
+        int timeLimit = Integer.parseInt(scanner.nextLine());
+        String[] dimensions = scanner.nextLine().split(" ");
+        int height = Integer.parseInt(dimensions[0]);
+        int width = Integer.parseInt(dimensions[1]);
+        scanner.nextLine(); // Skip empty line
 
-            // Process tiles
-            for (int i = 0; i < height; i++) {
-                String line = scanner.nextLine();
-                processTileLine(gc, line, i);
+        levelGrid = new ArrayList<>();
+        // Process tiles
+        for (int i = 0; i < width; i++) {
+            String line = scanner.nextLine();
+            ArrayList<Tile> levelRow = new ArrayList<>();
+            for (int j = 0; j < height; j++) {
+                char currentChar = line.charAt(j);
+                levelRow.add(processTile(gc, currentChar, j, i));
             }
-
-            // Process other entities (monsters, player, items, etc.)
-            while (scanner.hasNext()) {
-                String entityInfo = scanner.nextLine();
-                processEntity(gc, entityInfo);
-            }
+            levelGrid.add(levelRow);
         }
+        drawLevel(gc);
     }
 
     /**
@@ -66,82 +70,36 @@ public class LevelLoader {
      *  Each character in the line represents a com.example._cs250a2.tile, and the tiles are drawn on the specified
      *  GraphicsContext at the corresponding positions.
      * @param gc The GraphicsContext used for drawing.
-     * @param line The line containing com.example._cs250a2.tile information.
-     * @param lineNumber The line number in the level grid.
      */
-    private static void processTileLine(GraphicsContext gc, String line, int lineNumber) {
-        double tileSize = 50; // Assuming default tile size is 50x50
-        for (int i = 0; i < line.length(); i++) {
-            char currentChar = line.charAt(i);
-            char nextChar = (i < line.length() - 1) ? line.charAt(i + 1) : ' ';
+    private static Tile processTile(GraphicsContext gc, char c, int x, int y) {
+        switch (c){
+                case '#':
+                    return new Wall(x, y);
+                case '.':
+                    return new Path(x, y);
+                case ':':
+                    return new Dirt(x, y);
+                case '~':
+                    return new Water(x, y);
+                case 'E':
+                    return new Exit(x, y);
+                default:
+                    // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
+                    return null;
+        }
 
-            // Check if the currentChar is 'B' or 'T' and the nextChar is a digit
-            if ((currentChar == 'B' || currentChar == 'T') && Character.isDigit(nextChar)) {
-                int buttonNumber = Character.getNumericValue(nextChar);
-                drawTile(gc, i * tileSize, lineNumber * tileSize, tileSize, currentChar, buttonNumber);
-                i++; // Skip the next character (the digit) since its paired it with 'B' or 'T'
-            } else {
-                drawTile(gc, i * tileSize, lineNumber * tileSize, tileSize, currentChar, -1);
+    }
+
+    public static void drawLevel(GraphicsContext gc) {;
+        for (ArrayList<Tile> row : levelGrid) {
+            for (Tile tile : row) {
+                tile.draw(gc, tile.getX(), tile.getY(), 35);
             }
         }
-
     }
 
 
-    /**
-     *  Draws a com.example._cs250a2.tile on the specified GraphicsContext at the given position with the specified size,
-     *  based on the provided com.example._cs250a2.tile type and optional paired number.
-     * @param gc The GraphicsContext used for drawing.
-     * @param x The x-coordinate of the top-left corner of the com.example._cs250a2.tile.
-     * @param y The y-coordinate of the top-left corner of the com.example._cs250a2.tile.
-     * @param size size The size of the com.example._cs250a2.tile (assumed to be square).
-     * @param tileType tileType The type of the com.example._cs250a2.tile (character representing the type).
-     * @param pairedNumber pairedNumber The paired number associated with certain com.example._cs250a2.tile types (e.g., ButtonTile, TrapTile).
-     */
-    private static void drawTile(GraphicsContext gc, double x, double y, double size, char tileType, int pairedNumber) {
-//        Tile tile = null;
-//
-//        switch (tileType) {
-//            case 'D':
-//                tile = new DirtTile();
-//                break;
-//            case 'U':
-//                tile = new WallTile();
-//                break;
-//            //Add cases for other tile types...
-//            default:
-//                // Handle unknown tile types or leave empty if not needed
-//                break;
-//        }
-//
-//        if (tile != null) {
-//            tile.draw(gc, x, y, size);
-//        }
+    public static Tile getTile(int playerX, int playerY) {
+        return null;
     }
-
-
-    /**
-     * Processes information about different entities and performs actions based on their types.
-     * @param gc The GraphicsContext used for drawing or handling entities.
-     * @param entityInfo The string containing information about the entity.
-     */
-    private static void processEntity(GraphicsContext gc, String entityInfo) {
-        String[] parts = entityInfo.split(" ");
-        char entityType = parts[0].charAt(0);
-
-        switch (entityType) {
-            /* add enties look like
-            case 'E':
-                processMonster(gc, parts);
-                break;
-             */
-
-            // Add cases for other entity types...
-            default:
-                // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
-                break;
-        }
-    }
-
-
 }

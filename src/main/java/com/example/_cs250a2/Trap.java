@@ -1,12 +1,17 @@
 package com.example._cs250a2;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 /**
  * The {@code Trap} class represents a trap object that can be activated or deactivated.
  * It allows you to set its active state and check whether it is currently active.
  *
  * @author Juned Miah
  */
-public class Trap {
+public class Trap extends Tile{
+    private static final Image TRAP_IMAGE = new Image(Trap.class.getResourceAsStream("trap.png"));
+
     /**
      * The number paired with this trap.
      */
@@ -21,8 +26,12 @@ public class Trap {
      * Initializes a new instance of the {@code Trap} class.
      * The trap is initially active.
      */
-    public Trap() {
+    public Trap(int x, int y) {
+        super("trap",x,y);
         isActive = true;
+    }
+
+    public static void event() {
     }
 
     /**
@@ -50,6 +59,11 @@ public class Trap {
      */
     public boolean canMoveOff() {
         return !isActive;
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(TRAP_IMAGE, x*size, y*size);
     }
 }
 

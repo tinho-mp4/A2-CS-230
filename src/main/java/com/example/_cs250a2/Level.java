@@ -10,11 +10,8 @@ public class Level {
     }
 
     public static Tile checkTile(int x, int y){
-        Tile tile = new Tile("test",x,y, false);
-        return tile;
+        return new Path(x,y);
     }
-
-
 
     public static void nextLevel(){
     }

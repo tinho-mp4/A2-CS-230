@@ -1,11 +1,17 @@
 package com.example._cs250a2;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
-public class ChipSocket {
+public class ChipSocket extends Tile{
+    private static final Image CHIP_SOCKET_IMAGE = new Image(ChipSocket.class.getResourceAsStream("chipSocket.png"));
+
     private final int chipsNeeded;
 
-    public ChipSocket(int chipsNeeded) {
+    public ChipSocket(int chipsNeeded, int x, int y) {
+        super("chipSocket", x, y);
         this.chipsNeeded = chipsNeeded;
     }
 
@@ -32,6 +38,11 @@ public class ChipSocket {
         } else {
             System.out.println("Not enough computer chips to open the chip socket.");
         }
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(CHIP_SOCKET_IMAGE, x*size, y*size);
     }
 }
 

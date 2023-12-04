@@ -1,16 +1,17 @@
 package com.example._cs250a2;
 
-public class Tile {
-    private String name;
-    private int x;
-    private int y;
-    private boolean solid;
+import javafx.scene.canvas.GraphicsContext;
 
-    public Tile(String name, int x, int y, boolean isSolid) {
+public abstract class Tile {
+    protected String name;
+    protected int x;
+    protected int y;
+    protected boolean solid;
+
+    public Tile(String name, int x, int y) {
         this.name = name;
         this.x = x;
         this.y = y;
-        this.solid = isSolid;
     }
 
     public int getX() {
@@ -38,6 +39,12 @@ public class Tile {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
+
+    public Corner getBlockedCorner() {
+        return Corner.TOP_LEFT;
+    }
+
+    public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }

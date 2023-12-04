@@ -1,14 +1,21 @@
 package com.example._cs250a2;
 
-public class Chip {
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
-    public Chip() {
+public class Chip extends Tile{
+    private static final Image CHIP_IMAGE = new Image(Chip.class.getResourceAsStream("chip.png"));
 
+    public Chip(int x, int y) {
+        super("chip",x, y);
     }
 
     public void collectChip(Player player) {
-
         player.addToInventory("ComputerChip");
+    }
 
+    @Override
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(CHIP_IMAGE, x*size, y*size);
     }
 }

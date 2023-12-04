@@ -1,5 +1,8 @@
 package com.example._cs250a2;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +12,10 @@ import java.util.List;
  *
  * @author Juned Miah
  */
-public class Button {
+public class Button extends Tile{
+    private static final Image BUTTON_IMAGE = new Image(Button.class.getResourceAsStream("button.png"));
+
+
     /**
      * The number paired with this button.
      */
@@ -29,9 +35,13 @@ public class Button {
      * Initializes a new instance of the {@code Button} class.
      * The button is initially not pressed, and no traps are linked to it.
      */
-    public Button() {
+    public Button(int x, int y) {
+        super("button", x, y);
         isPressed = false;
         linkedTraps = new ArrayList<>();
+    }
+
+    public static void event() {
     }
 
     /**
@@ -62,6 +72,12 @@ public class Button {
      */
     public boolean isPressed() {
         return isPressed;
+    }
+
+
+    @Override
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(BUTTON_IMAGE, x*size, y*size);
     }
 }
 

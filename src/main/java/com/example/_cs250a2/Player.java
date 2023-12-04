@@ -1,18 +1,23 @@
 package com.example._cs250a2;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 
-public class Player {
+public class Player{
+    private static final Image PLAYER_TILE = new Image(Player.class.getResourceAsStream("player.png"));
+
+
     // X and Y coordinate of player on the grid.
-    private static int X;
-    private static int Y;
+    private static int x;
+    private static int y;
     private ArrayList<String> inventory;
 
     public Player(int x, int y) {
-        X = x;
-        Y = y;
+        Player.x = x;
+        Player.y = y;
     }
 
     // TODO: When this is finished, removed all occurrences of X = X +- n, and Y = Y +- n
@@ -25,7 +30,7 @@ public class Player {
 //                        && Block.isBlocked(x+1, y, x+2, y))):
 //                setX(x+1)
 //                interact(x+1, y)
-                X = X + 1;
+                x = x + 1;
                 break;
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
@@ -34,7 +39,7 @@ public class Player {
 //                        && Block.isBlocked(x-1, y, x-2, y))):
 //                setX(x-1)
 //                interact(x-1, y)
-                X = X - 1;
+                x = x - 1;
                 break;
             case UP:
                 // Up key was pressed. So move the player up by one cell.
@@ -43,7 +48,7 @@ public class Player {
 //                        && Block.isBlocked(x, y+1, x, y+2))):
 //                setY(y+1)
 //                interact(x, y+1)
-                Y = Y - 1;
+                y = y - 1;
                 break;
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
@@ -52,7 +57,7 @@ public class Player {
 //                        && Block.isBlocked(x, y-1, x, y-2))):
 //                setY(y-1)
 //                interact(x, y-1)
-                Y = Y + 1;
+                y = y + 1;
                 break;
             default:
                 // Do nothing for all other keys.
@@ -61,25 +66,25 @@ public class Player {
     }
 
     private void interact(int newX, int newY) {
-        Tile currentTile = Level.checkTile(X, Y);
+        Tile currentTile = Level.checkTile(x, y);
         switch(currentTile.getName()) {
             case "Dirt":
                 Dirt.event();
             case "Exit":
                 Level.nextLevel();
             case "Button":
-                Button.Button();
+                Button.event();
             case "Trap":
-                Trap.Trap();
+                Trap.event();
             case "Water":
                 GameOver.playerDeathDrown();
             case "Chip Socket":
-                ChipSocket chipSocket = new ChipSocket(0);
+                ChipSocket chipSocket = new ChipSocket(0,0,0);
                 chipSocket.event(inventory);
             case "Locked Door":
                 LockedDoor.event(inventory);
             case "Ice":
-                Ice.event(X, Y, newX, newY);
+                Ice.event(x, y, newX, newY);
             default:
 //            Path
                 break;
@@ -94,7 +99,7 @@ public class Player {
         }
 
         if(Level.isOnBlock()) {
-            Block block = new Block(X,Y);
+            Block block = new Block(x, y);
             block.moveBlock(newX, newY);
         }
     }
@@ -108,18 +113,22 @@ public class Player {
     }
 
     public static int getX() {
-        return X;
+        return x;
     }
 
     public static void setX(int x) {
-        X = x;
+        Player.x = x;
     }
 
     public static int getY() {
-        return Y;
+        return y;
     }
 
     public static void setY(int y) {
-        Y = y;
+        Player.y = y;
+    }
+
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(PLAYER_TILE, x*size, y*size);
     }
 }

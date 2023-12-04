@@ -1,11 +1,14 @@
 package com.example._cs250a2;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public class Block extends Tile {
+    private static final Image BLOCK_IMAGE = new Image(Block.class.getResourceAsStream("block.png"));
+
     private boolean pushableBlock;
-    public Block(int X, int Y) {
-        super("block", X, Y);
+    public Block(int x, int y) {
+        super("block",x, y);
         pushableBlock = true;
     }
 
@@ -40,5 +43,10 @@ public class Block extends Tile {
         //     return true;
         // }
         return false;
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(BLOCK_IMAGE, x*size, y*size);
     }
 }
