@@ -19,46 +19,45 @@ public class Player{
         Player.x = x;
         Player.y = y;
     }
-
-    // TODO: When this is finished, removed all occurrences of X = X +- n, and Y = Y +- n
     public void move(KeyEvent event) {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-//                if (Level.checkTile(x+1, y) != "Wall"
-//                        && !(Level.checkTile(x+1, y) == "Block"
-//                        && Block.isBlocked(x+1, y, x+2, y))):
-//                setX(x+1)
-//                interact(x+1, y)
-                x = x + 1;
+                if (LevelLoader.getTile(x+1, y).getName() != "wall"
+                        && (LevelLoader.getTile(x+1, y).getName() != "block")) {
+                        // && Block.isBlocked(x+1, y, x+2, y))): // not really sure what this is for :/
+                    setX(x+1);
+                    interact(x+1, y);
+                }
                 break;
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-//                if (Level.checkTile(x-1, y) != "Wall"
-//                        && !(Level.checkTile(x-1, y) == "Block"
-//                        && Block.isBlocked(x-1, y, x-2, y))):
-//                setX(x-1)
-//                interact(x-1, y)
-                x = x - 1;
+                if (LevelLoader.getTile(x-1, y).getName() != "wall"
+                        && (LevelLoader.getTile(x-1, y).getName() != "block")) {
+                    // && Block.isBlocked(x-1, y, x-2, y))):
+                    setX(x - 1);
+                    interact(x - 1, y);
+                }
                 break;
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-//                if (Level.checkTile(x, y+1) != "Wall"
-//                        && !(Level.checkTile(x, y+1) == "Block"
-//                        && Block.isBlocked(x, y+1, x, y+2))):
-//                setY(y+1)
-//                interact(x, y+1)
-                y = y - 1;
+                if (LevelLoader.getTile(x, y-1).getName() != "wall"
+                        && (LevelLoader.getTile(x, y-1).getName() != "block")) {
+                    // && Block.isBlocked(x, y-1, x, y-2))):
+                    setY(y - 1);
+                    interact(x, y - 1);
+                }
                 break;
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-//                if (Level.checkTile(x, y-1) != "Wall"
-//                        && !(Level.checkTile(x, y-1) == "Block"
-//                        && Block.isBlocked(x, y-1, x, y-2))):
-//                setY(y-1)
-//                interact(x, y-1)
-                y = y + 1;
+                if (LevelLoader.getTile(x, y+1).getName() != "wall"
+                        && (LevelLoader.getTile(x, y+1).getName() != "block")) {
+                    // && Block.isBlocked(x, y+1, x, y+2))):
+                    setY(y + 1);
+                    interact(x, y + 1);
+                }
                 break;
+
             default:
                 // Do nothing for all other keys.
                 break;
@@ -66,24 +65,24 @@ public class Player{
     }
 
     private void interact(int newX, int newY) {
-        Tile currentTile = Level.checkTile(x, y);
+        Tile currentTile = LevelLoader.getTile(x, y);
         switch(currentTile.getName()) {
-            case "Dirt":
+            case "dirt":
                 Dirt.event();
-            case "Exit":
+            case "exit":
                 Level.nextLevel();
-            case "Button":
+            case "button":
                 Button.event();
-            case "Trap":
+            case "trap":
                 Trap.event();
-            case "Water":
+            case "water":
                 GameOver.playerDeathDrown();
-            case "Chip Socket":
+            case "chipSocket":
                 ChipSocket chipSocket = new ChipSocket(0,0,0);
                 chipSocket.event(inventory);
-            case "Locked Door":
+            case "lockedDoor":
                 LockedDoor.event(inventory);
-            case "Ice":
+            case "ice":
                 Ice.event(x, y, newX, newY);
             default:
 //            Path
