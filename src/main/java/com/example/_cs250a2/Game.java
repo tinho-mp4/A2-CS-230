@@ -123,7 +123,7 @@ public class Game extends Application {
         LevelLoader.drawLevel(gc);
 
         // Draw player at current location
-        player.draw(gc, player.getX(),player.getY() , 35);
+        player.draw(gc, player.getX(),player.getY() , 32);
 
     }
 
