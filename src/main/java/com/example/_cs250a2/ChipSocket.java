@@ -15,12 +15,13 @@ public class ChipSocket extends Tile{
         this.chipsNeeded = chipsNeeded;
     }
 
-    public void event(ArrayList<String> inventory) {
+    public void event(ArrayList<Item> inventory) {
         int chipsInInventory = 0;
 
         // Count the number of computer chips in the inventory
-        for (String item : inventory) {
-            if (item.equals("ComputerChip")) {
+        // TODO: Adjust ChipSocket(0, 0, 0) as these are dummy values
+        for (Item item : inventory) {
+            if (item.equals(new ChipSocket(0, 0, 0))) {
                 chipsInInventory++;
             }
         }

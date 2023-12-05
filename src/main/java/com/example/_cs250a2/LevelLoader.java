@@ -37,7 +37,8 @@ public class LevelLoader {
      * Represents the level grid.
      * This value is set during the level loading process.
      */
-    private static ArrayList<ArrayList<Tile>> levelGrid = new ArrayList<>();
+    private static ArrayList<ArrayList<Tile>> tileGrid = new ArrayList<>();
+    private static ArrayList<ArrayList<Tile>> entityGrid = new ArrayList<>();
 
     /**
      * Reads level information to draw the level. The InputStream is expected to contain structured data representing
@@ -56,7 +57,7 @@ public class LevelLoader {
         scanner.nextLine(); // Skip empty line
 
 
-        levelGrid = new ArrayList<>();
+        tileGrid = new ArrayList<>();
         ArrayList<String> lines = new ArrayList<>();
 
         // Process tiles
@@ -87,7 +88,7 @@ public class LevelLoader {
                 System.out.println("Index out of bounds");
             }
 
-            levelGrid.add(levelRow);
+            tileGrid.add(levelRow);
             i++;
         }
         drawLevel(gc);
@@ -189,7 +190,7 @@ public class LevelLoader {
     }
 
     public static void drawLevel(GraphicsContext gc) {;
-        for (ArrayList<Tile> row : getLevelGrid()) {
+        for (ArrayList<Tile> row : getTileGrid()) {
             for (Tile tile : row) {
                 tile.draw(gc, tile.getX(), tile.getY(), 32);
             }
@@ -199,7 +200,7 @@ public class LevelLoader {
 
     public static Tile getTile(int x, int y) {
         try {
-            return levelGrid.get(x).get(y); // y might have to be reversed (height-y), since canvas y is flipped?
+            return tileGrid.get(x).get(y); // y might have to be reversed (height-y), since canvas y is flipped?
         } catch (IndexOutOfBoundsException e) {
             return new Wall(x, y);
         }
@@ -212,7 +213,7 @@ public class LevelLoader {
         return width;
     }
 
-    public static ArrayList<ArrayList<Tile>> getLevelGrid() {
-        return levelGrid;
+    public static ArrayList<ArrayList<Tile>> getTileGrid() {
+        return tileGrid;
     }
 }
