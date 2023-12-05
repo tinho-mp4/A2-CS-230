@@ -58,27 +58,29 @@ public class LevelLoader {
 
 
         tileGrid = new ArrayList<>();
-        ArrayList<String> lines = new ArrayList<>();
+        ArrayList<ArrayList<String>> tileMatchesGrid = new ArrayList<>();
+        Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
 
         // Process tiles
         while(scanner.hasNextLine()) {
-            lines.add(scanner.nextLine());
-        }
-        ArrayList<String> newLines = flipStringsVertically(rotateStringsCounterClockwise(lines));
-        // why does this work 😭
-
-        int i = 0;
-        while(i < width) {
-            String line = newLines.get(i);
-            Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
-            Matcher matcher = pattern.matcher(line);
-            ArrayList<String> matchesList = new ArrayList<>();
+            String currentLine = scanner.nextLine(); // example: PSPS
+            Matcher matcher = pattern.matcher(currentLine); // example: P, S, P, S
+            ArrayList<String> matchesList = new ArrayList<>(); // example: [P, S, P, S]
 
             while (matcher.find()) {
                 String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "");
                 matchesList.add(match);
             }
-            String[] matchesArray = matchesList.toArray(new String[0]); // example : [P, D, U, E]
+            tileMatchesGrid.add(matchesList);
+        }
+        ArrayList<ArrayList<String>> newTileMatchesGrid = flipStringsVertically(rotateStringsCounterClockwise(tileMatchesGrid));
+        // why does this work 😭
+
+        int i = 0;
+        while(i < width) {
+            ArrayList<String> matchesLine = newTileMatchesGrid.get(i);
+
+            String[] matchesArray = matchesLine.toArray(new String[0]); // example : [P, D, U, E]
             ArrayList<Tile> levelRow = new ArrayList<>();
             try {
                 for (int j = 0; j < matchesArray.length; j++) {
@@ -94,26 +96,26 @@ public class LevelLoader {
         drawLevel(gc);
     }
 
-    public static ArrayList<String> rotateStringsCounterClockwise(ArrayList<String> strings) {
+    public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
         int rows = strings.size();
-        int cols = strings.get(0).length();
+        int cols = strings.get(0).size();
 
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
         for (int col = cols - 1; col >= 0; col--) {
-            StringBuilder newRow = new StringBuilder();
+            ArrayList<String> newRow = new ArrayList<>();
             for (int row = 0; row < rows; row++) {
                 try {
-                    newRow.append(strings.get(row).charAt(col));
-                } catch (StringIndexOutOfBoundsException e) {
-                    newRow.append("W");
+                    newRow.add(strings.get(row).get(col));
+                } catch (IndexOutOfBoundsException e) {
+                    newRow.add("W");
                 }
             }
-            result.add(newRow.toString());
+            result.add(newRow);
         }
         return result;
     }
 
-    public static ArrayList<String> flipStringsVertically(ArrayList<String> strings) {
+    public static ArrayList<ArrayList<String>> flipStringsVertically(ArrayList<ArrayList<String>> strings) {
         Collections.reverse(strings);
         return strings;
     }

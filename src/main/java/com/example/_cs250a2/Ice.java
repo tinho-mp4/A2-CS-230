@@ -95,19 +95,19 @@ public class Ice extends Tile {
     public void draw(GraphicsContext gc, double x, double y, double size) {
         switch (this.blockedCorner) {
             case TOP_LEFT:
-                gc.drawImage(ICE_TOP_LEFT_IMAGE, x, y, size,size);
+                gc.drawImage(ICE_TOP_LEFT_IMAGE, x*size, y*size);
                 break;
             case TOP_RIGHT:
-                gc.drawImage(ICE_TOP_RIGHT_IMAGE, x, y, size,size);
+                gc.drawImage(ICE_TOP_RIGHT_IMAGE, x*size, y*size);
                 break;
             case BOTTOM_LEFT:
-                gc.drawImage(ICE_BOTTOM_LEFT_IMAGE, x, y, size,size);
+                gc.drawImage(ICE_BOTTOM_LEFT_IMAGE, x*size, y*size);
                 break;
             case BOTTOM_RIGHT:
-                gc.drawImage(ICE_BOTTOM_RIGHT_IMAGE, x, y, size,size);
+                gc.drawImage(ICE_BOTTOM_RIGHT_IMAGE, x*size, y*size);
                 break;
             default:
-                gc.drawImage(ICE_IMAGE, x, y, size, size);
+                gc.drawImage(ICE_IMAGE, x*size, y*size);
                 break;
         }
     }

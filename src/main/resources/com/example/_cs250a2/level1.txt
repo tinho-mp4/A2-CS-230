@@ -2,14 +2,8 @@ Level Name: Level1
 TimeLimit = 300
 Level Dimensions 6 5
 
-SPDPDI
-T1B1DPPI
+SPDPDI0
+T1B1DPPI0
 WWLWW
 PPPPPP
 UUUUUU
-
-E 5 4 R
-? 3 4
-K 2 6
-C 2 1
-Button 1: 4 1
