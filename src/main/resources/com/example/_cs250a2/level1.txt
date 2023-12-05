@@ -7,3 +7,9 @@ T1B1DPPI
 WWLWW
 PPPPPP
 UUUUUU
+
+E 5 4 R
+? 3 4
+K 2 6
+C 2 1
+Button 1: 4 1

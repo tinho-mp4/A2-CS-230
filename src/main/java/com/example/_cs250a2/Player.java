@@ -13,7 +13,7 @@ public class Player{
     // X and Y coordinate of player on the grid.
     private static int x;
     private static int y;
-    private ArrayList<String> inventory;
+    private ArrayList<Item> inventory;
 
     public Player(int x, int y) {
         Player.x = x;
@@ -90,7 +90,8 @@ public class Player{
         }
 
         if (Level.isOnitem()) {
-            addToInventory(Item.getItemName);
+            // ???
+            // addToInventory(Item.getItemName());
         }
 
         if(Level.isOnMonster()) {
@@ -103,11 +104,11 @@ public class Player{
         }
     }
 
-    public void addToInventory(String item){
+    public void addToInventory(Item item){
         inventory.add(item);
     }
 
-    public void removeToInventory(String item){
+    public void removeToInventory(Item item){
         inventory.add(item);
     }
 

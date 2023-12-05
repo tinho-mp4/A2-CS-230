@@ -12,7 +12,7 @@ public class LockedDoor extends Tile {
     public LockedDoor(int x, int y) {
         super("lockedDoor", x, y, true);
     }
-    public static void event(ArrayList<String> inventory) {
+    public static void event(ArrayList<Item> inventory) {
     }
 
     @Override
