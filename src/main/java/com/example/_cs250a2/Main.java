@@ -30,7 +30,6 @@ import javafx.util.Duration;
  * This class is intentionally not structured very well. This is just a starting point to show
  * how to draw an image on a canvas, respond to arrow key presses, use a tick method that is
  * called periodically, and use drag and drop.
- *
  * Do not build the whole application in one file. This file should probably remain very small.
  *
  * @author Liam O'Reilly
@@ -210,7 +209,7 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
 
         // Create the canvas that we will draw on.
-        // We store this as a gloabl variable so other methods can access it.
+        // We store this as a global variable so other methods can access it.
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
 
