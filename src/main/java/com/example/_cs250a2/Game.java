@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -59,11 +60,17 @@ public class Game extends Application {
 
     private Color bgColor = Color.LIGHTBLUE;
 
+    private static Game instance;
+
+
+
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
+    @Override
     public void start(Stage primaryStage) {
+        instance = this;
         // Build the GUI
         Pane root = buildGUI();
 
@@ -161,6 +168,22 @@ public class Game extends Application {
 
         // Finally, return the border pane we built up.
         return root;
+    }
+
+    public static void initializeInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+    }
+
+    public static void startGame() {
+        Platform.runLater(() -> {
+            try {
+                instance.start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {
