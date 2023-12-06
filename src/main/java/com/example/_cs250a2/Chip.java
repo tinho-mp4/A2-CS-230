@@ -11,7 +11,7 @@ public class Chip extends Item {
     }
 
     public void collectChip(Player player) {
-        player.addToInventory(new Item("chip"));
+        //player.addToInventory(new Item("chip"));
     }
 
     @Override

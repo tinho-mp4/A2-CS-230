@@ -27,6 +27,7 @@ public class LevelLoader {
      * This value is set during the level loading process.
      */
     private static int width;
+    private static int entityCount;
     /**
      * Represents the name of the level.
      * This value is set during the level loading process.
@@ -38,7 +39,21 @@ public class LevelLoader {
      * This value is set during the level loading process.
      */
     private static ArrayList<ArrayList<Tile>> tileGrid = new ArrayList<>();
-    private static ArrayList<ArrayList<Tile>> entityGrid = new ArrayList<>();
+    private static ArrayList<ArrayList<Entity>> entityGrid = new ArrayList<>();
+    private static ArrayList<ArrayList<Item>> itemGrid = new ArrayList<>();
+
+    public LevelLoader() {
+        Scanner scanner = new Scanner(getClass().getResourceAsStream("level2.txt"));
+        // Read level information
+        String levelName = scanner.nextLine().split(": ")[1];
+        int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
+        String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
+        int width = Integer.parseInt(dimensions[0]);
+        int height = Integer.parseInt(dimensions[1]);
+        this.width = width;
+        this.height = height;
+        this.entityCount = countFileLines(getClass().getResourceAsStream("level2.txt")) - 4 - height;
+    }
 
     /**
      * Reads level information to draw the level. The InputStream is expected to contain structured data representing
@@ -90,13 +105,11 @@ public class LevelLoader {
             }
             entityMatchesGrid.add(matchesList);
         }
-        ArrayList<ArrayList<String>> newEntityMatchesGrid = flipStringsVertically(rotateStringsCounterClockwise(entityMatchesGrid));
-
 
         i = 0;
         while(i < width) {
             ArrayList<String> matchesLine = newTileMatchesGrid.get(i);
-            ArrayList<String> entityLine = newEntityMatchesGrid.get(i);
+            // make this be able to be null
 
             String[] matchesArray = matchesLine.toArray(new String[0]); // example : [P, D, U, E]
             ArrayList<Tile> levelRow = new ArrayList<>();
@@ -108,21 +121,38 @@ public class LevelLoader {
                 System.out.println("Index out of bounds");
             }
 
+            tileGrid.add(levelRow);
+
+            i++;
+        }
+
+        for (int k = 0; k < getEntityCount(); k++) {
+            ArrayList<String> entityLine = entityMatchesGrid.get(k);
             String[] entitiesMatchesArray = entityLine.toArray(new String[0]);
-            ArrayList<Tile> entityRow = new ArrayList<>();
+            ArrayList<Entity> entityRow = new ArrayList<>();
+            ArrayList<Item> itemRow = new ArrayList<>();
             try {
                 for (int j = 0; j < entitiesMatchesArray.length; j++) {
-                    entityRow.add(processTile(gc, entitiesMatchesArray[j].toCharArray(), i, j));
+                    if (entitiesMatchesArray[j].toCharArray()[0] == 'C' || entitiesMatchesArray[j].toCharArray()[0] == 'K') {
+                        itemRow.add(processItem(gc, entitiesMatchesArray[j].toCharArray()));
+                    } else
+                        entityRow.add(processEntity(gc, entitiesMatchesArray[j].toCharArray()));
                 }
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Index out of bounds");
             }
-
-            tileGrid.add(levelRow);
-            entityGrid.add(entityRow);
-            i++;
+            if (entityRow.size() > 0) {
+                entityGrid.add(entityRow);
+            }
+            if (itemRow.size() > 0) {
+                itemGrid.add(itemRow);
+            }
         }
+
+
         drawLevel(gc);
+        drawEntities(gc);
+        drawItems(gc);
     }
 
     public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
@@ -186,8 +216,7 @@ public class LevelLoader {
                 case 'E':
                     return new Exit(x, y);
                 case 'B':
-                    return new Button(x, y);
-                    // return new Button(x, y, tile[1]);
+                    return new Button(x, y, tile[1]);
                 case 'T':
                     return new Trap(x, y);
                 case 'W':
@@ -207,18 +236,15 @@ public class LevelLoader {
 
     }
 
-    public static Entity processEntity(GraphicsContext gc, char[] entity, int x, int y) {
+    public static Entity processEntity(GraphicsContext gc, char[] entity) {
         switch (entity[0]){
             case 'F':
-                return new Frog(5, 'w', new int[]{x, y});
+                return new Frog(5, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
             case 'G':
-                return new PinkBall(x, y);
-            case 'E':
-                return new Bug(x, y);
-            case 'Q':
-                return new Player(x, y);
+                return new PinkBall(5, 'd', new int[]{entity[1]-'0', entity[2]-'0'});
+            case 'Z':
+                return new Bug(5, 'd', new int[]{entity[1]-'0', entity[2]-'0'}, false);
             default:
-                // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
                 return null;
         }
     }
@@ -226,13 +252,13 @@ public class LevelLoader {
     public static Item processItem(GraphicsContext gc, char[] item) {
             switch (item[0]){
             case 'C':
-                return new Chip(0, 0);
+                return new Chip(item[1]-'0', item[2]-'0');
             case 'K':
-                return new Key(item[1], item[2]);
+                return new Key(item[1]-'0', item[2]-'0');
             default:
-                // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
                 return null;
-        } }
+        }
+    }
 
     public static void drawLevel(GraphicsContext gc) {;
         for (ArrayList<Tile> row : getTileGrid()) {
@@ -242,6 +268,35 @@ public class LevelLoader {
         }
     }
 
+    public static void drawEntities(GraphicsContext gc) {
+        for (ArrayList<Entity> row : getentityGrid()) {
+            for (Entity entity : row) {
+                entity.draw(gc, entity.getX(), entity.getY(), 32);
+            }
+        }
+    }
+
+    public static void drawItems(GraphicsContext gc) {
+        for (ArrayList<Item> row : getItemGrid()) {
+            for (Item item : row) {
+                item.draw(gc, item.getX(), item.getY(), 32);
+            }
+        }
+    }
+
+    private static int countFileLines(InputStream inputStream) {
+        Scanner scanner = new Scanner(inputStream);
+        int count = 0;
+        while (scanner.hasNextLine()) {
+            count++;
+            scanner.nextLine();
+        }
+        return count;
+    }
+
+    public static int getEntityCount() {
+        return entityCount;
+    }
 
     public static Tile getTile(int x, int y) {
         try {
@@ -260,5 +315,13 @@ public class LevelLoader {
 
     public static ArrayList<ArrayList<Tile>> getTileGrid() {
         return tileGrid;
+    }
+
+    public static ArrayList<ArrayList<Entity>> getentityGrid() {
+        return entityGrid;
+    }
+
+    public static ArrayList<ArrayList<Item>> getItemGrid() {
+        return itemGrid;
     }
 }

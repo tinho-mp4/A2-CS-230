@@ -1,78 +1,88 @@
 package com.example._cs250a2;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 /**
  * javadoc to go here
  */
 //TODO test when level available
 public class Frog extends Monster {
 
+    private static final Image FROG_IMAGE = new Image(Key.class.getResourceAsStream("Frog.png"));
     public Frog (int speed, char startingDirection, int[] startingLocation) {
+        super(startingLocation[0], startingLocation[1], startingDirection);
         allowedTiles.remove("Trap");
         this.speed = speed;
         direction = startingDirection;
         location = startingLocation;
-        monsterX = location[0];
-        monsterY = location[1];
+        x = location[0];
+        y = location[1];
         checkDirection(startingDirection);
         checkLocation(startingLocation);
     }
 
     //this move method will try and make the frog x equal to player x then do the same with y
     public void move() {
-        int[] checkLeft = {monsterX--, monsterY};
-        int[] checkRight = {monsterX++, monsterY};
-        int[] checkBelow = {monsterX, monsterY--};
-        int[] checkAbove = {monsterX, monsterY++};
+        int[] checkLeft = {x--, y};
+        int[] checkRight = {x++, y};
+        int[] checkBelow = {x, y--};
+        int[] checkAbove = {x, y++};
         int playerX = Player.getX();
         int playerY = Player.getY();
-        if (monsterX > playerX && checkTile(checkLeft)) {
-            monsterX--;
+        if (x > playerX && checkTile(checkLeft)) {
+            x--;
             direction = 'a';
-        } else if (monsterX < playerX && checkTile(checkRight)) {
-            monsterX++;
+        } else if (x < playerX && checkTile(checkRight)) {
+            x++;
             direction = 'd';
-        } else if (monsterY > playerY && checkTile(checkBelow)) {
-            monsterY--;
+        } else if (y > playerY && checkTile(checkBelow)) {
+            y--;
             direction = 's';
-        } else if (monsterY < playerY && checkTile(checkAbove)) {
-            monsterY++;
+        } else if (y < playerY && checkTile(checkAbove)) {
+            y++;
             direction = 'w';
         } else if (direction == 'a' && checkTile(checkAbove)) {
-            monsterY++;
+            y++;
             direction = 'w';
         } else if (direction == 'a' && checkTile(checkBelow)) {
-            monsterY--;
+            y--;
             direction = 's';
         } else if (direction == 'a') {
-            monsterX++;
+            x++;
             direction = 'd';
         } else if (direction == 'w' && checkTile(checkLeft)) {
-            monsterX--;
+            x--;
             direction = 'a';
         } else if (direction == 'w' && checkTile(checkRight)) {
-            monsterX++;
+            x++;
             direction = 'd';
         } else if (direction == 'w') {
-            monsterY--;
+            y--;
             direction = 's';
         } else if (direction == 's' && checkTile(checkRight)) {
-            monsterX++;
+            x++;
             direction = 'd';
         } else if (direction == 's' && checkTile(checkLeft)) {
-            monsterX--;
+            x--;
             direction = 'a';
         } else if (direction == 's') {
-            monsterY++;
+            y++;
             direction = 'w';
         } else if (direction == 'd' && checkTile(checkBelow)) {
-            monsterY--;
+            y--;
             direction = 's';
         } else if (direction == 'd' && checkTile(checkAbove)) {
-            monsterY++;
+            y++;
             direction = 'w';
         } else if (direction == 'd') {
-            monsterY--;
+            y--;
             direction = 'a';
         }
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(FROG_IMAGE, x*size, y*size);
     }
 }

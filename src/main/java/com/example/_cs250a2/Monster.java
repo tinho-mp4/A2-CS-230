@@ -1,4 +1,6 @@
 package com.example._cs250a2;
+import javafx.scene.canvas.GraphicsContext;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,15 +18,17 @@ public abstract class Monster extends Entity {
    //speed decided based on how many ticks between moves
    protected int speed;
 
-   //x and y coordinates of monster
-   protected int monsterX;
-   protected int monsterY;
-
    //starting direction the monster is moving with single character (W,A,S,D)
    protected char direction;
 
+   public Monster(int x, int y, char direction) {
+      super(x, y);
+      this.direction = direction;
+
+   }
+
    //starting location given as an array of two integers (coordinates)
-   protected int[] location = {monsterX, monsterY};
+
 
    protected void checkLocation(int[] location) {
       if (location[0] > LevelLoader.getWidth() || location[1] > LevelLoader.getHeight()) {
@@ -52,8 +56,10 @@ public abstract class Monster extends Entity {
    }
 
    protected void playerKill() {
-      if (monsterX == Player.getX() && monsterY == Player.getY()) {
+      if (this.getX() == Player.getX() && this.getY() == Player.getY()) {
          GameOver.playerDeathMonster();
       }
    }
+
+   public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }

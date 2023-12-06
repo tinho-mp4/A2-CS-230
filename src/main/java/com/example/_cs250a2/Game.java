@@ -62,6 +62,7 @@ public class Game extends Application {
     private Color bgColor = Color.LIGHTBLUE;
 
     private static Game instance;
+    private LevelLoader levelLoader;
 
 
 
@@ -97,7 +98,8 @@ public class Game extends Application {
         // load the level
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        LevelLoader.loadLevel(gc,getClass().getResourceAsStream("level2.txt"));
+        this.levelLoader = new LevelLoader();
+        this.levelLoader.loadLevel(gc,getClass().getResourceAsStream("level2.txt"));
     }
 
     /**
@@ -128,12 +130,15 @@ public class Game extends Application {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 
-        LevelLoader.drawLevel(gc);
+        this.levelLoader.drawLevel(gc);
+        this.levelLoader.drawEntities(gc);
+        this.levelLoader.drawItems(gc);
+
 
         // Draw player at current location
         player.draw(gc, player.getX(),player.getY() , 32);
         //Draw key at current location
-        key.draw(gc, key.getX(), key.getY(), 32);
+        //key.draw(gc, key.getX(), key.getY(), 32);
 
     }
 

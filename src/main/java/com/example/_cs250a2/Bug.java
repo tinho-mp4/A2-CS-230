@@ -1,6 +1,7 @@
 package com.example._cs250a2;
 
-import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
  * javadoc to go here
@@ -9,22 +10,25 @@ public class Bug extends Monster {
     //which wall to 'hug' when it moves
     private final boolean left;
 
+    private static final Image BUG_IMAGE = new Image(Key.class.getResourceAsStream("Bug.png"));
+
     public Bug(int speed, char startingDirection, int[] startingLocation, boolean side) {
+        super(startingLocation[0], startingLocation[1], startingDirection);
         this.speed = speed;
         direction = startingDirection;
         location = startingLocation;
-        monsterX = location[0];
-        monsterY = location[1];
+        x = location[0];
+        y = location[1];
         left = side;
         checkDirection(startingDirection);
         checkLocation(startingLocation);
     }
 
     public void move() {
-        int[] toTheLeft = {monsterX--, monsterY};
-        int[] above = {monsterX, monsterY++};
-        int[] below = {monsterX, monsterY--};
-        int[] toTheRight = {monsterX++, monsterY};
+        int[] toTheLeft = {x--, y};
+        int[] above = {x, y++};
+        int[] below = {x, y--};
+        int[] toTheRight = {x++, y};
         //checks which side to keep the bug on
         if (left) {
             if (direction == 'w') {
@@ -35,13 +39,13 @@ public class Bug extends Monster {
                     move();
                     //it can either go one way or both, if it cant go left it goes in its' current facing
                 } else if (!(checkTile(toTheLeft))){
-                    monsterY++;
+                    y++;
                     playerKill();
                     //if both tiles are available it is on an outside corner and so
                     // turns (and moves in the new direction) to go around
                 } else {
                     direction = 'a';
-                    monsterX--;
+                    x--;
                     playerKill();
                 }
             } else if (direction == 's') {
@@ -49,11 +53,11 @@ public class Bug extends Monster {
                     direction = 'a';
                     move();
                 } else if (!checkTile(toTheRight)) {
-                    monsterY--;
+                    y--;
                     playerKill();
                 } else {
                     direction = 'd';
-                    monsterX++;
+                    x++;
                     playerKill();
                 }
             } else if (direction == 'a') {
@@ -61,11 +65,11 @@ public class Bug extends Monster {
                     direction = 'w';
                     move();
                 } else if (!checkTile(below)) {
-                    monsterX--;
+                    x--;
                     playerKill();
                 } else {
                     direction = 's';
-                    monsterY--;
+                    y--;
                     playerKill();
                 }
             } else if (direction == 'd') {
@@ -73,11 +77,11 @@ public class Bug extends Monster {
                     direction = 's';
                     move();
                 } else if (!checkTile(above)) {
-                    monsterX++;
+                    x++;
                     playerKill();
                 } else {
                     direction = 'w';
-                    monsterY++;
+                    y++;
                     playerKill();
                 }
             }
@@ -87,11 +91,11 @@ public class Bug extends Monster {
                     direction = 'a';
                     move();
                 } else if (!checkTile(toTheRight)) {
-                    monsterY++;
+                    y++;
                     playerKill();
                 } else {
                     direction = 'd';
-                    monsterX++;
+                    x++;
                     playerKill();
                 }
             } else if (direction == 's') {
@@ -99,11 +103,11 @@ public class Bug extends Monster {
                     direction = 'd';
                     move();
                 } else if (!checkTile(toTheLeft)) {
-                    monsterY++;
+                    y++;
                     playerKill();
                 } else {
                     direction = 'a';
-                    monsterX--;
+                    x--;
                     playerKill();
                 }
             } else if (direction == 'a') {
@@ -111,11 +115,11 @@ public class Bug extends Monster {
                     direction = 's';
                     move();
                 } else if (!checkTile(above)) {
-                    monsterX--;
+                    x--;
                     playerKill();
                 } else {
                     direction = 'w';
-                    monsterY++;
+                    y++;
                     playerKill();
                 }
             } else if (direction == 'd') {
@@ -123,14 +127,19 @@ public class Bug extends Monster {
                     direction = 'w';
                     move();
                 } else if (!checkTile(below)) {
-                    monsterX++;
+                    x++;
                     playerKill();
                 } else {
                     direction = 's';
-                    monsterY--;
+                    y--;
                     playerKill();
                 }
             }
         }
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        gc.drawImage(BUG_IMAGE, x*size, y*size);
     }
 }

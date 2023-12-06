@@ -35,10 +35,11 @@ public class Button extends Tile{
      * Initializes a new instance of the {@code Button} class.
      * The button is initially not pressed, and no traps are linked to it.
      */
-    public Button(int x, int y) {
+    public Button(int x, int y, int _pairedNumber) {
         super("button", x, y, false);
         isPressed = false;
         linkedTraps = new ArrayList<>();
+        pairedNumber = _pairedNumber;
     }
 
     public static void event() {
