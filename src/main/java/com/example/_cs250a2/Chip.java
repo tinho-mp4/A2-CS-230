@@ -3,15 +3,11 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Chip extends Tile{
+public class Chip extends Item{
     private static final Image CHIP_IMAGE = new Image(Chip.class.getResourceAsStream("chip.png"));
 
     public Chip(int x, int y) {
         super("chip",x, y, false);
-    }
-
-    public void collectChip(Player player) {
-        player.addToInventory(new Item("chip"));
     }
 
     @Override
