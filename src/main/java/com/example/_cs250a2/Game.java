@@ -54,6 +54,7 @@ public class Game extends Application {
 
     // Create Player
     Player player = new Player(1,1);
+    Key key = new Key(2,0);
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
@@ -96,7 +97,7 @@ public class Game extends Application {
         // load the level
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        LevelLoader.loadLevel(gc,getClass().getResourceAsStream("level1.txt"));
+        LevelLoader.loadLevel(gc,getClass().getResourceAsStream("level2.txt"));
     }
 
     /**
@@ -131,6 +132,8 @@ public class Game extends Application {
 
         // Draw player at current location
         player.draw(gc, player.getX(),player.getY() , 32);
+        //Draw key at current location
+        key.draw(gc, key.getX(), key.getY(), 32);
 
     }
 
