@@ -60,9 +60,9 @@ public class LevelLoader {
         tileGrid = new ArrayList<>();
         ArrayList<ArrayList<String>> tileMatchesGrid = new ArrayList<>();
         Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
-
+        int i = 0;
         // Process tiles
-        while(scanner.hasNextLine()) {
+        while(i < height) {
             String currentLine = scanner.nextLine(); // example: PSPS
             Matcher matcher = pattern.matcher(currentLine); // example: P, S, P, S
             ArrayList<String> matchesList = new ArrayList<>(); // example: [P, S, P, S]
@@ -72,13 +72,31 @@ public class LevelLoader {
                 matchesList.add(match);
             }
             tileMatchesGrid.add(matchesList);
+            i++;
         }
         ArrayList<ArrayList<String>> newTileMatchesGrid = flipStringsVertically(rotateStringsCounterClockwise(tileMatchesGrid));
-        // why does this work 😭
 
-        int i = 0;
+        // Process other entities (monsters, player, items, etc.)
+        ArrayList<ArrayList<String>> entityMatchesGrid = new ArrayList<>();
+        Pattern newPattern = Pattern.compile("([A-Z])([0-9][0-9])?(A-Z)?");
+        while (scanner.hasNext()) {
+            String entityInfo = scanner.nextLine(); // example: Frog 1 1
+            Matcher matcher = newPattern.matcher(entityInfo); // example: F, 1, 1
+            ArrayList<String> matchesList = new ArrayList<>(); // example: [F, 1, 1]
+
+            while (matcher.find()) {
+                String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "");
+                matchesList.add(match);
+            }
+            entityMatchesGrid.add(matchesList);
+        }
+        ArrayList<ArrayList<String>> newEntityMatchesGrid = flipStringsVertically(rotateStringsCounterClockwise(entityMatchesGrid));
+
+
+        i = 0;
         while(i < width) {
             ArrayList<String> matchesLine = newTileMatchesGrid.get(i);
+            ArrayList<String> entityLine = newEntityMatchesGrid.get(i);
 
             String[] matchesArray = matchesLine.toArray(new String[0]); // example : [P, D, U, E]
             ArrayList<Tile> levelRow = new ArrayList<>();
@@ -90,7 +108,18 @@ public class LevelLoader {
                 System.out.println("Index out of bounds");
             }
 
+            String[] entitiesMatchesArray = entityLine.toArray(new String[0]);
+            ArrayList<Tile> entityRow = new ArrayList<>();
+            try {
+                for (int j = 0; j < entitiesMatchesArray.length; j++) {
+                    entityRow.add(processTile(gc, entitiesMatchesArray[j].toCharArray(), i, j));
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Index out of bounds");
+            }
+
             tileGrid.add(levelRow);
+            entityGrid.add(entityRow);
             i++;
         }
         drawLevel(gc);
@@ -171,25 +200,39 @@ public class LevelLoader {
                     return new Block(x, y);
                case 'L':
                     return new LockedDoor(x, y);
-                    // return new LockedDoor(x, y, tile[1]);
-//                case 'F':
-//                    return new Frog(x, y);
-//                case 'G':
-//                    return new PinkBall(x, y);
-//                case 'E':
-//                    return new Bug(x, y);
-//                case 'Q':
-//                    return new Player(x, y);
-//                case 'C':
-//                    return new Chip(x, y);
-//                case 'K':
-//                    return new Key(x, y, tile[1]);
                 default:
                     // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
                     return null;
         }
 
     }
+
+    public static Entity processEntity(GraphicsContext gc, char[] entity, int x, int y) {
+        switch (entity[0]){
+            case 'F':
+                return new Frog(5, 'w', new int[]{x, y});
+            case 'G':
+                return new PinkBall(x, y);
+            case 'E':
+                return new Bug(x, y);
+            case 'Q':
+                return new Player(x, y);
+            default:
+                // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
+                return null;
+        }
+    }
+
+    public static Item processItem(GraphicsContext gc, char[] item) {
+            switch (item[0]){
+            case 'C':
+                return new Chip(0, 0);
+            case 'K':
+                return new Key(item[1], item[2]);
+            default:
+                // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
+                return null;
+        } }
 
     public static void drawLevel(GraphicsContext gc) {;
         for (ArrayList<Tile> row : getTileGrid()) {

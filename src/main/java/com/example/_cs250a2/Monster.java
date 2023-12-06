@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * javadoc to go here
  */
-public abstract class Monster {
+public abstract class Monster extends Entity {
 
     //tile still needs to be created
     //Arraylist of tiles the monster cannot move onto
