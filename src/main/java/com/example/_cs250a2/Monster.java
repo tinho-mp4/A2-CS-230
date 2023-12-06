@@ -39,9 +39,16 @@ public abstract class Monster extends Entity {
    }
 
    //method to check if monster move is legal
-   //not done just returns true!!!
-   protected boolean checkTile(int[] tile) {
-      return true;
+   //still needs to check for blocks and other monsters
+   protected boolean checkTile(int[] tileLocation) {
+      boolean safeTile = false;
+      String nextTile = LevelLoader.getTile(tileLocation[0], tileLocation[1]).getName();
+      for (String tile : allowedTiles){
+         if (nextTile.equals(tile)) {
+            safeTile = true;
+         }
+      }
+      return safeTile;
    }
 
    protected void playerKill() {

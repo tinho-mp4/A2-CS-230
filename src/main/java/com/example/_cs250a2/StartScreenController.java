@@ -97,19 +97,9 @@ public class StartScreenController {
                 currentLevelProperty()));
     }
 
-    private void handleStartButton() {
-        drawLevelOnCanvas();
-    }
-
-    private void drawLevelOnCanvas() {
-        System.out.println("drawing level");
-        GraphicsContext gc = levelCanvas.getGraphicsContext2D();
-
-        // Clear the canvas
-        gc.clearRect(0, 0, levelCanvas.getWidth(), levelCanvas.getHeight());
-
-
-        LevelLoader.loadLevel(gc,getClass().getResourceAsStream("level1.txt"));
+    private void handleStartButton(){
+        Game.initializeInstance();
+        Game.startGame();
     }
     private void handleSelectButton() {
         currentProfile = profileChoiceBox.getValue();

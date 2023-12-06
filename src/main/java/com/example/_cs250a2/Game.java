@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -53,17 +54,24 @@ public class Game extends Application {
 
     // Create Player
     Player player = new Player(1,1);
+    Key key = new Key(2,0);
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
 
     private Color bgColor = Color.LIGHTBLUE;
 
+    private static Game instance;
+
+
+
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
+    @Override
     public void start(Stage primaryStage) {
+        instance = this;
         // Build the GUI
         Pane root = buildGUI();
 
@@ -89,7 +97,7 @@ public class Game extends Application {
         // load the level
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        LevelLoader.loadLevel(gc,getClass().getResourceAsStream("level1.txt"));
+        LevelLoader.loadLevel(gc,getClass().getResourceAsStream("level2.txt"));
     }
 
     /**
@@ -124,6 +132,8 @@ public class Game extends Application {
 
         // Draw player at current location
         player.draw(gc, player.getX(),player.getY() , 32);
+        //Draw key at current location
+        key.draw(gc, key.getX(), key.getY(), 32);
 
     }
 
@@ -161,6 +171,22 @@ public class Game extends Application {
 
         // Finally, return the border pane we built up.
         return root;
+    }
+
+    public static void initializeInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+    }
+
+    public static void startGame() {
+        Platform.runLater(() -> {
+            try {
+                instance.start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {
