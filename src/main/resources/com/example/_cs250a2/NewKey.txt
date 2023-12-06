@@ -2,19 +2,19 @@ Path: P
 Dirt: D
 Wall: U
 Exit: E
-Button: B(n)
+Button: Bn - n is the paired number with trap
 Trap: T
 Water: W
 Chip Socket: S
-Ice: I(n)
+Ice: I - n it the direction of the ice
 Block: O
-Locked Door: L - maybe n not sure yet
+Locked Door: L - maybe n not sure yet - connected key and type of lock
 Frog: F
 Pink Ball: G
 Bug: E
-Player:?
+Player: Q
 Computer Chip: C
-Key: K - maybe n not sure yet
+Key: K - maybe n not sure yet - connected lock and type of key
 
 
 
