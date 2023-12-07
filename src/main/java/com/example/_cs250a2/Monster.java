@@ -4,7 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO write tile checker
 //TODO test all methods when level working, check playerkill works later
 /**
  * javadoc to go here
