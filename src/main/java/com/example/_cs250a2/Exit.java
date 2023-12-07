@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Exit extends Tile{
-    private static final Image EXIT_IMAGE = new Image(Exit.class.getResourceAsStream("exit.png"));
+    private static final Image EXIT_IMAGE = new Image(Exit.class.getResourceAsStream("sprites/exit.png"));
 
     public Exit(int x, int y) {
         super("exit", x, y, false);

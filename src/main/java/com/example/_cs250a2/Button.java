@@ -13,7 +13,7 @@ import java.util.List;
  * @author Juned Miah
  */
 public class Button extends Tile{
-    private static final Image BUTTON_IMAGE = new Image(Button.class.getResourceAsStream("button.png"));
+    private static final Image BUTTON_IMAGE = new Image(Button.class.getResourceAsStream("sprites/button.png"));
 
 
     /**

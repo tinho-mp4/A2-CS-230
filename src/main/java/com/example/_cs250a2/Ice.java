@@ -5,11 +5,11 @@ import javafx.scene.image.Image;
 
 enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, NONE};
 public class Ice extends Tile {
-    private static final Image ICE_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
-    private static final Image ICE_TOP_LEFT_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
-    private static final Image ICE_TOP_RIGHT_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
-    private static final Image ICE_BOTTOM_LEFT_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
-    private static final Image ICE_BOTTOM_RIGHT_IMAGE = new Image(Ice.class.getResourceAsStream("/com/example/_cs250a2/ice.png"));
+    private static final Image ICE_IMAGE = new Image(Ice.class.getResourceAsStream("sprites/ice.png"));
+    private static final Image ICE_TOP_LEFT_IMAGE = new Image(Ice.class.getResourceAsStream("sprites/iceTopLeft.png"));
+    private static final Image ICE_TOP_RIGHT_IMAGE = new Image(Ice.class.getResourceAsStream("sprites/iceTopRight.png"));
+    private static final Image ICE_BOTTOM_LEFT_IMAGE = new Image(Ice.class.getResourceAsStream("sprites/iceBottomLeft.png"));
+    private static final Image ICE_BOTTOM_RIGHT_IMAGE = new Image(Ice.class.getResourceAsStream("sprites/iceBottomRight.png"));
     /**
      * Instantiation of the corner variable
      */

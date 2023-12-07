@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Block extends Tile {
-    private static final Image BLOCK_IMAGE = new Image(Block.class.getResourceAsStream("block.png"));
+    private static final Image BLOCK_IMAGE = new Image(Block.class.getResourceAsStream("sprites/block.png"));
 
     public Block(int x, int y) {
         super("block",x, y, true);

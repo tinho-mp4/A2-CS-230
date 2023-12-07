@@ -10,7 +10,7 @@ public class Bug extends Monster {
     //which wall to 'hug' when it moves
     private final boolean left;
 
-    private static final Image BUG_IMAGE = new Image(Key.class.getResourceAsStream("Bug.png"));
+    private static final Image BUG_IMAGE = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
 
     public Bug(int speed, char startingDirection, int[] startingLocation, boolean side) {
         super(startingLocation[0], startingLocation[1], startingDirection);

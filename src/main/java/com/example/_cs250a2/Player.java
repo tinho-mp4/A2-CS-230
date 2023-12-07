@@ -7,8 +7,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 
 public class Player{
-    private static final Image PLAYER_TILE = new Image(Player.class.getResourceAsStream("player.png"));
-
+    private static final Image PLAYER_TILE = new Image(Player.class.getResourceAsStream("sprites/player.png"));
 
     // X and Y coordinate of player on the grid.
     private static int x;

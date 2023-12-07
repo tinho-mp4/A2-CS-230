@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 public class ChipSocket extends Tile{
-    private static final Image CHIP_SOCKET_IMAGE = new Image(ChipSocket.class.getResourceAsStream("chipSocket.png"));
+    private static final Image CHIP_SOCKET_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket.png"));
 
     private final int chipsNeeded;
 

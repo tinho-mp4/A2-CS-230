@@ -43,7 +43,7 @@ public class LevelLoader {
     private static ArrayList<ArrayList<Item>> itemGrid = new ArrayList<>();
 
     public LevelLoader() {
-        Scanner scanner = new Scanner(getClass().getResourceAsStream("level2.txt"));
+        Scanner scanner = new Scanner(getClass().getResourceAsStream("levels/level2.txt"));
         // Read level information
         String levelName = scanner.nextLine().split(": ")[1];
         int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
@@ -52,7 +52,7 @@ public class LevelLoader {
         int height = Integer.parseInt(dimensions[1]);
         this.width = width;
         this.height = height;
-        this.entityCount = countFileLines(getClass().getResourceAsStream("level2.txt")) - 4 - height;
+        this.entityCount = countFileLines(getClass().getResourceAsStream("levels/level2.txt")) - 4 - height;
     }
 
     /**

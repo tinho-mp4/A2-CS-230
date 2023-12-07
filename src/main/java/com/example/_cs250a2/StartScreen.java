@@ -16,7 +16,7 @@ public class StartScreen extends Application {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            InputStream fxmlStream = getClass().getResourceAsStream("/com/example/_cs250a2/StartScreen.fxml");
+            InputStream fxmlStream = getClass().getResourceAsStream("StartScreen.fxml");
             Parent root = loader.load(fxmlStream);
 
             // Get the controller from the FXMLLoader

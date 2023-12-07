@@ -99,7 +99,7 @@ public class Game extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         this.levelLoader = new LevelLoader();
-        this.levelLoader.loadLevel(gc,getClass().getResourceAsStream("level2.txt"));
+        this.levelLoader.loadLevel(gc,Game.class.getResourceAsStream("levels/level2.txt"));
     }
 
     /**

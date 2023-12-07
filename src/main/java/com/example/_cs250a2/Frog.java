@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 //TODO test when level available
 public class Frog extends Monster {
 
-    private static final Image FROG_IMAGE = new Image(Key.class.getResourceAsStream("Frog.png"));
+    private static final Image FROG_IMAGE = new Image(Key.class.getResourceAsStream("sprites/frog.png"));
     public Frog (int speed, char startingDirection, int[] startingLocation) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         allowedTiles.remove("Trap");

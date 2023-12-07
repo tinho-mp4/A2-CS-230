@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Dirt extends Tile{
-    private static final Image DIRT_IMAGE = new Image(Dirt.class.getResourceAsStream("dirt.png"));
+    private static final Image DIRT_IMAGE = new Image(Dirt.class.getResourceAsStream("sprites/dirt.png"));
 
     public Dirt(int x, int y) {
         super("dirt",x, y, true);

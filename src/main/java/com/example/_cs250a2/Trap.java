@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
  * @author Juned Miah
  */
 public class Trap extends Tile{
-    private static final Image TRAP_IMAGE = new Image(Trap.class.getResourceAsStream("trap.png"));
+    private static final Image TRAP_IMAGE = new Image(Trap.class.getResourceAsStream("sprites/trap.png"));
 
     /**
      * The number paired with this trap.

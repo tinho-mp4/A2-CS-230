@@ -3,15 +3,12 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * javadoc to go here
  */
 public class PinkBall extends Monster {
 
-    private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("Ball.png"));
+    private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/ball.png"));
     public PinkBall(int speed, char startingDirection, int[] startingLocation) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         this.speed = speed;

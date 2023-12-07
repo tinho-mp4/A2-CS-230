@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Wall extends Tile{
-    private static final Image WALL_IMAGE = new Image(Wall.class.getResourceAsStream("wall.png"));
+    private static final Image WALL_IMAGE = new Image(Wall.class.getResourceAsStream("sprites/wall.png"));
 
     public Wall(int x, int y) {
         super("wall",x,y, true);

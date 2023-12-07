@@ -11,7 +11,7 @@ Block: O
 Locked Door: L - maybe n not sure yet - connected key and type of lock
 Frog: F
 Pink Ball: G
-Bug: E
+Bug: Z
 Player: Q
 Computer Chip: C
 Key: K - maybe n not sure yet - connected lock and type of key

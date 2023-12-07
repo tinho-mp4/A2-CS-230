@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Key extends Item {
-    private static final Image KEY_IMAGE = new Image(Key.class.getResourceAsStream("key.png"));
+    private static final Image KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/key.png"));
 
     public Key(int x, int y) {
         super("key", x, y, false);

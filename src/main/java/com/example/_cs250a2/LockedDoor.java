@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class LockedDoor extends Tile {
     //TODO: Change key.png to lockedDoor.png
-    private static final Image LOCKED_DOOR_IMAGE = new Image(Key.class.getResourceAsStream("key.png"));
+    private static final Image LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/redLockedDoor.png"));
 
     public LockedDoor(int x, int y) {
         super("lockedDoor", x, y, true);
