@@ -80,6 +80,7 @@ public class StartScreenController {
         levelChoiceBox.setItems(levels);
 
         selectNameButton.disableProperty().bind(profileChoiceBox.valueProperty().isNull());
+        levelChoiceBox.disableProperty().bind(profileChoiceBox.valueProperty().isNull());
         selectLevelButton.disableProperty().bind(levelChoiceBox.valueProperty().isNull());
         selectNameButton.setOnAction(event -> handleSelectButton());
         deleteButton.setOnAction(event -> handleDeleteButton());
@@ -122,10 +123,16 @@ public class StartScreenController {
     }
 
     private void handleSelectLevelButton() {
-        currentLevel = levelChoiceBox.getValue();
-        System.out.println("Selected level: " + currentLevel.getName());
-        currentLevelProperty.set(null);
-        currentLevelProperty.set(currentLevel);
+        Level selectedLevel = levelChoiceBox.getValue();
+        int selectedLevelNumber = Integer.parseInt(selectedLevel.getName().substring(5)); //locks level names to be level1, level2, level3
+        if (selectedLevelNumber <= currentProfile.getLevelReached() + 1) {
+            currentLevel = selectedLevel;
+            System.out.println("Selected level: " + currentLevel.getName());
+            currentLevelProperty.set(null);
+            currentLevelProperty.set(currentLevel);
+        } else {
+            System.out.println("You must complete the previous level first.");
+        }
     }
 
     public ObjectProperty<Profile> currentProfileProperty() {
