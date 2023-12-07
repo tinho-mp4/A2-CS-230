@@ -306,6 +306,14 @@ public class LevelLoader {
         }
     }
 
+    public static void setTile(int x, int y, Tile newTile) {
+        try {
+            tileGrid.get(x).set(y, newTile);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid tile position: " + x + ", " + y);
+        }
+    }
+
     public static int getHeight() {
         return height;
     }

@@ -67,7 +67,9 @@ public class Player{
         Tile currentTile = LevelLoader.getTile(x, y);
         switch(currentTile.getName()) {
             case "dirt":
-                Dirt.event();
+                Dirt dirt = (Dirt) currentTile;
+                dirt.compact();
+                break;
             case "exit":
                 Level.nextLevel();
             case "button":
