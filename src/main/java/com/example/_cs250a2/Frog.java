@@ -20,6 +20,10 @@ public class Frog extends Monster {
         y = location[1];
         checkDirection(startingDirection);
         checkLocation(startingLocation);
+        arrayLocationX = countMonsters;
+        countMonsters++;
+        arrayLocationY = countMonsters;
+        countMonsters++;
     }
 
     //this move method will try and make the frog x equal to player x then do the same with y

@@ -22,6 +22,10 @@ public class Bug extends Monster {
         left = side;
         checkDirection(startingDirection);
         checkLocation(startingLocation);
+        arrayLocationX = countMonsters;
+        countMonsters++;
+        arrayLocationY = countMonsters;
+        countMonsters++;
     }
 
     public void move() {

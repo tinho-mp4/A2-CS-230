@@ -18,6 +18,12 @@ public class PinkBall extends Monster {
         y = location[1];
         checkDirection(startingDirection);
         checkLocation(startingLocation);
+        arrayLocationX = countMonsters;
+        countMonsters++;
+        arrayLocationY = countMonsters;
+        countMonsters++;
+        monsterLocations.add(x);
+        monsterLocations.add(y);
     }
 
     public void move() {
