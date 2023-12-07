@@ -76,7 +76,7 @@ public class StartScreenController {
         profiles.addAll(new Profile("Profile1"), new Profile("Profile2"), new Profile("Profile3"));
         profileChoiceBox.setItems(profiles);
 
-        levels.addAll(new Level("Level1"), new Level("Level2"), new Level("Level3"));
+        levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"));
         levelChoiceBox.setItems(levels);
 
         selectNameButton.disableProperty().bind(profileChoiceBox.valueProperty().isNull());
@@ -98,10 +98,20 @@ public class StartScreenController {
                 currentLevelProperty()));
     }
 
-    private void handleStartButton(){
-        Game.initializeInstance();
-        Game.startGame();
+    private void handleStartButton() {
+
+        try {
+            if (currentLevel == null) {
+                throw new IllegalArgumentException("No level selected.");
+            }
+            Game gameInstance = Game.getInstance();
+            gameInstance.setLevelName(currentLevel.getName());
+            gameInstance.startGame();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
+
     private void handleSelectButton() {
         currentProfile = profileChoiceBox.getValue();
         System.out.println("Selected profile: " + currentProfile.getName());
@@ -123,15 +133,23 @@ public class StartScreenController {
     }
 
     private void handleSelectLevelButton() {
-        Level selectedLevel = levelChoiceBox.getValue();
-        int selectedLevelNumber = Integer.parseInt(selectedLevel.getName().substring(5)); //locks level names to be level1, level2, level3
-        if (selectedLevelNumber <= currentProfile.getLevelReached() + 1) {
+        try {
+            Level selectedLevel = levelChoiceBox.getValue();
+            if (selectedLevel == null) {
+                throw new IllegalArgumentException("No level selected.");
+            }
+
+            int selectedLevelNumber = Integer.parseInt(selectedLevel.getName().substring(5));
+            if (currentProfile == null || selectedLevelNumber > currentProfile.getLevelReached() + 1) {
+                throw new IllegalArgumentException("You must complete the previous level first.");
+            }
+
             currentLevel = selectedLevel;
             System.out.println("Selected level: " + currentLevel.getName());
             currentLevelProperty.set(null);
             currentLevelProperty.set(currentLevel);
-        } else {
-            System.out.println("You must complete the previous level first.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 

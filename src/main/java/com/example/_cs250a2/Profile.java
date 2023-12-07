@@ -9,7 +9,7 @@ public class Profile {
 
     public Profile(String name) {
         this.name = name;
-        this.levelReached = 0;
+        this.levelReached = 3;
     }
 
 

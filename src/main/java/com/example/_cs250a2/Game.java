@@ -54,7 +54,6 @@ public class Game extends Application {
 
     // Create Player
     Player player = new Player(1,1);
-    Key key = new Key(2,0);
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
@@ -64,6 +63,14 @@ public class Game extends Application {
     private static Game instance;
     private LevelLoader levelLoader;
 
+    private String levelName = "level1";
+
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
 
 
     /**
@@ -99,7 +106,7 @@ public class Game extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         this.levelLoader = new LevelLoader();
-        this.levelLoader.loadLevel(gc,Game.class.getResourceAsStream("levels/level2.txt"));
+        this.levelLoader.loadLevel(gc,Game.class.getResourceAsStream("levels/"+ levelName +".txt"));
     }
 
     /**
@@ -178,12 +185,6 @@ public class Game extends Application {
         return root;
     }
 
-    public static void initializeInstance() {
-        if (instance == null) {
-            instance = new Game();
-        }
-    }
-
     public static void startGame() {
         Platform.runLater(() -> {
             try {
@@ -192,6 +193,10 @@ public class Game extends Application {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
     }
 
     public static void main(String[] args) {
