@@ -63,7 +63,7 @@ public class Game extends Application {
     private static Game instance;
     private LevelLoader levelLoader;
 
-    private String levelName = "level1";
+    private String levelName = "level2";
 
     public static Game getInstance() {
         if (instance == null) {

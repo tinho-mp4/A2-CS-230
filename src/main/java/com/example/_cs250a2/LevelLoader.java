@@ -118,7 +118,7 @@ public class LevelLoader {
                     levelRow.add(processTile(gc, matchesArray[j].toCharArray(), i, j));
                 }
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Index out of bounds");
+                System.out.println("Tile Index out of bounds");
             }
 
             tileGrid.add(levelRow);
@@ -228,7 +228,7 @@ public class LevelLoader {
                 case 'O':
                     return new Block(x, y);
                case 'L':
-                    return new LockedDoor(x, y);
+                    return new LockedDoor(x, y, tile[1]);
                 default:
                     // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
                     return null;

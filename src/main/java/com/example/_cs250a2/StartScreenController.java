@@ -69,8 +69,8 @@ public class StartScreenController {
 
     @FXML
     public void initialize() {
-        double canvasWidth = 1000; // Set your desired width
-        double canvasHeight = 1000; // Set your desired height
+        double canvasWidth = 1000;
+        double canvasHeight = 1000;
         levelCanvas.setWidth(canvasWidth);
         levelCanvas.setHeight(canvasHeight);
         profiles.addAll(new Profile("Profile1"), new Profile("Profile2"), new Profile("Profile3"));
