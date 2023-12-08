@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,6 +16,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.Button;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
+import java.io.IOException;
 
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
@@ -45,6 +53,7 @@ public class Game extends Application {
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
     // We could use FXML to place code in the controller instead.
+    @FXML
     private Canvas canvas;
 
     // Loaded images
@@ -65,176 +74,55 @@ public class Game extends Application {
 
     private Profile currentProfile;
 
-    public static Game getInstance() {
-        if (instance == null) {
-            instance = new Game();
-        }
-        return instance;
-    }
-
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
-    @Override
-    public void start(Stage primaryStage) {
-        instance = this;
-        // Build the GUI
-        Pane root = buildGUI();
-
-        // Create a scene from the GUI
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
+        Parent root = loader.load();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        // Set up the controller
+        GameController controller = loader.getController();
+        controller.initialize();
 
         // Register an event handler for key presses.
         // This causes the processKeyEvent method to be called each time a key is pressed.
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> controller.processKeyEvent(event));
 
         // Register a tick method to be called periodically.
         // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
+        controller.tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> controller.tick()));
         // Loop the timeline forever
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        controller.tickTimeline.setCycleCount(Animation.INDEFINITE);
         // We start the timeline upon a button press.
 
         // Create a timer to update the time limit
-        Timeline timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTimer()));
+        Timeline timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> controller.updateTimer()));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
         timerTimeline.play();
 
-
         // Display the scene on the stage
-        drawGame();
+        controller.drawGame();
         primaryStage.setScene(scene);
         primaryStage.show();
 
         // load the level
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        GraphicsContext gc = controller.canvas.getGraphicsContext2D();
 
-        this.levelLoader = new LevelLoader();
-        this.levelLoader.loadLevel(gc,Game.class.getResourceAsStream("levels/"+ levelName +".txt"));
+        controller.levelLoader = new LevelLoader();
+        controller.levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + controller.levelName + ".txt"));
     }
 
-    /**
-     * Process a key event due to a key being pressed, e.g., to move the player.
-     * @param event The key event that was pressed.
-     */
-    public void processKeyEvent(KeyEvent event) {
-        player.move(event);
-
-        // Redraw game as the player may have moved.
-        drawGame();
-
-        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
-        event.consume();
-    }
-
-    /**
-     * Draw the game on the canvas.
-     */
-    public void drawGame() {
-        // Get the Graphic Context of the canvas. This is what we draw on.
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        // Clear canvas
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        // Set the background to gray.
-        gc.setFill(bgColor);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-
-        this.levelLoader.drawLevel(gc);
-        this.levelLoader.drawEntities(gc);
-        this.levelLoader.drawItems(gc);
-
-
-        // Draw player at current location
-        player.draw(gc, player.getX(),player.getY() , 32);
-        //Draw key at current location
-        //key.draw(gc, key.getX(), key.getY(), 32);
-
-    }
-
-    /**
-     * This method is called periodically by the tick timeline
-     * and would for, example move, perform logic in the game,
-     * this might cause the bad guys to move (by e.g., looping
-     * over them all and calling their own tick method).
-     */
-    public void tick() {
-        //update the timer every tick if its 0 end the game
-        updateTimer();
-
-        if (timeLimit <= 0) {
-            GameOver.gameEndTime();
-            tickTimeline.stop();
-        }
-        // Here we move the player right one cell and teleport
-        // them back to the left side when they reach the right side.
-        int playerX = player.getX();
-
-        player.setX(playerX + 1);
-        if (playerX > 11) {
-            player.setX(0);
-        }
-        // We then redraw the whole canvas.
-        drawGame();
-    }
-
-    /**
-     * Create the GUI.
-     * @return The panel that contains the created GUI.
-     */
-    private Pane buildGUI() {
-        // Create top-level panel that will hold all GUI nodes.
-        BorderPane root = new BorderPane();
-
-        // Create the canvas that we will draw on.
-        // We store this as a gloabl variable so other methods can access it.
-        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        root.setCenter(canvas);
-
-        // Finally, return the border pane we built up.
-        return root;
-    }
-
-    //reduce the time by one or until it reaches 0`
-    public void updateTimer() {
-        timeLimit--;
-        if (timeLimit <= 0) {
-            GameOver.gameEndTime();
-            tickTimeline.stop();
-        }
-
-        //sets the score for the current profile
-        if(currentProfile != null) {
-            currentProfile.setScoreForLevel(levelName, timeLimit);
-        }
-
-    }
-
-    public void startGame(Profile profile) {
-        this.currentProfile = profile;
-        Platform.runLater(() -> {
-            try {
-                instance.start(new Stage());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    public void setLevelName(String levelName) {
-        this.levelName = levelName;
-    }
 
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public void setTimeLimit(int timeLimit) {
-        this.timeLimit = timeLimit;
-    }
 }
+
+
 
 //test push

@@ -1,7 +1,7 @@
 package com.example._cs250a2;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+        import javafx.scene.canvas.GraphicsContext;
+        import javafx.scene.image.Image;
 
 public class Key extends Item {
     private static final Image KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/key.png"));
