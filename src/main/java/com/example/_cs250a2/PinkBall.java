@@ -20,9 +20,10 @@ public class PinkBall extends Monster {
         y = location[1];
         checkDirection(startingDirection);
         checkLocation(startingLocation);
-        arrayLocationX = countMonsters;
-        countMonsters++;
-        arrayLocationY = countMonsters;
+        //saves the index that the monsters' x and y coordinates are stored
+        //X is stored at 2 * the number of monsters since each monster stores two values and y is after that
+        arrayLocationX = countMonsters*2;
+        arrayLocationY = (countMonsters*2)+1;
         countMonsters++;
         monsterLocations.add(x);
         monsterLocations.add(y);
@@ -33,7 +34,7 @@ public class PinkBall extends Monster {
         //w is up, s is down, a is left and d is right
         if (direction == 'w') {
             //next location is 1 tile above current position
-            int[] locationNext = {x, y++};
+            int[] locationNext = {x, y+1};
             //method to check the tile is legal
             if (checkTile(locationNext)) {
                 y++;
@@ -45,7 +46,7 @@ public class PinkBall extends Monster {
             }
         } else if (direction == 's') {
             //next location is 1 tile below current position
-            int[] locationNext = {x, y--};
+            int[] locationNext = {x, y-1};
             //check tile legality
             if (checkTile(locationNext)) {
                 y--;
@@ -56,7 +57,7 @@ public class PinkBall extends Monster {
                 move();
             }
         } else if (direction == 'a') {
-            int[] locationNext = {x--, y};
+            int[] locationNext = {x-1, y};
             if (checkTile(locationNext)) {
                 x--;
                 playerKill();
@@ -66,7 +67,7 @@ public class PinkBall extends Monster {
                 move();
             }
         } else if (direction == 'd') {
-            int[] locationNext = {x++, y};
+            int[] locationNext = {x+1, y};
             if (checkTile(locationNext)) {
                 x++;
                 playerKill();

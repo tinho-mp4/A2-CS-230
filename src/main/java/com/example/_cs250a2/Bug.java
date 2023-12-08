@@ -23,17 +23,23 @@ public class Bug extends Monster {
         left = side;
         checkDirection(startingDirection);
         checkLocation(startingLocation);
-        arrayLocationX = countMonsters;
+        //saves the index that the monsters' x and y coordinates are stored
+        //X is stored at 2 * the number of monsters since each monster stores two values and y is after that
+        arrayLocationX = countMonsters*2;
+        arrayLocationY = (countMonsters*2)+1;
         countMonsters++;
-        arrayLocationY = countMonsters;
-        countMonsters++;
+        BugList.add(this);
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void move() {
-        int[] toTheLeft = {x--, y};
-        int[] above = {x, y++};
-        int[] below = {x, y--};
-        int[] toTheRight = {x++, y};
+        int[] toTheLeft = {x+1, y};
+        int[] above = {x, y-1};
+        int[] below = {x, y+1};
+        int[] toTheRight = {x-1, y};
         //checks which side to keep the bug on
         if (left) {
             if (direction == 'w') {
@@ -44,14 +50,14 @@ public class Bug extends Monster {
                     move();
                     //it can either go one way or both, if it cant go left it goes in its' current facing
                 } else if (!(checkTile(toTheLeft))){
-                    y++;
+                    y--;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
                     //if both tiles are available it is on an outside corner and so
                     // turns (and moves in the new direction) to go around
                 } else {
                     direction = 'a';
-                    x--;
+                    x++;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
                 }
@@ -60,12 +66,12 @@ public class Bug extends Monster {
                     direction = 'a';
                     move();
                 } else if (!checkTile(toTheRight)) {
-                    y--;
+                    y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
                 } else {
                     direction = 'd';
-                    x++;
+                    x--;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
                 }
@@ -74,12 +80,12 @@ public class Bug extends Monster {
                     direction = 'w';
                     move();
                 } else if (!checkTile(below)) {
-                    x--;
+                    x++;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
                 } else {
                     direction = 's';
-                    y--;
+                    y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
                 }
@@ -88,12 +94,12 @@ public class Bug extends Monster {
                     direction = 's';
                     move();
                 } else if (!checkTile(above)) {
-                    x++;
+                    x--;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
                 } else {
                     direction = 'w';
-                    y++;
+                    y--;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
                 }
@@ -104,12 +110,12 @@ public class Bug extends Monster {
                     direction = 'a';
                     move();
                 } else if (!checkTile(toTheRight)) {
-                    y++;
+                    y--;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
                 } else {
                     direction = 'd';
-                    x++;
+                    x--;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
                 }
@@ -118,12 +124,12 @@ public class Bug extends Monster {
                     direction = 'd';
                     move();
                 } else if (!checkTile(toTheLeft)) {
-                    y++;
+                    y--;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
                 } else {
                     direction = 'a';
-                    x--;
+                    x++;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
                 }
@@ -132,12 +138,12 @@ public class Bug extends Monster {
                     direction = 's';
                     move();
                 } else if (!checkTile(above)) {
-                    x--;
+                    x++;
                     playerKill();
                     locationUpdate(arrayLocationX,x);
                 } else {
                     direction = 'w';
-                    y++;
+                    y--;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
                 }
@@ -146,12 +152,12 @@ public class Bug extends Monster {
                     direction = 'w';
                     move();
                 } else if (!checkTile(below)) {
-                    x++;
+                    x--;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
                 } else {
                     direction = 's';
-                    y--;
+                    y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
                 }

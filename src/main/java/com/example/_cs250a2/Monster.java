@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//TODO fix checkTile
+//TODO swap all + and -
 //TODO test all methods when level working, check playerkill works later
 /**
  * javadoc to go here
@@ -17,11 +19,12 @@ public abstract class Monster extends Entity {
    protected static ArrayList<PinkBall> PinkBallList = new ArrayList<>();
    protected static ArrayList<Bug> BugList = new ArrayList<>();
    protected static ArrayList<Frog> FrogList = new ArrayList<>();
+
    //this is an ArrayList for monsters to put their location in with LocationUpdate method (called when the monster moves)
    protected static ArrayList<Integer> monsterLocations = new ArrayList<>();
    //tile still needs to be created
    //Arraylist of tiles the monster cannot move onto
-   protected ArrayList<String> allowedTiles = new ArrayList<>(Arrays.asList("Path", "Button", "Trap"));
+   protected ArrayList<String> allowedTiles = new ArrayList<>(Arrays.asList("path", "button", "trap"));
 
    //speed decided based on how many ticks between moves
    protected static int speed;
@@ -38,7 +41,7 @@ public abstract class Monster extends Entity {
 
    }
 
-   public static int getSpeed() {
+   public int getSpeed() {
       return speed;
    }
 
@@ -56,19 +59,23 @@ public abstract class Monster extends Entity {
 
    //called by the tick method to move monsters
    public static void tickMove(int count) {
-      if (count % PinkBallList.get(0).getSpeed() == 0) {
-         for (PinkBall pinkBall : Monster.getPinkBallList()) {
-            pinkBall.move();
+      if (!PinkBallList.isEmpty()) {
+         if (count % PinkBallList.get(0).getSpeed() == 0) {
+            for (PinkBall pinkBall : Monster.getPinkBallList()) {
+               pinkBall.move();
+            }
          }
-      }
-      if (count % Monster.getBugList().get(0).getSpeed() == 0) {
-         for (Bug bug : Monster.getBugList()) {
-            bug.move();
+      } if (!BugList.isEmpty()) {
+         if (count % BugList.get(0).getSpeed() == 0) {
+            for (Bug bug : Monster.getBugList()) {
+               bug.move();
+            }
          }
-      }
-      if (count % Monster.getFrogList().get(0).getSpeed() == 0) {
-         for (Frog frog : Monster.getFrogList()) {
-            frog.move();
+      } if (!FrogList.isEmpty()) {
+         if (count % FrogList.get(0).getSpeed() == 0) {
+            for (Frog frog : Monster.getFrogList()) {
+               frog.move();
+            }
          }
       }
    }
@@ -79,7 +86,6 @@ public abstract class Monster extends Entity {
          throw new IllegalArgumentException("the monster has to start within the coordinates of the game space");
       }
    }
-
    protected void checkDirection(char direction) {
       if (!(direction == 'w' || direction == 'a' || direction == 's' || direction == 'd')) {
          throw new IllegalArgumentException("starting direction must be a character w, a, s or d");
@@ -94,14 +100,10 @@ public abstract class Monster extends Entity {
          if (nextTile.equals(tile)) {
             safeTile = true;
          }
-      } //now checks that no other monster is on the tile
+      }
+      //now checks that no other monster is on the tile
       for (int i = 0; i < countMonsters; i++) {
-         if (i == arrayLocationX || i == arrayLocationY) {
-            //do nothing
-            //i%2==0 will give the x position from monsterlocations i%2==1 would give y
-         } else if (i % 2 == 0 && tileLocation[0] == monsterLocations.get(i) && tileLocation[1] == monsterLocations.get(i++)) {
-            safeTile = false;
-         } else ; // does nothing since the y coordinates have been checked already, goes to next X to start check again
+
       }
       return safeTile;
    }

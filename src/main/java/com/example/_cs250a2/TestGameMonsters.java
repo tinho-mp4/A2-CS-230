@@ -91,9 +91,7 @@ public class TestGameMonsters extends Application{
         tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
         // Loop the timeline forever
         tickTimeline.setCycleCount(Animation.INDEFINITE);
-        // We start the timeline upon a button press.
-
-        // Display the scene on the stage
+        tickTimeline.play();
         drawGame();
         primaryStage.setScene(scene);
         primaryStage.show();

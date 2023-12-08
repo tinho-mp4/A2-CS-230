@@ -22,19 +22,21 @@ public class Frog extends Monster {
         y = location[1];
         checkDirection(startingDirection);
         checkLocation(startingLocation);
-        arrayLocationX = countMonsters;
+        //saves the index that the monsters' x and y coordinates are stored
+        //X is stored at 2 * the number of monsters since each monster stores two values and y is after that
+        arrayLocationX = countMonsters*2;
+        arrayLocationY = (countMonsters*2)+1;
         countMonsters++;
-        arrayLocationY = countMonsters;
-        countMonsters++;
+        FrogList.add(this);
     }
 
 
     //this move method will try and make the frog x equal to player x then do the same with y
     public void move() {
-        int[] checkLeft = {x--, y};
-        int[] checkRight = {x++, y};
-        int[] checkBelow = {x, y--};
-        int[] checkAbove = {x, y++};
+        int[] checkLeft = {x-1, y};
+        int[] checkRight = {x+1, y};
+        int[] checkBelow = {x, y-1};
+        int[] checkAbove = {x, y+1};
         int playerX = Player.getX();
         int playerY = Player.getY();
         if (x > playerX && checkTile(checkLeft)) {
