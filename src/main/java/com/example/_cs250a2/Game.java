@@ -113,16 +113,10 @@ public class Game extends Application {
 
         controller.levelLoader = new LevelLoader();
         controller.levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + controller.levelName + ".txt"));
+        player.draw(gc, player.getX(),player.getY() , 32);
     }
-
-
 
     public static void main(String[] args) {
         launch(args);
     }
-
 }
-
-
-
-//test push
