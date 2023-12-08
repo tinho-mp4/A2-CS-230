@@ -48,9 +48,6 @@ public class Game extends Application {
     private Canvas canvas;
 
     // Loaded images
-    private Image playerImage;
-    private Image dirtImage;
-    private Image iconImage;
 
     // Create Player
     Player player = new Player(1,1);
@@ -65,6 +62,8 @@ public class Game extends Application {
     private String levelName = "level2";
 
     private int timeLimit;
+
+    private Profile currentProfile;
 
     public static Game getInstance() {
         if (instance == null) {
@@ -205,11 +204,16 @@ public class Game extends Application {
             GameOver.gameEndTime();
             tickTimeline.stop();
         }
-        //change to print the time on the screen
-        System.out.println("Time left: " + timeLimit);
+
+        //sets the score for the current profile
+        if(currentProfile != null) {
+            currentProfile.setScoreForLevel(levelName, timeLimit);
+        }
+
     }
 
-    public static void startGame() {
+    public void startGame(Profile profile) {
+        this.currentProfile = profile;
         Platform.runLater(() -> {
             try {
                 instance.start(new Stage());
