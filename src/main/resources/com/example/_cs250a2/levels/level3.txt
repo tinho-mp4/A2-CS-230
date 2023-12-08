@@ -1,0 +1,12 @@
+Level Name: Level3
+TimeLimit = 300
+Level Dimensions 7 3
+
+PPPPWDP
+P ## PWDP
+PPPPPDD
+Z31
+K10
+C21
+K13
+F12

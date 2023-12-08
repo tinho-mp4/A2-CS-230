@@ -9,15 +9,16 @@ import java.util.ArrayList;
 public class Player{
     private static final Image PLAYER_TILE = new Image(Player.class.getResourceAsStream("sprites/player.png"));
 
-    // X and Y coordinate of player on the grid.
     private static int x;
     private static int y;
-    private ArrayList<Item> inventory;
+    private final ArrayList<Item> inventory;
 
     public Player(int x, int y) {
         Player.x = x;
         Player.y = y;
+        this.inventory = new ArrayList<>();
     }
+
     public void move(KeyEvent event) {
         switch (event.getCode()) {
             case RIGHT:
@@ -57,6 +58,7 @@ public class Player{
                 // Do nothing for all other keys.
                 break;
         }
+        System.out.println("Player's new position: (" + x + ", " + y + ")");
     }
 
     private void interact(int newX, int newY) {
@@ -65,6 +67,11 @@ public class Player{
         if (currentTile.getName() != "ice") { // Player movement on ice is handled in Ice.java
             Player.setX(newX);
             Player.setY(newY);
+        }
+        Item item = Level.getItem(newX, newY);
+        if (item instanceof Key) {
+            addToInventory(item);
+            Level.removeItem(newX, newY);
         }
 
         switch(currentTile.getName()) {
@@ -92,9 +99,12 @@ public class Player{
                 break;
         }
 
-        if (Level.isOnitem()) {
-            // ???
-            // addToInventory(Item.getItemName());
+        if (Level.isOnItem(x, y)) {
+            if (item != null) {
+                System.out.println("Player is on an item: " + item.getClass().getSimpleName());
+                addToInventory(item);
+                Level.removeItem(x, y);
+            }
         }
 
         if(Level.isOnMonster()) {
@@ -107,8 +117,10 @@ public class Player{
         }
     }
 
-    public void addToInventory(Item item){
-        inventory.add(item);
+    private void addToInventory(Item item) {
+        if (item instanceof Key) {
+            inventory.add(item);
+        }
     }
 
     public void removeToInventory(Item item){
@@ -132,6 +144,6 @@ public class Player{
     }
 
     public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(PLAYER_TILE, x*size, y*size);
+        gc.drawImage(PLAYER_TILE, x * size, y * size);
     }
 }

@@ -13,7 +13,7 @@ public class LockedDoor extends Tile {
     private static final Image GREEN_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/greenLockedDoor.png"));
     private static final Image YELLOW_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/yellowLockedDoor.png"));
 
-    private DoorType doorType;
+    private final DoorType doorType;
 
     public LockedDoor(int x, int y, char doorTypeChar) {
         super("lockedDoor", x, y, true);
@@ -24,18 +24,12 @@ public class LockedDoor extends Tile {
     }
 
     private DoorType getDoorType(char doorTypeChar) {
-        switch (doorTypeChar) {
-            case '0':
-                return DoorType.RED;
-            case '1':
-                return DoorType.GREEN;
-            case '2':
-                return DoorType.BLUE;
-            case '3':
-                return DoorType.YELLOW;
-            default:
-                return DoorType.RED;
-        }
+        return switch (doorTypeChar) {
+            case '1' -> DoorType.GREEN;
+            case '2' -> DoorType.BLUE;
+            case '3' -> DoorType.YELLOW;
+            default -> DoorType.RED;
+        };
     }
 
 

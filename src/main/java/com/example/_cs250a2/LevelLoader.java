@@ -134,7 +134,7 @@ public class LevelLoader {
             try {
                 for (int j = 0; j < entitiesMatchesArray.length; j++) {
                     if (entitiesMatchesArray[j].toCharArray()[0] == 'C' || entitiesMatchesArray[j].toCharArray()[0] == 'K') {
-                        itemRow.add(processItem(gc, entitiesMatchesArray[j].toCharArray()));
+                        itemRow.add(processItem(entitiesMatchesArray[j].toCharArray()));
                     } else
                         entityRow.add(processEntity(gc, entitiesMatchesArray[j].toCharArray()));
                 }
@@ -249,14 +249,25 @@ public class LevelLoader {
         }
     }
 
-    public static Item processItem(GraphicsContext gc, char[] item) {
-            switch (item[0]){
-            case 'C':
-                return new Chip(item[1]-'0', item[2]-'0');
-            case 'K':
-                return new Key(item[1]-'0', item[2]-'0');
-            default:
-                return null;
+    public static Item processItem(char[] item) {
+        if (item.length < 3) {
+            return null;
+        }
+        char itemType = item[0];
+        int x, y;
+        try {
+            x = Character.getNumericValue(item[1]);
+            y = Character.getNumericValue(item[2]);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        if (itemType == 'K') {
+            char type = item.length >= 4 ? item[3] : ' ';
+            return new Key(x, y, type);
+        } else if (itemType == 'C') {
+            return new Chip(x, y);
+        } else {
+            return null;
         }
     }
 
@@ -271,18 +282,24 @@ public class LevelLoader {
     public static void drawEntities(GraphicsContext gc) {
         for (ArrayList<Entity> row : getentityGrid()) {
             for (Entity entity : row) {
-                entity.draw(gc, entity.getX(), entity.getY(), 32);
+                if (entity != null) {
+                    entity.draw(gc, entity.getX(), entity.getY(), 32);
+                }
             }
         }
     }
 
+
     public static void drawItems(GraphicsContext gc) {
         for (ArrayList<Item> row : getItemGrid()) {
             for (Item item : row) {
-                item.draw(gc, item.getX(), item.getY(), 32);
+                if (item != null) {
+                    item.draw(gc, item.getX(), item.getY(), 32);
+                }
             }
         }
     }
+
 
     private static int countFileLines(InputStream inputStream) {
         Scanner scanner = new Scanner(inputStream);

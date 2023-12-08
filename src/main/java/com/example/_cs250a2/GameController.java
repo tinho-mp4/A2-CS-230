@@ -35,7 +35,7 @@ public class GameController {
     private static Game instance;
     public LevelLoader levelLoader;
 
-    public String levelName = "level2";
+    public String levelName = "level3";
 
     private int timeLimit = 100;
 
@@ -53,12 +53,9 @@ public class GameController {
     }
 
     public void processKeyEvent(KeyEvent event) {
+        System.out.println("Key pressed: " + event.getCode()); // Debugging statement
         player.move(event);
-
-        // Redraw game as the player may have moved.
         drawGame();
-
-        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
     }
 

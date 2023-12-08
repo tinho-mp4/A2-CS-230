@@ -68,8 +68,6 @@ public class Game extends Application {
     private static Game instance;
     private LevelLoader levelLoader;
 
-    private String levelName = "level2";
-
     private int timeLimit;
 
     private Profile currentProfile;
@@ -119,4 +117,5 @@ public class Game extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
