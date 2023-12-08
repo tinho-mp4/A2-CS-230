@@ -16,7 +16,7 @@ public class LevelLoader {
      * This value is set during the level loading process.
      */
 
-    private int timeLimit;
+    private static int timeLimit;
     /**
      * Represents the height of the level grid.
      * This value is set during the level loading process.
@@ -47,6 +47,7 @@ public class LevelLoader {
         // Read level information
         String levelName = scanner.nextLine().split(": ")[1];
         int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
+        Game.getInstance().setTimeLimit(timeLimit);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
@@ -320,6 +321,7 @@ public class LevelLoader {
     public static int getWidth() {
         return width;
     }
+
 
     public static ArrayList<ArrayList<Tile>> getTileGrid() {
         return tileGrid;

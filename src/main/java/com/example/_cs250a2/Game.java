@@ -48,9 +48,6 @@ public class Game extends Application {
     private Canvas canvas;
 
     // Loaded images
-    private Image playerImage;
-    private Image dirtImage;
-    private Image iconImage;
 
     // Create Player
     Player player = new Player(1,1);
@@ -59,11 +56,14 @@ public class Game extends Application {
     private Timeline tickTimeline;
 
     private Color bgColor = Color.LIGHTBLUE;
-
     private static Game instance;
     private LevelLoader levelLoader;
 
     private String levelName = "level2";
+
+    private int timeLimit;
+
+    private Profile currentProfile;
 
     public static Game getInstance() {
         if (instance == null) {
@@ -71,7 +71,6 @@ public class Game extends Application {
         }
         return instance;
     }
-
 
     /**
      * Set up the new application.
@@ -96,6 +95,12 @@ public class Game extends Application {
         // Loop the timeline forever
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         // We start the timeline upon a button press.
+
+        // Create a timer to update the time limit
+        Timeline timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTimer()));
+        timerTimeline.setCycleCount(Animation.INDEFINITE);
+        timerTimeline.play();
+
 
         // Display the scene on the stage
         drawGame();
@@ -156,6 +161,13 @@ public class Game extends Application {
      * over them all and calling their own tick method).
      */
     public void tick() {
+        //update the timer every tick if its 0 end the game
+        updateTimer();
+
+        if (timeLimit <= 0) {
+            GameOver.gameEndTime();
+            tickTimeline.stop();
+        }
         // Here we move the player right one cell and teleport
         // them back to the left side when they reach the right side.
         int playerX = player.getX();
@@ -185,7 +197,23 @@ public class Game extends Application {
         return root;
     }
 
-    public static void startGame() {
+    //reduce the time by one or until it reaches 0`
+    public void updateTimer() {
+        timeLimit--;
+        if (timeLimit <= 0) {
+            GameOver.gameEndTime();
+            tickTimeline.stop();
+        }
+
+        //sets the score for the current profile
+        if(currentProfile != null) {
+            currentProfile.setScoreForLevel(levelName, timeLimit);
+        }
+
+    }
+
+    public void startGame(Profile profile) {
+        this.currentProfile = profile;
         Platform.runLater(() -> {
             try {
                 instance.start(new Stage());
@@ -199,8 +227,13 @@ public class Game extends Application {
         this.levelName = levelName;
     }
 
+
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void setTimeLimit(int timeLimit) {
+        this.timeLimit = timeLimit;
     }
 }
 

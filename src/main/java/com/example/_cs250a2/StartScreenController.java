@@ -99,18 +99,25 @@ public class StartScreenController {
     }
 
     private void handleStartButton() {
-
         try {
             if (currentLevel == null) {
                 throw new IllegalArgumentException("No level selected.");
             }
+
+            if (currentProfile == null) {
+                throw new IllegalArgumentException("No profile selected.");
+            }
+
+            // Pass the selected profile to the Game class
             Game gameInstance = Game.getInstance();
             gameInstance.setLevelName(currentLevel.getName());
-            gameInstance.startGame();
+            gameInstance.startGame(currentProfile);
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+
 
     private void handleSelectButton() {
         currentProfile = profileChoiceBox.getValue();
