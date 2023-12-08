@@ -22,6 +22,7 @@ public class StartScreen extends Application {
             // Get the controller from the FXMLLoader
             StartScreenController controller = loader.getController();
 
+
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();

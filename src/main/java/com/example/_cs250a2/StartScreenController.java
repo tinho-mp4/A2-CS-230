@@ -109,9 +109,7 @@ public class StartScreenController {
             }
 
             // Pass the selected profile to the Game class
-            Game gameInstance = Game.getInstance();
-            gameInstance.setLevelName(currentLevel.getName());
-            gameInstance.startGame(currentProfile);
+            System.out.println("jsut smile and wave");
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
