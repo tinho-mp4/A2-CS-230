@@ -41,56 +41,91 @@ public class Ice extends Tile {
     }
 
     public static void event(int playerX, int playerY, int newPlayerX, int newPlayerY) {
+        // log coords
+        // System.out.println("playerX: " + playerX + " playerY: " + playerY + " newPlayerX: " + newPlayerX + " newPlayerY: " + newPlayerY);
         // delta will act as the direction in which the player is going
         // NOTE: deltaX -1 is left, deltaX 1 is right, deltaY 1 is up, deltaY -1 is down, this might need changing
         int deltaX = newPlayerX - playerX;
         int deltaY = newPlayerY - playerY;
 
-        if (LevelLoader.getTile(playerX, playerY).getName() == "ice") {
-            if (!LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) {
-                // Corner checking
-                if (LevelLoader.getTile(newPlayerX, newPlayerY).getName() == "ice") {
-                    Player.setX(newPlayerX);
-                    Player.setY(newPlayerY);
+        if (!LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) {
+            // Corner checking
+            if (LevelLoader.getTile(newPlayerX, newPlayerY).getName() == "ice") {
+                Player.setX(newPlayerX);
+                Player.setY(newPlayerY);
 
-                    Corner blockedCorner = ((Ice)LevelLoader.getTile(newPlayerX, newPlayerY)).getBlockedCorner();
+                Corner blockedCorner = ((Ice)LevelLoader.getTile(newPlayerX, newPlayerY)).getBlockedCorner();
 
-                    int targetX = newPlayerX;
-                    int targetY = newPlayerY;
+                int targetX = newPlayerX;
+                int targetY = newPlayerY;
 
-                    switch (blockedCorner) {
-                        case TOP_LEFT:
-                            targetY -= (deltaX == -1) ? 1 : 0;
-                            targetX += (deltaY == 1) ? 1 : 0;
-                            break;
-                        case TOP_RIGHT:
-                            targetY -= (deltaX == 1) ? 1 : 0;
-                            targetX -= (deltaY == 1) ? 1 : 0;
-                            break;
-                        case BOTTOM_LEFT:
-                            targetY += (deltaX == -1) ? 1 : 0;
-                            targetX += (deltaY == -1) ? 1 : 0;
-                            break;
-                        case BOTTOM_RIGHT:
-                            targetY += (deltaX == 1) ? 1 : 0;
-                            targetX -= (deltaY == -1) ? 1 : 0;
-                            break;
-                        default:
-                            targetX += deltaX;
-                            targetY += deltaY;
-                            break;
+                if (hitIceWall(playerX, playerY, newPlayerX, newPlayerY, blockedCorner)) {
+                    // if the player came from a path, player should stay on the path
+                    if (LevelLoader.getTile(playerX, playerY).getName() != "ice") {
+                        Player.setX(playerX);
+                        Player.setY(playerY);
+                        return;
                     }
-
-                    event(newPlayerX, newPlayerY, targetX, targetY);
+                    Player.setX(playerX - deltaX);
+                    Player.setY(playerY - deltaY);
+                    event(playerX, playerY, playerX - deltaX, playerY - deltaY);
+                    return;
                 }
-            } else if (LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) {
-                Player.setX(playerX - deltaX);
-                Player.setY(playerY - deltaY);
-                event(playerX - deltaX, playerY - deltaY, playerX - 2*deltaX, playerY - 2*deltaY);
+
+                switch (blockedCorner) {
+                    case TOP_LEFT:
+                        targetY += (deltaX == -1) ? 1 : 0;
+                        targetX += (deltaY == -1) ? 1 : 0;
+                        break;
+                    case TOP_RIGHT:
+                        targetY += (deltaX == 1) ? 1 : 0;
+                        targetX -= (deltaY == -1) ? 1 : 0;
+                        break;
+                    case BOTTOM_LEFT:
+                        targetY -= (deltaX == -1) ? 1 : 0;
+                        targetX += (deltaY == 1) ? 1 : 0;
+                        break;
+                    case BOTTOM_RIGHT:
+                        targetY -= (deltaX == 1) ? 1 : 0;
+                        targetX -= (deltaY == 1) ? 1 : 0;
+                        break;
+                    default:
+                        targetX += deltaX;
+                        targetY += deltaY;
+                        break;
+                }
+
+                event(newPlayerX, newPlayerY, targetX, targetY);
+            } else {
+                Player.setX(newPlayerX);
+                Player.setY(newPlayerY);
             }
+        } else if (LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) { // Go in the reverse direction
+            Player.setX(playerX - deltaX);
+            Player.setY(playerY - deltaY);
+            event(playerX, playerY, playerX - deltaX, playerY - deltaY);
         }
     }
 
+    public static boolean hitIceWall(int playerX, int playerY, int newPlayerX, int newPlayerY, Corner blockedCorner) {
+        int deltaX = newPlayerX - playerX;
+        int deltaY = newPlayerY - playerY;
+
+        // this code acts as a way of checking if the player is hitting a wall, if it does,
+        switch (blockedCorner) {
+            case TOP_LEFT:
+                return (deltaX == 1 || deltaY == 1);
+            case TOP_RIGHT:
+                return (deltaX == -1 || deltaY == 1);
+            case BOTTOM_LEFT:
+                return (deltaX == 1 || deltaY == -1);
+            case BOTTOM_RIGHT:
+                return (deltaX == -1 || deltaY == -1);
+            default:
+                return false;
+        }
+
+    }
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         switch (this.blockedCorner) {
