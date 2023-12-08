@@ -112,6 +112,7 @@ public class Game extends Application {
 
         this.levelLoader = new LevelLoader();
         this.levelLoader.loadLevel(gc,Game.class.getResourceAsStream("levels/"+ levelName +".txt"));
+        player.draw(gc, player.getX(),player.getY() , 32);
     }
 
     /**
@@ -120,7 +121,6 @@ public class Game extends Application {
      */
     public void processKeyEvent(KeyEvent event) {
         player.move(event);
-
         // Redraw game as the player may have moved.
         drawGame();
 
