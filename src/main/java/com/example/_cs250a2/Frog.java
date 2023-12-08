@@ -9,11 +9,13 @@ import javafx.scene.image.Image;
 //TODO test when level available
 public class Frog extends Monster {
 
+    private static int speed;
+
     private static final Image FROG_IMAGE = new Image(Key.class.getResourceAsStream("sprites/frog.png"));
-    public Frog (int speed, char startingDirection, int[] startingLocation) {
+    public Frog (int ticks, char startingDirection, int[] startingLocation) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         allowedTiles.remove("Trap");
-        this.speed = speed;
+        speed = ticks;
         direction = startingDirection;
         location = startingLocation;
         x = location[0];
@@ -26,6 +28,7 @@ public class Frog extends Monster {
         countMonsters++;
     }
 
+
     //this move method will try and make the frog x equal to player x then do the same with y
     public void move() {
         int[] checkLeft = {x--, y};
@@ -36,51 +39,83 @@ public class Frog extends Monster {
         int playerY = Player.getY();
         if (x > playerX && checkTile(checkLeft)) {
             x--;
+            playerKill();
+            locationUpdate(arrayLocationX, x);
             direction = 'a';
         } else if (x < playerX && checkTile(checkRight)) {
             x++;
+            playerKill();
+            locationUpdate(arrayLocationX, x);
             direction = 'd';
         } else if (y > playerY && checkTile(checkBelow)) {
             y--;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 's';
         } else if (y < playerY && checkTile(checkAbove)) {
             y++;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 'w';
         } else if (direction == 'a' && checkTile(checkAbove)) {
             y++;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 'w';
         } else if (direction == 'a' && checkTile(checkBelow)) {
             y--;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 's';
         } else if (direction == 'a') {
             x++;
+            playerKill();
+            locationUpdate(arrayLocationX, x);
             direction = 'd';
         } else if (direction == 'w' && checkTile(checkLeft)) {
             x--;
+            playerKill();
+            locationUpdate(arrayLocationX, x);
             direction = 'a';
         } else if (direction == 'w' && checkTile(checkRight)) {
             x++;
+            playerKill();
+            locationUpdate(arrayLocationX, x);
             direction = 'd';
         } else if (direction == 'w') {
             y--;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 's';
         } else if (direction == 's' && checkTile(checkRight)) {
             x++;
+            playerKill();
+            locationUpdate(arrayLocationX, x);
             direction = 'd';
         } else if (direction == 's' && checkTile(checkLeft)) {
             x--;
+            playerKill();
+            locationUpdate(arrayLocationX, x);
             direction = 'a';
         } else if (direction == 's') {
             y++;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 'w';
         } else if (direction == 'd' && checkTile(checkBelow)) {
             y--;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 's';
         } else if (direction == 'd' && checkTile(checkAbove)) {
             y++;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 'w';
         } else if (direction == 'd') {
             y--;
+            playerKill();
+            locationUpdate(arrayLocationY, y);
             direction = 'a';
         }
     }

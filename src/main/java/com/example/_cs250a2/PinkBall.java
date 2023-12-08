@@ -8,10 +8,12 @@ import javafx.scene.image.Image;
  */
 public class PinkBall extends Monster {
 
+    private static int speed;
+
     private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/ball.png"));
-    public PinkBall(int speed, char startingDirection, int[] startingLocation) {
+    public PinkBall(int ticks, char startingDirection, int[] startingLocation) {
         super(startingLocation[0], startingLocation[1], startingDirection);
-        this.speed = speed;
+        speed = ticks;
         direction = startingDirection;
         location = startingLocation;
         x = location[0];
@@ -24,6 +26,7 @@ public class PinkBall extends Monster {
         countMonsters++;
         monsterLocations.add(x);
         monsterLocations.add(y);
+        PinkBallList.add(this);
     }
 
     public void move() {
@@ -34,6 +37,8 @@ public class PinkBall extends Monster {
             //method to check the tile is legal
             if (checkTile(locationNext)) {
                 y++;
+                locationUpdate(arrayLocationY, y);
+                playerKill();
             } else {
                 direction = 's';
                 move();
@@ -45,6 +50,7 @@ public class PinkBall extends Monster {
             if (checkTile(locationNext)) {
                 y--;
                 playerKill();
+                locationUpdate(arrayLocationY, y);
             } else {
                 direction = 'w';
                 move();
@@ -54,6 +60,7 @@ public class PinkBall extends Monster {
             if (checkTile(locationNext)) {
                 x--;
                 playerKill();
+                locationUpdate(arrayLocationX, x);
             } else {
                 direction = 'd';
                 move();
@@ -63,6 +70,7 @@ public class PinkBall extends Monster {
             if (checkTile(locationNext)) {
                 x++;
                 playerKill();
+                locationUpdate(arrayLocationX, x);
             } else {
                 direction = 'a';
                 move();

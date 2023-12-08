@@ -1,0 +1,14 @@
+Level Name: level3
+TimeLimit = 300
+Level Dimensions 6 5
+
+PPPPPP
+PI0PPI0P
+L0L1L2L3PPP
+PPPPPP
+PPUPPP
+Z31
+K43
+C21
+K13
+F44
