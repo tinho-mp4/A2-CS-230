@@ -50,7 +50,7 @@ public class Game extends Application {
     // Loaded images
 
     // Create Player
-    Player player = new Player(1,1);
+    Player player = new Player(0,1);
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
