@@ -37,6 +37,7 @@ public class Button extends Tile{
      */
     public Button(int x, int y, int _pairedNumber) {
         super("button", x, y, false);
+        this.setPushableBlock(true);
         isPressed = false;
         linkedTraps = new ArrayList<>();
         pairedNumber = _pairedNumber;

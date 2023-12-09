@@ -20,7 +20,8 @@ public class Ice extends Tile {
      * @param blockedCorner the blocked corner enum variable (can be null)
      */
     public Ice(int x, int y, int blockedCorner) {
-        super("ice", x, y, false);
+        super("ice", x, y, true);
+        this.setPushableBlock(true);
         switch (blockedCorner-'0') {
             case 0:
                 this.blockedCorner = Corner.NONE;

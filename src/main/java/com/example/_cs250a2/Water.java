@@ -8,6 +8,7 @@ public class Water extends Tile{
 
     public Water(int x, int y) {
         super("water",x, y, false);
+        this.setPushableBlock(true);
     }
 
     @Override
