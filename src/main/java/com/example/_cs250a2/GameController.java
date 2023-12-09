@@ -25,6 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.List;
+
 
 public class GameController {
 
@@ -296,16 +298,25 @@ public class GameController {
 
     @FXML
     public void handleShowHighScoresButton() {
-        // Here you can add the code to show the high scores
         System.out.println("Show high scores button clicked");
+
+        // Assuming 'highScore' is an instance of the modified HighScore class
         highScore.addScore(levelName, currentProfile.getName(), timeLimit);
+
         for (Level level : levels) {
-            ScoreEntry highScoreEntry = highScore.getHighScore(level.getName());
-            if (highScoreEntry != null) {
-                System.out.println("High score for " + level.getName() + ": " + highScoreEntry.getScore() + " by " + highScoreEntry.getProfileName());
+            List<ScoreEntry> highScoresList = highScore.getHighScores(level.getName());
+
+            if (!highScoresList.isEmpty()) {
+                System.out.println("High scores for " + level.getName() + ":");
+                int rank = 1;
+                for (ScoreEntry highScoreEntry : highScoresList) {
+                    System.out.println(rank + ". " + highScoreEntry.getProfileName() + " - " + highScoreEntry.getScore());
+                    rank++;
+                }
+            } else {
+                System.out.println("No high scores for " + level.getName());
             }
         }
-
     }
 
     private void handleSelectLevelButton() {

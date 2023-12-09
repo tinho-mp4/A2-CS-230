@@ -84,7 +84,6 @@ public class Game extends Application {
 
         // Set up the controller
         GameController controller = loader.getController();
-        controller.initialize();
 
         // Register an event handler for key presses.
         // This causes the processKeyEvent method to be called each time a key is pressed.
