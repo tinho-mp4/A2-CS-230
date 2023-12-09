@@ -213,7 +213,9 @@ public class GameController {
 
     @FXML
     public void initialize() {
-        profiles.addAll(new Profile("Profile1"), new Profile("Profile2"), new Profile("Profile3"));
+        List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
+        profiles.addAll(loadedProfiles);
+
         profileChoiceBox.setItems(profiles);
 
         // scan the levels directory and add all the levels to the levels list
@@ -252,6 +254,9 @@ public class GameController {
     }
 
     private void handleStartButton() {
+        List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
+        ProfileFileManager.printAllProfiles(loadedProfiles);
+
         try {
             if (currentLevel == null) {
                 throw new IllegalArgumentException("No level selected.");
@@ -311,10 +316,13 @@ public class GameController {
         Profile newProfile = new Profile(newProfileName);
         profiles.add(newProfile);
         System.out.println("Created profile: " + newProfile.getName());
+
+        ProfileFileManager.saveAllProfiles(profiles);
     }
 
     @FXML
     public void handleShowHighScoresButton() {
+
         System.out.println("Show high scores button clicked");
 
         // Assuming 'highScore' is an instance of the modified HighScore class
