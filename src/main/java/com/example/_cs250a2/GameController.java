@@ -215,7 +215,7 @@ public class GameController {
         profiles.addAll(new Profile("Profile1"), new Profile("Profile2"), new Profile("Profile3"));
         profileChoiceBox.setItems(profiles);
 
-        levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"), new Level("level4"));
+        levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"));
         levelChoiceBox.setItems(levels);
 
         selectNameButton.disableProperty().bind(profileChoiceBox.valueProperty().isNull());
@@ -258,8 +258,8 @@ public class GameController {
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
-            levelLoader.updateLevelInformation(levelName);
-
+            // Clear the level before loading a new one
+            levelLoader.clearLevel();
             levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
 
 
@@ -333,7 +333,7 @@ public class GameController {
             if (currentProfile == null || selectedLevelNumber > currentProfile.getLevelReached() + 1) {
                 throw new IllegalArgumentException("You must complete the previous level first.");
             }
-            this.currentLevel = selectedLevel;
+            currentLevel = selectedLevel;
             System.out.println("Selected level: " + currentLevel.getName());
             currentLevelProperty.set(currentLevel);
         } catch (IllegalArgumentException e) {

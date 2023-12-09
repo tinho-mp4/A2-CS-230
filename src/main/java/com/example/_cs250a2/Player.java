@@ -74,7 +74,7 @@ public class Player{
                 dirt.compact();
                 break;
             case "exit":
-                Level.nextLevel();
+                Exit.event();
             case "button":
                 Button.event();
             case "trap":

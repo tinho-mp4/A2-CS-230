@@ -368,4 +368,10 @@ public class LevelLoader {
     public static ArrayList<ArrayList<Item>> getItemGrid() {
         return itemGrid;
     }
+
+    public static void clearLevel() {
+        tileGrid.clear();
+        entityGrid.clear();
+        itemGrid.clear();
+    }
 }

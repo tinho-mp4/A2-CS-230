@@ -87,9 +87,6 @@ public class Game extends Application {
 
         // Register a tick method to be called periodically.
         // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        controller.tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> controller.tick()));
-        // Loop the timeline forever
-        controller.tickTimeline.setCycleCount(Animation.INDEFINITE);
 
         // Display the scene on the stage
         primaryStage.setScene(scene);

@@ -1,11 +1,12 @@
 package com.example._cs250a2;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.*;
 
-public class Profile {
+public class Profile implements Serializable{
     private String name;
 
     private int levelReached;
@@ -43,6 +44,39 @@ public class Profile {
     public void setScoreForLevel(String level, int score) {
         levelScores.put(level, score);
     }
+
+    public Profile(String name, String filePath) {
+        this.name = name;
+        this.levelReached = 3;
+        this.levelScores = new HashMap<>();
+        this.highScores = new HashMap<>();
+
+        loadFromFile(filePath);
+    }
+
+    // Save the profile to a file
+    public void saveToFile(String filePath) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            oos.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Load the profile from a file
+    private void loadFromFile(String filePath) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+            Profile savedProfile = (Profile) ois.readObject();
+            this.levelReached = savedProfile.levelReached;
+            this.levelScores = savedProfile.levelScores;
+            this.highScores = savedProfile.highScores;
+        } catch (FileNotFoundException e) {
+            // Ignore if the file doesn't exist (first run)
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void addScoreToHighScores(String level, int score) {
         highScores.putIfAbsent(level, new PriorityQueue<>(Comparator.comparingInt(ScoreEntry::getScore)));

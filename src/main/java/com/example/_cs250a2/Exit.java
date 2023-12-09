@@ -10,6 +10,11 @@ public class Exit extends Tile{
         super("exit", x, y, false);
     }
 
+    public static void event() {
+        System.out.println("You win!");
+    }
+
+
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(EXIT_IMAGE, x*size, y*size);
