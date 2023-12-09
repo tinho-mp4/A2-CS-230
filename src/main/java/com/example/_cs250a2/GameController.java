@@ -16,10 +16,8 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -35,6 +33,12 @@ public class GameController {
 
     @FXML
     public Canvas canvas;
+
+    @FXML
+    private Button showHighScoresButton;
+
+    @FXML
+    private TextArea highScoresTextArea;
 
     // Loaded images
 
@@ -103,6 +107,8 @@ public class GameController {
 
     @FXML
     private Label selectedLevelLabel;
+    private HighScore highScore = new HighScore();
+
 
     private final ObjectProperty<Level> currentLevelProperty = new SimpleObjectProperty<>();
 
@@ -216,11 +222,10 @@ public class GameController {
         createButton.setOnAction(event -> handleCreateButton());
         selectLevelButton.setOnAction(event -> handleSelectLevelButton());
         startButton.setOnAction(event -> handleStartButton());
+        showHighScoresButton.setOnAction(event -> handleShowHighScoresButton());
 
         timeRemainingProperty = new SimpleStringProperty();
         timeRemainingLabel.textProperty().bind(timeRemainingProperty);
-
-
 
 
         selectedProfileLabel.textProperty().bind(currentProfileProperty.asString());
@@ -287,6 +292,20 @@ public class GameController {
         Profile newProfile = new Profile(newProfileName);
         profiles.add(newProfile);
         System.out.println("Created profile: " + newProfile.getName());
+    }
+
+    @FXML
+    public void handleShowHighScoresButton() {
+        // Here you can add the code to show the high scores
+        System.out.println("Show high scores button clicked");
+        highScore.addScore(levelName, currentProfile.getName(), timeLimit);
+        for (Level level : levels) {
+            ScoreEntry highScoreEntry = highScore.getHighScore(level.getName());
+            if (highScoreEntry != null) {
+                System.out.println("High score for " + level.getName() + ": " + highScoreEntry.getScore() + " by " + highScoreEntry.getProfileName());
+            }
+        }
+
     }
 
     private void handleSelectLevelButton() {
