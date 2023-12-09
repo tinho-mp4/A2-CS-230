@@ -8,7 +8,7 @@ public abstract class Item {
     protected int x;
     protected int y;
 
-    public Item(String name, int x, int y, boolean b) {
+    public Item(String name, int x, int y) {
         this.name = name;
         this.x = x;
         this.y = y;

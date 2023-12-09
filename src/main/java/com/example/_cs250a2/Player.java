@@ -114,8 +114,7 @@ public class Player{
 
 
 
-            } else if (currentItem instanceof Key) {
-                Key key = new Key(x, y);
+            } else if (currentItem instanceof Key key) {
                 addToInventory(key);
                 LevelLoader.removeItem(currentItem);
                 displayInventory();

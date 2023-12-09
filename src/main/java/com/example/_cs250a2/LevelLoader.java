@@ -250,11 +250,15 @@ public class LevelLoader {
     }
 
     public static Item processItem(GraphicsContext gc, char[] item) {
+        int x = item[1] - '0';
+        int y = item[2] - '0';
+
         switch (item[0]){
             case 'C':
-                return new Chip(item[1]-'0', item[2]-'0');
+                return new Chip(x, y);
             case 'K':
-                return new Key(item[1]-'0', item[2]-'0');
+                char colourCode = item[3];
+                return new Key(x, y, colourCode);
             default:
                 return null;
         }
