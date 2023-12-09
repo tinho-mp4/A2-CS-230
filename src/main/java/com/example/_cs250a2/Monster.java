@@ -4,7 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO fix checkTile... again (stop them going too far right or down)
 //more tests dont hurt
 /**
  * javadoc to go here
@@ -108,7 +107,10 @@ public abstract class Monster extends Entity {
       }
       //now checks that no other monster is on the tile
       for (int i = 0; i < countMonsters; i++) {
-
+         if (monsterLocations.get(i*2) == tileLocation[0]
+                 && monsterLocations.get(i*2+1) == tileLocation[1]) {
+            safeTile = false;
+         }
       }
       if (safeTile && withinBounds) {
          return true;
