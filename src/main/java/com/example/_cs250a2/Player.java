@@ -83,12 +83,16 @@ public class Player{
                 break;
             case "exit":
                 Exit.event();
+                break;
             case "button":
                 Button.event();
+                break;
             case "trap":
                 Trap.event();
+                break;
             case "water":
                 GameOver.playerDeathDrown();
+                break;
             case "chipSocket":
                 ChipSocket chipSocket = (ChipSocket) currentTile;
                 chipSocket.event(inventory);
@@ -101,6 +105,7 @@ public class Player{
                 break;
             case "ice":
                 Ice.event(x, y, newX, newY);
+                break;
             default:
 //            Path
                 break;
