@@ -37,6 +37,8 @@ public class Frog extends Monster {
         return speed;
     }
 
+    public void event (int x, int y, int newX, int newY) {}
+
     //this move method will try and make the frog x equal to player x then do the same with y
     public void move() {
         int[] checkLeft = {x-1, y};

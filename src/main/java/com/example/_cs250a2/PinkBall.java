@@ -31,6 +31,7 @@ public class PinkBall extends Monster {
         PinkBallList.add(this);
     }
 
+    public void event (int x, int y, int newX, int newY) {}
     public static int getSpeed() {
         return speed;
     }

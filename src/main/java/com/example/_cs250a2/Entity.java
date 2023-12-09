@@ -40,5 +40,7 @@ public abstract class Entity {
         this.location = new int[]{x, y};
     }
 
+    public abstract void event(int x, int y, int newX, int newY);
+
     public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }

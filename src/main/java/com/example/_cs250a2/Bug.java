@@ -38,6 +38,8 @@ public class Bug extends Monster {
         return speed;
     }
 
+    public void event (int x, int y, int newX, int newY) {}
+
     public void move() {
         int[] toTheLeft = {x-1, y};
         int[] above = {x, y+1};
