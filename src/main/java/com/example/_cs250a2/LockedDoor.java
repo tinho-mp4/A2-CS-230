@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
-enum DoorType {RED, GREEN, BLUE, YELLOW};
+
 
 public class LockedDoor extends Tile {
     private static final Image RED_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/redLockedDoor.png"));
@@ -13,30 +13,65 @@ public class LockedDoor extends Tile {
     private static final Image GREEN_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/greenLockedDoor.png"));
     private static final Image YELLOW_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/yellowLockedDoor.png"));
 
-    private DoorType doorType;
+    private DoorColour doorType;
 
     public LockedDoor(int x, int y, char doorTypeChar) {
         super("lockedDoor", x, y, true);
         this.doorType = getDoorType(doorTypeChar);
     }
 
-    public static void event(ArrayList<Item> inventory) {
-    }
-
-    private DoorType getDoorType(char doorTypeChar) {
-        switch (doorTypeChar) {
-            case '0':
-                return DoorType.RED;
-            case '1':
-                return DoorType.GREEN;
-            case '2':
-                return DoorType.BLUE;
-            case '3':
-                return DoorType.YELLOW;
-            default:
-                return DoorType.RED;
+    public void event(ArrayList<Item> inventory) {
+        if (correctKey(inventory)) {
+            LevelLoader.setTile(getX(), getY(), new Path(getX(), getY()));
         }
     }
+
+    private boolean correctKey(ArrayList<Item> inventory){
+        for (Item item : inventory) {
+            if (item instanceof Key) {
+                Key key = (Key) item;
+                if (key.getColour() == this.getColour()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void checkUnlock(ArrayList<Item> inventory) {
+        if(correctKey(inventory)) {
+            setSolid(false);
+        }
+    }
+
+
+
+
+
+    private DoorColour getDoorType() {
+        return doorType;
+    }
+
+    private DoorColour getDoorType(char doorTypeChar) {
+        switch (doorTypeChar) {
+            case '0':
+                return DoorColour.RED;
+            case '1':
+                return DoorColour.GREEN;
+            case '2':
+                return DoorColour.BLUE;
+            case '3':
+                return DoorColour.YELLOW;
+            default:
+                return DoorColour.RED;
+        }
+    }
+
+    public DoorColour getColour() {
+        return this.doorType;
+    }
+
+
 
 
     @Override

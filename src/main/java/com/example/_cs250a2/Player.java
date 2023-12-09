@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
 
 public class Player{
     private static final Image PLAYER_TILE = new Image(Player.class.getResourceAsStream("sprites/player.png"));
@@ -82,11 +83,13 @@ public class Player{
             case "chipSocket":
                 ChipSocket chipSocket = (ChipSocket) currentTile;
                 chipSocket.event(inventory);
-                ChipSocket.restAllLocks();
-
+                ChipSocket.resetAllLocks();
                 break;
             case "lockedDoor":
-                LockedDoor.event(inventory);
+                LockedDoor lockedDoor = (LockedDoor) currentTile;
+                lockedDoor.event(inventory);
+                displayInventory();
+                break;
             case "ice":
                 Ice.event(x, y, newX, newY);
             default:
@@ -114,10 +117,20 @@ public class Player{
 
 
 
-            } else if (currentItem instanceof Key key) {
-                addToInventory(key);
+            } else if (currentItem instanceof Key) {
+                addToInventory(currentItem);
                 LevelLoader.removeItem(currentItem);
                 displayInventory();
+
+                for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
+                    for (Tile t : row) {
+                        if (t instanceof LockedDoor) {
+                            LockedDoor door = (LockedDoor) t;
+                            door.checkUnlock(inventory);
+                        }
+                    }
+                }
+
             }
         }
 

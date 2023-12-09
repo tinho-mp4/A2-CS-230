@@ -18,7 +18,7 @@ public class ChipSocket extends Tile{
         this.chipsNeeded = type;
     }
 
-    public static void restAllLocks() {
+    public static void resetAllLocks() {
         for(ArrayList<Tile> row : LevelLoader.getTileGrid()) {
             for(Tile t : row) {
                 if(t instanceof ChipSocket socket) {
@@ -32,8 +32,6 @@ public class ChipSocket extends Tile{
     public void event(ArrayList<Item> inventory) {
         if (enoughChips(inventory)) {
             LevelLoader.setTile(getX(), getY(), new Path(getX(), getY()));
-
-
             AtomicInteger removeChips = new AtomicInteger(chipsNeeded);
             inventory.removeIf(item -> {
                 if (item instanceof Chip && removeChips.get() > 0) {
