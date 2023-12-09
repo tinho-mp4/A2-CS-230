@@ -120,6 +120,7 @@ public class GameController {
 
         // Check if the player is on the exit after moving
         if (player.isOnExit()) {
+            startButton.setDisable(false);
             completeLevel();
             updateScoreAndSaveProfile();
 
@@ -294,6 +295,7 @@ public class GameController {
 
             if (levelLoader == null) {
                 levelLoader = new LevelLoader();
+                startButton.setDisable(true);
             }
 
             setCurrentLevel(currentLevel);
