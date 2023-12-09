@@ -32,6 +32,7 @@ public class GameController {
 
     private static final int CANVAS_WIDTH = 700;
     private static final int CANVAS_HEIGHT = 400;
+    private static final int MAXIMUMTICKS = 5;
 
     @FXML
     public Canvas canvas;
@@ -51,6 +52,7 @@ public class GameController {
     public Timeline tickTimeline;
 
     public int score = 0;
+    private int tickCount = 0;
 
     private Color bgColor = Color.LIGHTBLUE;
     private static Game instance;
@@ -158,21 +160,19 @@ public class GameController {
      */
     public void tick() {
         //update the timer every tick if its 0 end the game
+        System.out.println("tick");
         updateTimer();
+        //this is redundant if you call update timer
+        //if (timeLimit <= 0) {
+        //    GameOver.gameEndTime();
+        //    tickTimeline.stop();
+        //}
 
-        if (timeLimit <= 0) {
-            GameOver.gameEndTime();
-            tickTimeline.stop();
+        Monster.tickMove(tickCount);
+        tickCount++;
+        if (tickCount >= MAXIMUMTICKS) {
+            tickCount = 0;
         }
-        // Here we move the player right one cell and teleport
-        // them back to the left side when they reach the right side.
-        int playerX = player.getX();
-
-        player.setX(playerX + 1);
-        if (playerX > 11) {
-            player.setX(0);
-        }
-        // We then redraw the whole canvas.
         drawGame();
     }
     //reduce the time by one or until it reaches 0`

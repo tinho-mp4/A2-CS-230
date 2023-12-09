@@ -62,11 +62,7 @@ public class Game extends Application {
     // Create Player
     Player player = new Player(1,1);
 
-    // Timeline which will cause tick method to be called periodically.
-    private Timeline tickTimeline;
-
     private Color bgColor = Color.LIGHTBLUE;
-    private static Game instance;
     private LevelLoader levelLoader;
 
     private int timeLimit;
@@ -94,7 +90,6 @@ public class Game extends Application {
         controller.tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> controller.tick()));
         // Loop the timeline forever
         controller.tickTimeline.setCycleCount(Animation.INDEFINITE);
-        // We start the timeline upon a button press.
 
         // Create a timer to update the time limit
         Timeline timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> controller.updateTimer()));
