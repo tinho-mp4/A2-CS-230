@@ -3,7 +3,6 @@ package com.example._cs250a2;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -59,6 +58,7 @@ public class GameController {
     public String levelName = "level3";
 
     private boolean levelCompleted = false;
+    private boolean profileUpdated = false;
 
     private int timeLimit = 100;
 
@@ -66,7 +66,6 @@ public class GameController {
 
     @FXML
     public Label selectedLevelLable;
-    public Canvas levelCanvas;
 
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
@@ -115,19 +114,30 @@ public class GameController {
         System.out.println("This is a button");
     }
 
+    public void clearAndRedrawCanvas() {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        // Draw an invisible shape to force redraw
+        gc.beginPath();
+        gc.moveTo(0, 0);
+        gc.lineTo(1, 1);
+        gc.stroke();
+    }
+
+
     public void processKeyEvent(KeyEvent event) {
-        player.move(event);
-
-        // Check if the player is on the exit after moving
-        if (player.isOnExit()) {
-            startButton.setDisable(false);
-            completeLevel();
-            updateScoreAndSaveProfile();
-
+        if (!levelCompleted) {
+            player.move(event);
+            // Check if the player is on the exit after moving
+            if (player.isOnExit()) {
+                startButton.setDisable(false);
+                completeLevel();
+                updateScoreAndSaveProfile();
+            }
+            drawGame();
+            event.consume();
         }
-
-        drawGame();
-        event.consume();
     }
 
     /**
@@ -139,15 +149,12 @@ public class GameController {
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-
-
-        this.levelLoader.drawLevel(gc);
-        this.levelLoader.drawEntities(gc);
-        this.levelLoader.drawItems(gc);
-
+        LevelLoader.drawLevel(gc);
+        LevelLoader.drawEntities(gc);
+        LevelLoader.drawItems(gc);
 
         // Draw player at current location
-        player.draw(gc, player.getX(), player.getY(), 32);
+        player.draw(gc, Player.getX(), Player.getY(), 32);
         //Draw key at current location
 
     }
@@ -205,19 +212,21 @@ public class GameController {
     }
 
     private void completeLevel() {
-        if (currentProfile != null) {
+        if (currentProfile != null && !levelCompleted) {
+            System.out.println("completeLevel() called");
             int currentLevelReached = currentProfile.getLevelReached();
-            System.out.println("Current Level Reached Before Increment: " + currentLevelReached);
-
             currentProfile.setLevelReached(currentLevelReached + 1);
+            levelCompleted = true;
 
-            levelCompleted = true; // Set level completion flag
-
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
+            clearAndRedrawCanvas();
             if (tickTimeline != null) {
                 tickTimeline.stop();
+            }
+
+            // Prevent multiple calls to update profile
+            if (!profileUpdated) {
+                updateScoreAndSaveProfile();
+                profileUpdated = true;
             }
 
             updateScoreAndSaveProfile();
@@ -306,7 +315,7 @@ public class GameController {
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
             // Clear the level before loading a new one
-            levelLoader.clearLevel();
+            LevelLoader.clearLevel();
             LevelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
 
 
