@@ -161,7 +161,9 @@ public class GameController {
     public void tick() {
         //update the timer every tick if its 0 end the game
         System.out.println("tick");
-        updateTimer();
+        if (tickCount % 2 == 0) {
+            updateTimer();
+        }
         //this is redundant if you call update timer
         //if (timeLimit <= 0) {
         //    GameOver.gameEndTime();
