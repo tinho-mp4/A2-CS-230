@@ -105,7 +105,7 @@ public class GameController {
     private Label selectedProfileLabel;
 
     @FXML
-    private Label selectedLevelLabel;
+    //private Label selectedLevelLabel;
     private HighScore highScore = new HighScore();
 
 
@@ -275,9 +275,10 @@ public class GameController {
 
         selectedProfileLabel.textProperty().bind(currentProfileProperty.asString());
 
-        selectedLevelLable.textProperty().bind(Bindings.createStringBinding(() ->
+        /*selectedLevelLable.textProperty().bind(Bindings.createStringBinding(() ->
                         "Selected level: \n" + (currentLevel != null ? currentLevel.getName() : ""),
-                currentLevelProperty()));
+                currentLevelProperty()));*/
+        selectedLevelLable.textProperty().bind(currentLevelProperty.asString());
     }
 
     private void handleStartButton() {
