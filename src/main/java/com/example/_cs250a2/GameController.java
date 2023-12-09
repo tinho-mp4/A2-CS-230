@@ -211,6 +211,7 @@ public class GameController {
             currentProfile.setLevelReached(currentLevelReached + 1);
 
             levelCompleted = true; // Set level completion flag
+            canvas.setVisible(false);
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -293,9 +294,9 @@ public class GameController {
             }
 
             if (levelLoader == null) {
-                levelLoader = new LevelLoader();
+                levelLoader = new LevelLoader(); // Ensure levelLoader is initialized
             }
-
+            canvas.setVisible(true);
             setCurrentLevel(currentLevel);
             levelName = currentLevel.getName();
             System.out.println("Selected level: " + levelName);
@@ -303,19 +304,20 @@ public class GameController {
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
             // Clear the level before loading a new one
-            levelLoader.clearLevel();
-            LevelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
-
-
-
+            levelLoader.clearLevel(); // Clear existing level data
+            levelLoader.loadLevel(gc, getClass().getResourceAsStream("levels/" + levelName + ".txt"));
 
             setTimeLimit(levelLoader.getTimeLimit());
-
             currentProfile.setScoreForLevel(levelName, timeLimit);
 
             System.out.println("Selected profile: " + currentProfile.getName());
             System.out.println("Selected level: " + currentLevel.getName());
-            Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
+
+            if (tickTimeline != null) {
+                tickTimeline.stop();
+            }
+
+            tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
             tickTimeline.setCycleCount(Animation.INDEFINITE);
             tickTimeline.play();
 
