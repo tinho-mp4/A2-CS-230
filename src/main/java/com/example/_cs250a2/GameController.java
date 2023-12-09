@@ -40,15 +40,8 @@ public class GameController {
     @FXML
     private Button showHighScoresButton;
 
-    @FXML
-    private TextArea highScoresTextArea;
-
-    // Loaded images
-
-    // Create Player
     Player player = new Player(1, 1);
 
-    // Timeline which will cause tick method to be called periodically.
     public Timeline tickTimeline;
 
     public int score = 0;
@@ -109,16 +102,10 @@ public class GameController {
     @FXML
     private Label selectedProfileLabel;
 
-    @FXML
-    private Label selectedLevelLabel;
     private HighScore highScore = new HighScore();
 
 
     private final ObjectProperty<Level> currentLevelProperty = new SimpleObjectProperty<>();
-
-    public void handleButtonClick(ActionEvent actionEvent) {
-        System.out.println("This is a button");
-    }
 
     public void processKeyEvent(KeyEvent event) {
         player.move(event);
@@ -136,9 +123,6 @@ public class GameController {
     public void drawGame() {
         // Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        // Clear canvas
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
 
 
         this.levelLoader.drawLevel(gc);
@@ -152,6 +136,15 @@ public class GameController {
 
     }
 
+    public void clearGame(){
+        this.levelLoader.clearLevel();
+        tickCount = 0;
+        tickTimeline.stop();
+
+
+    }
+
+
     /**
      * This method is called periodically by the tick timeline
      * and would for, example move, perform logic in the game,
@@ -164,11 +157,6 @@ public class GameController {
         if (tickCount % 2 == 0) {
             updateTimer();
         }
-        //this is redundant if you call update timer
-        //if (timeLimit <= 0) {
-        //    GameOver.gameEndTime();
-        //    tickTimeline.stop();
-        //}
 
         Monster.tickMove(tickCount);
         tickCount++;
@@ -177,6 +165,7 @@ public class GameController {
         }
         drawGame();
     }
+
     //reduce the time by one or until it reaches 0`
     public void updateTimer() {
         timeLimit--;
@@ -240,6 +229,7 @@ public class GameController {
     }
 
     private void handleStartButton() {
+
         try {
             if (currentLevel == null) {
                 throw new IllegalArgumentException("No level selected.");
@@ -258,10 +248,9 @@ public class GameController {
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
+            // Clear the level before loading a new one
+            levelLoader.clearLevel();
             levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
-
-
-
 
             setTimeLimit(levelLoader.getTimeLimit());
 
@@ -269,10 +258,14 @@ public class GameController {
 
             System.out.println("Selected profile: " + currentProfile.getName());
             System.out.println("Selected level: " + currentLevel.getName());
-            Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
-            tickTimeline.setCycleCount(Animation.INDEFINITE);
-            tickTimeline.play();
 
+
+            //if the tick timeline is null do this
+            if (tickTimeline == null) {
+                tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
+                tickTimeline.setCycleCount(Animation.INDEFINITE);
+                tickTimeline.play();
+            }
             drawGame();
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
@@ -338,6 +331,7 @@ public class GameController {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
 
     public ObjectProperty<Profile> currentProfileProperty() {
 

@@ -1,14 +1,17 @@
-Level Name: Level1
+Level Name: Level2
 TimeLimit = 300
 Level Dimensions 6 5
 
-PPPPPU
+PPPPS2E
 PI0PPI0P
-LLLPLL
+L0L1L2L3I0PP
 PPPPPP
-PPUPPP
+PPUPPS1
 Z31
-K43
+K00R
+K10B
 C21
+C32
+C00
 K13
 F44
