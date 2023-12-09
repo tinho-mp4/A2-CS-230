@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -215,7 +216,18 @@ public class GameController {
         profiles.addAll(new Profile("Profile1"), new Profile("Profile2"), new Profile("Profile3"));
         profileChoiceBox.setItems(profiles);
 
-        levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"));
+        // scan the levels directory and add all the levels to the levels list
+        File directory = new File("src/main/resources/com/example/_cs250a2/levels");
+        File[] files = directory.listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                String fileName = file.getName();
+                String levelName = fileName.substring(0, fileName.length() - 4);
+                levels.add(new Level(levelName));
+            }
+        }
+
+        //levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"));
         levelChoiceBox.setItems(levels);
 
         selectNameButton.disableProperty().bind(profileChoiceBox.valueProperty().isNull());
