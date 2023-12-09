@@ -3,13 +3,15 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 enum KeyType { RED, GREEN, BLUE, YELLOW }
 
 public class Key extends Item {
-    private static final Image RED_KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/redKey.png"));
-    private static final Image GREEN_KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/greenKey.png"));
-    private static final Image BLUE_KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/blueKey.png"));
-    private static final Image YELLOW_KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/yellowKey.png"));
+    private static final Image RED_KEY_IMAGE = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/redKey.png")));
+    private static final Image GREEN_KEY_IMAGE = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/greenKey.png")));
+    private static final Image BLUE_KEY_IMAGE = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/blueKey.png")));
+    private static final Image YELLOW_KEY_IMAGE = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/yellowKey.png")));
 
     private final KeyType keyType;
 
@@ -33,7 +35,6 @@ public class Key extends Item {
                 return KeyType.RED;
         }
     }
-
 
 
     @Override

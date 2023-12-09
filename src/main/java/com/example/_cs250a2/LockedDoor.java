@@ -4,14 +4,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-enum DoorType {RED, GREEN, BLUE, YELLOW};
+enum DoorType {RED, GREEN, BLUE, YELLOW}
 
 public class LockedDoor extends Tile {
-    private static final Image RED_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/redLockedDoor.png"));
-    private static final Image BLUE_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/blueLockedDoor.png"));
-    private static final Image GREEN_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/greenLockedDoor.png"));
-    private static final Image YELLOW_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/yellowLockedDoor.png"));
+    private static final Image RED_LOCKED_DOOR_IMAGE = new Image(Objects.requireNonNull(LockedDoor.class.getResourceAsStream("sprites/redLockedDoor.png")));
+    private static final Image BLUE_LOCKED_DOOR_IMAGE = new Image(Objects.requireNonNull(LockedDoor.class.getResourceAsStream("sprites/blueLockedDoor.png")));
+    private static final Image GREEN_LOCKED_DOOR_IMAGE = new Image(Objects.requireNonNull(LockedDoor.class.getResourceAsStream("sprites/greenLockedDoor.png")));
+    private static final Image YELLOW_LOCKED_DOOR_IMAGE = new Image(Objects.requireNonNull(LockedDoor.class.getResourceAsStream("sprites/yellowLockedDoor.png")));
 
     private final DoorType doorType;
 
@@ -31,7 +32,6 @@ public class LockedDoor extends Tile {
             default -> DoorType.RED;
         };
     }
-
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {

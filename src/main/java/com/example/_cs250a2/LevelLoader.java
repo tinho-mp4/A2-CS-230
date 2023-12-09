@@ -3,10 +3,7 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,11 +36,11 @@ public class LevelLoader {
      * This value is set during the level loading process.
      */
     private static ArrayList<ArrayList<Tile>> tileGrid = new ArrayList<>();
-    private static ArrayList<ArrayList<Entity>> entityGrid = new ArrayList<>();
-    private static ArrayList<ArrayList<Item>> itemGrid = new ArrayList<>();
+    private static final ArrayList<ArrayList<Entity>> entityGrid = new ArrayList<>();
+    private static final ArrayList<ArrayList<Item>> itemGrid = new ArrayList<>();
 
     public LevelLoader() {
-        Scanner scanner = new Scanner(getClass().getResourceAsStream("levels/level2.txt"));
+        Scanner scanner = new Scanner(Objects.requireNonNull(getClass().getResourceAsStream("levels/level2.txt")));
         // Read level information
         String levelName = scanner.nextLine().split(": ")[1];
         int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
@@ -257,14 +254,14 @@ public class LevelLoader {
         char itemType = item[0];
         int x, y;
         try {
-            x = Character.getNumericValue(item[1]);
-            y = Character.getNumericValue(item[2]);
+            x = Character.getNumericValue(item[1]); // Column
+            y = Character.getNumericValue(item[2]); // Row
         } catch (NumberFormatException e) {
             return null;
         }
         if (itemType == 'K') {
             char type = item.length >= 4 ? item[3] : 'R';
-            System.out.println("Creating key with color: " + type);
+            System.out.println("Placing key at position: (" + x + ", " + y + ")");
             return new Key(x, y, type);
         } else if (itemType == 'C') {
             return new Chip(x, y);
