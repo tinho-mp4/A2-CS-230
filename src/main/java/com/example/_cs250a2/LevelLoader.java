@@ -132,7 +132,7 @@ public class LevelLoader {
             try {
                 for (int j = 0; j < entitiesMatchesArray.length; j++) {
                     if (entitiesMatchesArray[j].toCharArray()[0] == 'C' || entitiesMatchesArray[j].toCharArray()[0] == 'K') {
-                        itemRow.add(processItem(entitiesMatchesArray[j].toCharArray()));
+                        itemRow.add(processItem(gc, entitiesMatchesArray[j].toCharArray()));
                     } else
                         entityRow.add(processEntity(gc, entitiesMatchesArray[j].toCharArray()));
                 }
@@ -146,6 +146,7 @@ public class LevelLoader {
                 itemGrid.add(itemRow);
             }
         }
+
 
 
         drawLevel(gc);
@@ -205,31 +206,32 @@ public class LevelLoader {
      */
     private static Tile processTile(GraphicsContext gc, char[] tile, int x, int y) {
         switch (tile[0]){
-                case 'P':
-                    return new Path(x, y);
-                case 'D':
-                    return new Dirt(x, y);
-                case 'U':
-                    return new Wall(x, y);
-                case 'E':
-                    return new Exit(x, y);
-                case 'B':
-                    return new Button(x, y, tile[1]);
-                case 'T':
-                    return new Trap(x, y);
-                case 'W':
-                    return new Water(x, y);
-                case 'S':
-                    return new ChipSocket(0, x, y);
-                case 'I':
-                    return new Ice(x, y, tile[1]);
-                case 'O':
-                    return new Block(x, y);
-               case 'L':
-                    return new LockedDoor(x, y, tile[1]);
-                default:
-                    // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
-                    return null;
+            case 'P':
+                return new Path(x, y);
+            case 'D':
+                return new Dirt(x, y);
+            case 'U':
+                return new Wall(x, y);
+            case 'E':
+                return new Exit(x, y);
+            case 'B':
+                return new Button(x, y, tile[1]);
+            case 'T':
+                return new Trap(x, y);
+            case 'W':
+                return new Water(x, y);
+            case 'S':
+                return new ChipSocket(
+                        Integer.parseInt(String.valueOf(tile[1])), x, y);
+            case 'I':
+                return new Ice(x, y, tile[1]);
+            case 'O':
+                return new Block(x, y);
+            case 'L':
+                return new LockedDoor(x, y, tile[1]);
+            default:
+                // Handle unknown com.example._cs250a2.tile types or leave empty if not needed
+                return null;
         }
 
     }
@@ -247,27 +249,19 @@ public class LevelLoader {
         }
     }
 
-    public static Item processItem(char[] item) {
-        System.out.println("Key data array: " + Arrays.toString(item));
-        if (item.length < 3) {
-            return null;
+    public static Item processItem(GraphicsContext gc, char[] item) {
+        switch (item[0]){
+            case 'C':
+                return new Chip(item[1]-'0', item[2]-'0');
+            case 'K':
+                return new Key(item[1]-'0', item[2]-'0');
+            default:
+                return null;
         }
-        char itemType = item[0];
-        int x, y;
-        try {
-            x = Character.getNumericValue(item[1]); // Column
-            y = Character.getNumericValue(item[2]); // Row
-        } catch (NumberFormatException e) {
-            return null;
-        }
-        if (itemType == 'K') {
-            char type = item.length >= 4 ? item[3] : 'R';
-            System.out.println("Placing key at position: (" + x + ", " + y + ")");
-            return new Key(x, y, type);
-        } else if (itemType == 'C') {
-            return new Chip(x, y);
-        } else {
-            return null;
+    }
+    public static void removeItem(Item item) {
+        for(ArrayList<Item> row: itemGrid) {
+            row.removeIf(i -> i == item);
         }
     }
 

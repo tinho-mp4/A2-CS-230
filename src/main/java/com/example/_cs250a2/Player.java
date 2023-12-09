@@ -5,52 +5,55 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Player{
-    private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
+    private static final Image PLAYER_TILE = new Image(Player.class.getResourceAsStream("sprites/player.png"));
 
+    // X and Y coordinate of player on the grid.
     private static int x;
     private static int y;
-    private final ArrayList<Item> inventory;
+    private ArrayList<Item> inventory;
 
     public Player(int x, int y) {
         Player.x = x;
         Player.y = y;
-        this.inventory = new ArrayList<>();
+        inventory = new ArrayList<>();
     }
-
     public void move(KeyEvent event) {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (!Objects.equals(LevelLoader.getTile(x + 1, y).getName(), "wall")
-                        && (!Objects.equals(LevelLoader.getTile(x + 1, y).getName(), "block"))) {
-                        // && Block.isBlocked(x+1, y, x+2, y))): // not really sure what this is for :/
+                if (LevelLoader.getTile(x+1, y).getName() != "block"
+                        && (!LevelLoader.getTile(x + 1, y).isSolid())) {
+                    // && Block.isBlocked(x+1, y, x+2, y))): // not really sure what this is for :/
+                    setX(x+1);
                     interact(x+1, y);
                 }
                 break;
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                if (!Objects.equals(LevelLoader.getTile(x - 1, y).getName(), "wall")
-                        && (!Objects.equals(LevelLoader.getTile(x - 1, y).getName(), "block"))) {
+                if (LevelLoader.getTile(x-1, y).getName() != "block"
+                        && (!LevelLoader.getTile(x - 1, y).isSolid())) {
                     // && Block.isBlocked(x-1, y, x-2, y))):
+                    setX(x - 1);
                     interact(x - 1, y);
                 }
                 break;
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                if (!Objects.equals(LevelLoader.getTile(x, y - 1).getName(), "wall")
-                        && (!Objects.equals(LevelLoader.getTile(x, y - 1).getName(), "block"))) {
+                if (LevelLoader.getTile(x, y-1).getName() != "block"
+                        && (!LevelLoader.getTile(x, y - 1).isSolid())) {
                     // && Block.isBlocked(x, y-1, x, y-2))):
+                    setY(y - 1);
                     interact(x, y - 1);
                 }
                 break;
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (!Objects.equals(LevelLoader.getTile(x, y + 1).getName(), "wall")
-                        && (!Objects.equals(LevelLoader.getTile(x, y + 1).getName(), "block"))) {
+                if (LevelLoader.getTile(x, y+1).getName() != "block"
+                        && (!LevelLoader.getTile(x, y + 1).isSolid())) {
                     // && Block.isBlocked(x, y+1, x, y+2))):
+                    setY(y + 1);
                     interact(x, y + 1);
                 }
                 break;
@@ -59,51 +62,63 @@ public class Player{
                 // Do nothing for all other keys.
                 break;
         }
-        System.out.println("Player's new position: (" + x + ", " + y + ")");
     }
 
     private void interact(int newX, int newY) {
-
-        Tile currentTile = LevelLoader.getTile(newX, newY);
-        if (!Objects.equals(currentTile.getName(), "ice")) { // Player movement on ice is handled in Ice.java
-            Player.setX(newX);
-            Player.setY(newY);
-        }
-        Item item = Level.getItem(newX, newY);
-        if (item instanceof Key) {
-            addToInventory(item);
-            Level.removeItem(newX, newY);
-        }
-
-        switch (currentTile.getName()) {
-            case "dirt" -> {
+        Tile currentTile = LevelLoader.getTile(x, y);
+        switch(currentTile.getName()) {
+            case "dirt":
                 Dirt dirt = (Dirt) currentTile;
                 dirt.compact();
-            }
-            case "exit" -> Level.nextLevel();
-            case "button" -> Button.event();
-            case "trap" -> Trap.event();
-            case "water" -> GameOver.playerDeathDrown();
-            case "chipSocket" -> {
+                break;
+            case "exit":
+                Level.nextLevel();
+            case "button":
+                Button.event();
+            case "trap":
+                Trap.event();
+            case "water":
+                GameOver.playerDeathDrown();
+            case "chipSocket":
                 ChipSocket chipSocket = (ChipSocket) currentTile;
                 chipSocket.event(inventory);
-            }
-            case "lockedDoor" -> {
-                LockedDoor lockedDoor = (LockedDoor) currentTile;
-                LockedDoor.event(inventory, newX, newY, lockedDoor.getDoorType());
-            }
-            case "ice" -> Ice.event(x, y, newX, newY);
-            default -> {
-            }
-            // Path or any other tile
+                ChipSocket.restAllLocks();
+
+                break;
+            case "lockedDoor":
+                LockedDoor.event(inventory);
+            case "ice":
+                Ice.event(x, y, newX, newY);
+            default:
+//            Path
+                break;
         }
 
+        if (Level.isOnItem()) {
+            Item currentItem = Level.getCurrentItem();
+            if (currentItem instanceof Chip) {
 
-        if (Level.isOnItem(x, y)) {
-            if (item != null) {
-                System.out.println("Player is on an item: " + item.getClass().getSimpleName());
-                addToInventory(item);
-                Level.removeItem(x, y);
+                addToInventory(currentItem);
+                LevelLoader.removeItem(currentItem);
+                System.out.println(getChips());
+
+                for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
+                    for (Tile t : row) {
+                        if (t instanceof ChipSocket) {
+                            ChipSocket socket = (ChipSocket) t;
+                            socket.checkUnlock(inventory);
+                        }
+                    }
+                }
+
+
+
+
+            } else if (currentItem instanceof Key) {
+                Key key = new Key(x, y);
+                addToInventory(key);
+                LevelLoader.removeItem(currentItem);
+                displayInventory();
             }
         }
 
@@ -117,10 +132,23 @@ public class Player{
         }
     }
 
-    private void addToInventory(Item item) {
-        if (item instanceof Key) {
-            inventory.add(item);
+    private void displayInventory() {
+        System.out.println("Inventory:");
+        for (Item item : inventory) {
+            System.out.println("- " + item);
         }
+    }
+
+
+
+
+
+    public void addToInventory(Item item){
+        inventory.add(item);
+    }
+
+    public void removeFromInventory(Item item){
+        inventory.remove(item);
     }
 
     public static int getX() {
@@ -140,6 +168,13 @@ public class Player{
     }
 
     public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(PLAYER_TILE, x * size, y * size);
+        gc.drawImage(PLAYER_TILE, x*size, y*size);
     }
+
+    public  int getChips() {
+        return (int) inventory.stream().filter(item -> item instanceof Chip).count();
+    }
+
+
+
 }

@@ -7,12 +7,9 @@ public class Chip extends Item {
     private static final Image CHIP_IMAGE = new Image(Chip.class.getResourceAsStream("sprites/chip.png"));
 
     public Chip(int x, int y) {
-        super("chip",x, y);
+        super("chip",x, y, false);
     }
 
-    public void collectChip(Player player) {
-        //player.addToInventory(new Item("chip"));
-    }
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {

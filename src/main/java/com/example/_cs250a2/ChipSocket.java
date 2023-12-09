@@ -4,46 +4,69 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ChipSocket extends Tile{
     private static final Image CHIP_SOCKET_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket.png"));
-
+    //other chips sprites
     private final int chipsNeeded;
 
-    public ChipSocket(int chipsNeeded, int x, int y) {
-        super("chipSocket", x, y, false);
-        this.chipsNeeded = chipsNeeded;
+
+
+    public ChipSocket(int type, int x, int y) {
+        super("chipSocket", x, y, true);
+        this.chipsNeeded = type;
     }
+
+    public static void restAllLocks() {
+        for(ArrayList<Tile> row : LevelLoader.getTileGrid()) {
+            for(Tile t : row) {
+                if(t instanceof ChipSocket socket) {
+                    socket.setSolid(true);
+                }
+            }
+        }
+    }
+
 
     public void event(ArrayList<Item> inventory) {
-        int chipsInInventory = 0;
+        if (enoughChips(inventory)) {
+            LevelLoader.setTile(getX(), getY(), new Path(getX(), getY()));
 
-        // Count the number of computer chips in the inventory
-        // TODO: Adjust ChipSocket(0, 0, 0) as these are dummy values
-        for (Item item : inventory) {
-            if (item.equals(new ChipSocket(0, 0, 0))) {
-                chipsInInventory++;
-            }
+
+            AtomicInteger removeChips = new AtomicInteger(chipsNeeded);
+            inventory.removeIf(item -> {
+                if (item instanceof Chip && removeChips.get() > 0) {
+                    removeChips.getAndDecrement();
+                    return true;
+                }
+                return false;
+            });
+
         }
 
-        // Check if the player is on the chip socket and has enough chips to open it
-        if (chipsInInventory >= chipsNeeded) {
-            // Taking out the chips
-            for (int i = 0; i < chipsNeeded; i++) {
-                inventory.remove("ComputerChip");
+    }
+
+    private boolean enoughChips(ArrayList<Item> inventory) {
+        int chipCount = 0;
+        for (Item item : inventory) {
+            if(item instanceof Chip) {
+                chipCount++;
             }
+        }
+        return chipCount >= chipsNeeded;
+    }
 
-            // Replace the chip socket with a path or update the game state accordingly (UNFINISHED)
-
-            System.out.println("open!");
-        } else {
-            System.out.println("Not enough computer chips to open the chip socket.");
+    public void checkUnlock(ArrayList<Item> inventory) {
+        if(enoughChips(inventory)) {
+            setSolid(false);
         }
     }
 
+
     @Override
+    //case chipsneeded 1-5, draw chipsocket dependant on which it is
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(CHIP_SOCKET_IMAGE, x*size, y*size);
     }
 }
-
