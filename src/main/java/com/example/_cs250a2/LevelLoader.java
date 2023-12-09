@@ -93,14 +93,14 @@ public class LevelLoader {
 
         // Process other entities (monsters, player, items, etc.)
         ArrayList<ArrayList<String>> entityMatchesGrid = new ArrayList<>();
-        Pattern newPattern = Pattern.compile("([A-Z])([0-9][0-9])?(A-Z)?");
+        Pattern newPattern = Pattern.compile("([A-Z])([0-9]+)([A-Z])?");
         while (scanner.hasNext()) {
             String entityInfo = scanner.nextLine(); // example: Frog 1 1
             Matcher matcher = newPattern.matcher(entityInfo); // example: F, 1, 1
             ArrayList<String> matchesList = new ArrayList<>(); // example: [F, 1, 1]
 
             while (matcher.find()) {
-                String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "");
+                String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "") + (matcher.group(3) != null ? matcher.group(3) : "");
                 matchesList.add(match);
             }
             entityMatchesGrid.add(matchesList);
@@ -250,6 +250,7 @@ public class LevelLoader {
     }
 
     public static Item processItem(char[] item) {
+        System.out.println("Key data array: " + Arrays.toString(item));
         if (item.length < 3) {
             return null;
         }
@@ -262,7 +263,8 @@ public class LevelLoader {
             return null;
         }
         if (itemType == 'K') {
-            char type = item.length >= 4 ? item[3] : ' ';
+            char type = item.length >= 4 ? item[3] : 'R';
+            System.out.println("Creating key with color: " + type);
             return new Key(x, y, type);
         } else if (itemType == 'C') {
             return new Chip(x, y);

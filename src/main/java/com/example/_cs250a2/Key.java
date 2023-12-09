@@ -19,13 +19,22 @@ public class Key extends Item {
     }
 
     private KeyType getKeyType(char keyTypeChar) {
-        return switch (keyTypeChar) {
-            case 'G' -> KeyType.GREEN;
-            case 'B' -> KeyType.BLUE;
-            case 'Y' -> KeyType.YELLOW;
-            default -> KeyType.RED;
-        };
+        switch (keyTypeChar) {
+            case 'G':
+                return KeyType.GREEN;
+            case 'B':
+                return KeyType.BLUE;
+            case 'Y':
+                return KeyType.YELLOW;
+            case 'R':
+                return KeyType.RED;
+            default:
+                System.out.println("Unknown key type: " + keyTypeChar);
+                return KeyType.RED;
+        }
     }
+
+
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
