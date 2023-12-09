@@ -91,11 +91,6 @@ public class Game extends Application {
         // Loop the timeline forever
         controller.tickTimeline.setCycleCount(Animation.INDEFINITE);
 
-        // Create a timer to update the time limit
-        Timeline timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> controller.updateTimer()));
-        timerTimeline.setCycleCount(Animation.INDEFINITE);
-
-
         // Display the scene on the stage
         primaryStage.setScene(scene);
         primaryStage.show();

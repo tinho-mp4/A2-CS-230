@@ -267,9 +267,9 @@ public class GameController {
 
             System.out.println("Selected profile: " + currentProfile.getName());
             System.out.println("Selected level: " + currentLevel.getName());
-            Timeline timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTimer()));
-            timerTimeline.setCycleCount(Animation.INDEFINITE);
-            timerTimeline.play();
+            Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
+            tickTimeline.setCycleCount(Animation.INDEFINITE);
+            tickTimeline.play();
 
             drawGame();
         } catch (IllegalArgumentException e) {
