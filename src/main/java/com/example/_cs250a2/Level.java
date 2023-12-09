@@ -6,6 +6,8 @@ public class Level {
     private int[][] levelTiles;
     private static Item[][] itemLayer;
 
+    public int timeLimit;
+
     public Level(int[][] levelTiles) {
         this.levelTiles = levelTiles;
         initializeItemLayer(levelTiles.length, levelTiles[0].length);
@@ -75,6 +77,10 @@ public class Level {
 
     public String getName() {
         return name;
+    }
+
+    public int getTimeLimit() {
+        return timeLimit;
     }
 
     @Override

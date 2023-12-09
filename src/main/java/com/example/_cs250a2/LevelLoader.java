@@ -63,6 +63,7 @@ public class LevelLoader {
         // Read level information
         String levelName = scanner.nextLine().split(": ")[1];
         int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
+        setTimeLimit(timeLimit);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
@@ -335,6 +336,14 @@ public class LevelLoader {
     }
     public static int getWidth() {
         return width;
+    }
+
+    public int getTimeLimit() {
+        return timeLimit;
+    }
+
+    private static void setTimeLimit(int limit) {
+        timeLimit = limit;
     }
 
 

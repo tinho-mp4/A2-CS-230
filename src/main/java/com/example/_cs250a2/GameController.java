@@ -42,6 +42,8 @@ public class GameController {
     // Timeline which will cause tick method to be called periodically.
     public Timeline tickTimeline;
 
+    public int score = 0;
+
     private Color bgColor = Color.LIGHTBLUE;
     private static Game instance;
     public LevelLoader levelLoader;
@@ -120,9 +122,6 @@ public class GameController {
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        // Set the background to gray.
-        gc.setFill(bgColor);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 
         this.levelLoader.drawLevel(gc);
@@ -133,7 +132,6 @@ public class GameController {
         // Draw player at current location
         player.draw(gc, player.getX(), player.getY(), 32);
         //Draw key at current location
-        //key.draw(gc, key.getX(), key.getY(), 32);
 
     }
 
@@ -162,33 +160,6 @@ public class GameController {
         // We then redraw the whole canvas.
         drawGame();
     }
-
-    /**
-     * Create the GUI.
-     *
-     * @return The panel that contains the created GUI.
-     */
-    private Pane buildGUI() {
-        // Create top-level panel that will hold all GUI nodes.
-        BorderPane root = new BorderPane();
-
-        // Create the canvas that we will draw on.
-        // We store this as a gloabl variable so other methods can access it.
-        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        root.setCenter(canvas);
-        BorderPane.setAlignment(canvas, Pos.CENTER);
-
-        javafx.scene.control.Button button = new Button("Click Me");
-        button.setOnAction(event -> System.out.println("This is a button"));
-
-        // Set the button to the right of the BorderPane
-        root.setRight(button);
-
-
-        // Finally, return the border pane we built up.
-        return root;
-    }
-
     //reduce the time by one or until it reaches 0`
     public void updateTimer() {
         timeLimit--;
@@ -197,17 +168,13 @@ public class GameController {
             tickTimeline.stop();
         }
         System.out.println("Time left: " + timeLimit);
+        System.out.println("Score: " + score);
 
         //sets the score for the current profile
         if (currentProfile != null) {
             currentProfile.setScoreForLevel(levelName, timeLimit);
         }
 
-    }
-
-    @FXML
-    private void handleButtonClick() {
-        System.out.println("This is a button");
     }
 
     public void setLevelName(String levelName) {
@@ -254,20 +221,28 @@ public class GameController {
             if (currentProfile == null) {
                 throw new IllegalArgumentException("No profile selected.");
             }
-            setCurrentLevel(currentLevel);
-            levelName = currentLevel.getName();
+
+            if (levelLoader == null) {
+                levelLoader = new LevelLoader();
+            }
+
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
-            levelLoader = new LevelLoader();
             levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
+
+            setCurrentLevel(currentLevel);
+            levelName = currentLevel.getName();
+
+
+            setTimeLimit(levelLoader.getTimeLimit());
+
+            currentProfile.setScoreForLevel(levelName, timeLimit);
+
             System.out.println("Selected profile: " + currentProfile.getName());
             System.out.println("Selected level: " + currentLevel.getName());
             Timeline timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTimer()));
             timerTimeline.setCycleCount(Animation.INDEFINITE);
             timerTimeline.play();
-            levelLoader = new LevelLoader();
-            levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
-            player.draw(gc, player.getX(),player.getY() , 32);
 
             drawGame();
         } catch (IllegalArgumentException e) {
@@ -342,6 +317,8 @@ public class GameController {
     public void setCurrentLevel(Level level) {
         currentLevelProperty.set(level);
     }
+
+
 }
 
 
