@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 /**
  * javadoc to go here
  */
+//TODO test more
 public class Bug extends Monster {
 
     private static final Image BUG_IMAGE = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
@@ -28,10 +29,12 @@ public class Bug extends Monster {
         arrayLocationX = countMonsters*2;
         arrayLocationY = (countMonsters*2)+1;
         countMonsters++;
+        monsterLocations.add(x);
+        monsterLocations.add(y);
         BugList.add(this);
     }
 
-    public int getSpeed() {
+    public static int getSpeed() {
         return speed;
     }
 

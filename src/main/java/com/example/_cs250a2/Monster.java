@@ -4,9 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO fix checkTile
-//TODO swap all + and -
-//TODO test all methods when level working, check playerkill works later
+//TODO fix checkTile... again (stop them going too far right or down)
+//more tests dont hurt
 /**
  * javadoc to go here
  */
@@ -41,7 +40,7 @@ public abstract class Monster extends Entity {
 
    }
 
-   public int getSpeed() {
+   public static int getSpeed() {
       return speed;
    }
 
@@ -60,19 +59,19 @@ public abstract class Monster extends Entity {
    //called by the tick method to move monsters
    public static void tickMove(int count) {
       if (!PinkBallList.isEmpty()) {
-         if (count % PinkBallList.get(0).getSpeed() == 0) {
+         if (count % PinkBall.getSpeed() == 0) {
             for (PinkBall pinkBall : Monster.getPinkBallList()) {
                pinkBall.move();
             }
          }
       } if (!BugList.isEmpty()) {
-         if (count % BugList.get(0).getSpeed() == 0) {
+         if (count % Bug.getSpeed() == 0) {
             for (Bug bug : Monster.getBugList()) {
                bug.move();
             }
          }
       } if (!FrogList.isEmpty()) {
-         if (count % FrogList.get(0).getSpeed() == 0) {
+         if (count % Frog.getSpeed() == 0) {
             for (Frog frog : Monster.getFrogList()) {
                frog.move();
             }
