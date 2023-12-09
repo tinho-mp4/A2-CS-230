@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
+
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
  * This class is intentionally not structured very well. This is just a starting point to show
