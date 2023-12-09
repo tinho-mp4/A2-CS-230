@@ -25,6 +25,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -230,6 +234,10 @@ public class GameController {
 
     private void handleStartButton() {
 
+        List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
+        ProfileFileManager.printAllProfiles(loadedProfiles);
+
+
         try {
             if (currentLevel == null) {
                 throw new IllegalArgumentException("No level selected.");
@@ -285,11 +293,40 @@ public class GameController {
     }
 
     private void handleCreateButton() {
+
         String newProfileName = createName.getText();
         Profile newProfile = new Profile(newProfileName);
         profiles.add(newProfile);
         System.out.println("Created profile: " + newProfile.getName());
+
+        ProfileFileManager.saveAllProfiles(profiles);
     }
+
+    private void viewAllProfiles() {
+        String directoryPath = "src/main/resources/com/example/_cs250a2/Profiles";
+        String filePath = directoryPath + "/allProfiles.ser";
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+            ArrayList<Profile> loadedProfiles = (ArrayList<Profile>) ois.readObject();
+
+            System.out.println("All Profiles:");
+
+            for (Profile profile : loadedProfiles) {
+                System.out.println("Name: " + profile.getName());
+                System.out.println("Level Reached: " + profile.getLevelReached());
+                // Add more information as needed
+                System.out.println("------------------------");
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("No profiles found.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
     @FXML
     public void handleShowHighScoresButton() {
