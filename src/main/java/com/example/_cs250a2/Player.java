@@ -5,15 +5,15 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
+import java.util.Objects;
 
 public class Player{
-    private static final Image PLAYER_TILE = new Image(Player.class.getResourceAsStream("sprites/player.png"));
+    private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
 
     // X and Y coordinate of player on the grid.
     private static int x;
     private static int y;
-    private ArrayList<Item> inventory;
+    private final ArrayList<Item> inventory;
 
     public Player(int x, int y) {
         Player.x = x;
@@ -121,8 +121,7 @@ public class Player{
 
                 for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
                     for (Tile t : row) {
-                        if (t instanceof ChipSocket) {
-                            ChipSocket socket = (ChipSocket) t;
+                        if (t instanceof ChipSocket socket) {
                             socket.checkUnlock(inventory);
                         }
                     }
@@ -138,8 +137,7 @@ public class Player{
 
                 for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
                     for (Tile t : row) {
-                        if (t instanceof LockedDoor) {
-                            LockedDoor door = (LockedDoor) t;
+                        if (t instanceof LockedDoor door) {
                             door.checkUnlock(inventory);
                         }
                     }
@@ -156,6 +154,11 @@ public class Player{
             Block block = new Block(x, y);
             block.moveBlock(newX, newY);
         }
+    }
+
+    public boolean isOnExit() {
+        Tile currentTile = LevelLoader.getTile(x, y);
+        return currentTile instanceof Exit;
     }
 
     private void displayInventory() {
