@@ -5,9 +5,10 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Player{
-    private static final Image PLAYER_TILE = new Image(Player.class.getResourceAsStream("sprites/player.png"));
+    private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
 
     private static int x;
     private static int y;
@@ -23,32 +24,32 @@ public class Player{
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (LevelLoader.getTile(x+1, y).getName() != "wall"
-                        && (LevelLoader.getTile(x+1, y).getName() != "block")) {
+                if (!Objects.equals(LevelLoader.getTile(x + 1, y).getName(), "wall")
+                        && (!Objects.equals(LevelLoader.getTile(x + 1, y).getName(), "block"))) {
                         // && Block.isBlocked(x+1, y, x+2, y))): // not really sure what this is for :/
                     interact(x+1, y);
                 }
                 break;
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                if (LevelLoader.getTile(x-1, y).getName() != "wall"
-                        && (LevelLoader.getTile(x-1, y).getName() != "block")) {
+                if (!Objects.equals(LevelLoader.getTile(x - 1, y).getName(), "wall")
+                        && (!Objects.equals(LevelLoader.getTile(x - 1, y).getName(), "block"))) {
                     // && Block.isBlocked(x-1, y, x-2, y))):
                     interact(x - 1, y);
                 }
                 break;
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                if (LevelLoader.getTile(x, y-1).getName() != "wall"
-                        && (LevelLoader.getTile(x, y-1).getName() != "block")) {
+                if (!Objects.equals(LevelLoader.getTile(x, y - 1).getName(), "wall")
+                        && (!Objects.equals(LevelLoader.getTile(x, y - 1).getName(), "block"))) {
                     // && Block.isBlocked(x, y-1, x, y-2))):
                     interact(x, y - 1);
                 }
                 break;
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (LevelLoader.getTile(x, y+1).getName() != "wall"
-                        && (LevelLoader.getTile(x, y+1).getName() != "block")) {
+                if (!Objects.equals(LevelLoader.getTile(x, y + 1).getName(), "wall")
+                        && (!Objects.equals(LevelLoader.getTile(x, y + 1).getName(), "block"))) {
                     // && Block.isBlocked(x, y+1, x, y+2))):
                     interact(x, y + 1);
                 }
@@ -64,7 +65,7 @@ public class Player{
     private void interact(int newX, int newY) {
 
         Tile currentTile = LevelLoader.getTile(newX, newY);
-        if (currentTile.getName() != "ice") { // Player movement on ice is handled in Ice.java
+        if (!Objects.equals(currentTile.getName(), "ice")) { // Player movement on ice is handled in Ice.java
             Player.setX(newX);
             Player.setY(newY);
         }
@@ -74,30 +75,29 @@ public class Player{
             Level.removeItem(newX, newY);
         }
 
-        switch(currentTile.getName()) {
-            case "dirt":
+        switch (currentTile.getName()) {
+            case "dirt" -> {
                 Dirt dirt = (Dirt) currentTile;
                 dirt.compact();
-                break;
-            case "exit":
-                Level.nextLevel();
-            case "button":
-                Button.event();
-            case "trap":
-                Trap.event();
-            case "water":
-                GameOver.playerDeathDrown();
-            case "chipSocket":
-                ChipSocket chipSocket = new ChipSocket(0,0,0);
+            }
+            case "exit" -> Level.nextLevel();
+            case "button" -> Button.event();
+            case "trap" -> Trap.event();
+            case "water" -> GameOver.playerDeathDrown();
+            case "chipSocket" -> {
+                ChipSocket chipSocket = (ChipSocket) currentTile;
                 chipSocket.event(inventory);
-            case "lockedDoor":
-                LockedDoor.event(inventory);
-            case "ice":
-                Ice.event(x, y, newX, newY);
-            default:
-//            Path
-                break;
+            }
+            case "lockedDoor" -> {
+                LockedDoor lockedDoor = (LockedDoor) currentTile;
+                LockedDoor.event(inventory, newX, newY, lockedDoor.getDoorType());
+            }
+            case "ice" -> Ice.event(x, y, newX, newY);
+            default -> {
+            }
+            // Path or any other tile
         }
+
 
         if (Level.isOnItem(x, y)) {
             if (item != null) {
@@ -121,10 +121,6 @@ public class Player{
         if (item instanceof Key) {
             inventory.add(item);
         }
-    }
-
-    public void removeToInventory(Item item){
-        inventory.add(item);
     }
 
     public static int getX() {

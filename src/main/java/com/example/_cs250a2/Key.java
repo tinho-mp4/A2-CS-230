@@ -36,6 +36,14 @@ public class Key extends Item {
         }
     }
 
+    public boolean matchesDoorType(DoorType doorType) {
+        return switch (this.keyType) {
+            case RED -> doorType == DoorType.RED;
+            case GREEN -> doorType == DoorType.GREEN;
+            case BLUE -> doorType == DoorType.BLUE;
+            case YELLOW -> doorType == DoorType.YELLOW;
+        };
+    }
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {

@@ -6,8 +6,6 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.Objects;
 
-enum DoorType {RED, GREEN, BLUE, YELLOW}
-
 public class LockedDoor extends Tile {
     private static final Image RED_LOCKED_DOOR_IMAGE = new Image(Objects.requireNonNull(LockedDoor.class.getResourceAsStream("sprites/redLockedDoor.png")));
     private static final Image BLUE_LOCKED_DOOR_IMAGE = new Image(Objects.requireNonNull(LockedDoor.class.getResourceAsStream("sprites/blueLockedDoor.png")));
@@ -21,8 +19,18 @@ public class LockedDoor extends Tile {
         this.doorType = getDoorType(doorTypeChar);
     }
 
-    public static void event(ArrayList<Item> inventory) {
+    public static void event(ArrayList<Item> inventory, int x, int y, DoorType doorType) {
+        for (Item item : inventory) {
+            if (item instanceof Key key) {
+                if (key.matchesDoorType(doorType)) {
+                    // Replace the locked door with a path
+                    LevelLoader.setTile(x, y, new Path(x, y));
+                    break;
+                }
+            }
+        }
     }
+
 
     private DoorType getDoorType(char doorTypeChar) {
         return switch (doorTypeChar) {
@@ -33,21 +41,17 @@ public class LockedDoor extends Tile {
         };
     }
 
+    public DoorType getDoorType() {
+        return this.doorType;
+    }
+
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         switch (this.doorType) {
-            case RED:
-                gc.drawImage(RED_LOCKED_DOOR_IMAGE, x * size, y * size);
-                break;
-            case GREEN:
-                gc.drawImage(GREEN_LOCKED_DOOR_IMAGE, x * size, y * size);
-                break;
-            case BLUE:
-                gc.drawImage(BLUE_LOCKED_DOOR_IMAGE, x * size, y * size);
-                break;
-            case YELLOW:
-                gc.drawImage(YELLOW_LOCKED_DOOR_IMAGE, x * size, y * size);
-                break;
+            case RED -> gc.drawImage(RED_LOCKED_DOOR_IMAGE, x * size, y * size);
+            case GREEN -> gc.drawImage(GREEN_LOCKED_DOOR_IMAGE, x * size, y * size);
+            case BLUE -> gc.drawImage(BLUE_LOCKED_DOOR_IMAGE, x * size, y * size);
+            case YELLOW -> gc.drawImage(YELLOW_LOCKED_DOOR_IMAGE, x * size, y * size);
         }
     }
 }
