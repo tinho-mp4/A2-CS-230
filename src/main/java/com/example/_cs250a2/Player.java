@@ -27,7 +27,6 @@ public class Player{
                 if (LevelLoader.getTile(x+1, y).getName() != "block"
                         && (!LevelLoader.getTile(x + 1, y).isSolid())) {
                     // && Block.isBlocked(x+1, y, x+2, y))): // not really sure what this is for :/
-                    setX(x+1);
                     interact(x+1, y);
                 }
                 break;
@@ -36,7 +35,6 @@ public class Player{
                 if (LevelLoader.getTile(x-1, y).getName() != "block"
                         && (!LevelLoader.getTile(x - 1, y).isSolid())) {
                     // && Block.isBlocked(x-1, y, x-2, y))):
-                    setX(x - 1);
                     interact(x - 1, y);
                 }
                 break;
@@ -45,7 +43,6 @@ public class Player{
                 if (LevelLoader.getTile(x, y-1).getName() != "block"
                         && (!LevelLoader.getTile(x, y - 1).isSolid())) {
                     // && Block.isBlocked(x, y-1, x, y-2))):
-                    setY(y - 1);
                     interact(x, y - 1);
                 }
                 break;
@@ -54,7 +51,6 @@ public class Player{
                 if (LevelLoader.getTile(x, y+1).getName() != "block"
                         && (!LevelLoader.getTile(x, y + 1).isSolid())) {
                     // && Block.isBlocked(x, y+1, x, y+2))):
-                    setY(y + 1);
                     interact(x, y + 1);
                 }
                 break;
@@ -66,7 +62,12 @@ public class Player{
     }
 
     private void interact(int newX, int newY) {
-        Tile currentTile = LevelLoader.getTile(x, y);
+        Tile currentTile = LevelLoader.getTile(newX, newY);
+        if (currentTile.getName() != "ice") { // Player movement on ice is handled in Ice.java
+            Player.setX(newX);
+            Player.setY(newY);
+        }
+
         switch(currentTile.getName()) {
             case "dirt":
                 Dirt dirt = (Dirt) currentTile;
