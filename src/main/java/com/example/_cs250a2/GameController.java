@@ -205,7 +205,9 @@ public class GameController {
 
     @FXML
     public void initialize() {
-        profiles.addAll(new Profile("Profile1"), new Profile("Profile2"), new Profile("Profile3"));
+        List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
+        profiles.addAll(loadedProfiles);
+
         profileChoiceBox.setItems(profiles);
 
         levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"));
@@ -301,32 +303,6 @@ public class GameController {
 
         ProfileFileManager.saveAllProfiles(profiles);
     }
-
-    private void viewAllProfiles() {
-        String directoryPath = "src/main/resources/com/example/_cs250a2/Profiles";
-        String filePath = directoryPath + "/allProfiles.ser";
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            ArrayList<Profile> loadedProfiles = (ArrayList<Profile>) ois.readObject();
-
-            System.out.println("All Profiles:");
-
-            for (Profile profile : loadedProfiles) {
-                System.out.println("Name: " + profile.getName());
-                System.out.println("Level Reached: " + profile.getLevelReached());
-                // Add more information as needed
-                System.out.println("------------------------");
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("No profiles found.");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
 
     @FXML
     public void handleShowHighScoresButton() {
