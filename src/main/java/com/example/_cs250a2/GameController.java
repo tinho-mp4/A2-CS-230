@@ -345,8 +345,20 @@ public class GameController {
 
     private void handleDeleteButton() {
         Profile selectedProfile = profileChoiceBox.getValue();
+
+        // Check if a profile is actually selected
+        if (selectedProfile == null) {
+            System.out.println("No profile selected to delete.");
+            return; // Exit the method as there's no profile to delete
+        }
+
+        // Proceed with deletion if a profile is selected
         profiles.remove(selectedProfile);
         System.out.println("Deleted profile: " + selectedProfile.getName());
+
+        // Update the ChoiceBox to reflect the deletion
+        profileChoiceBox.setItems(profiles);
+        profileChoiceBox.getSelectionModel().clearSelection();
     }
 
     private void handleCreateButton() {
