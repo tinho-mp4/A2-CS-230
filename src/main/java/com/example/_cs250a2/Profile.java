@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.*;
 
 public class Profile implements Serializable{
-    private String name;
+    private final String name;
 
     private int levelReached;
     private Map<String, Integer> levelScores;
@@ -17,10 +17,9 @@ public class Profile implements Serializable{
 
     public Profile(String name) {
         this.name = name;
-        this.levelReached = 3;
+        this.levelReached = 0;
         this.levelScores = new HashMap<>();
         this.highScores = new HashMap<>();
-
     }
 
 
@@ -43,15 +42,6 @@ public class Profile implements Serializable{
 
     public void setScoreForLevel(String level, int score) {
         levelScores.put(level, score);
-    }
-
-    public Profile(String name, String filePath) {
-        this.name = name;
-        this.levelReached = 3;
-        this.levelScores = new HashMap<>();
-        this.highScores = new HashMap<>();
-
-        loadFromFile(filePath);
     }
 
     // Save the profile to a file
