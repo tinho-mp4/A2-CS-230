@@ -99,19 +99,14 @@ public class Game extends Application {
         // Create a timer to update the time limit
         Timeline timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> controller.updateTimer()));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
-        timerTimeline.play();
+
 
         // Display the scene on the stage
-        controller.drawGame();
         primaryStage.setScene(scene);
         primaryStage.show();
 
         // load the level
         GraphicsContext gc = controller.canvas.getGraphicsContext2D();
-
-        controller.levelLoader = new LevelLoader();
-        controller.levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + controller.levelName + ".txt"));
-        player.draw(gc, player.getX(),player.getY() , 32);
     }
 
     public static void main(String[] args) {
