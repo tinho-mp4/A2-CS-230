@@ -40,16 +40,20 @@ public class LevelLoader {
     private static final ArrayList<ArrayList<Item>> itemGrid = new ArrayList<>();
 
     public LevelLoader() {
-        Scanner scanner = new Scanner(Objects.requireNonNull(getClass().getResourceAsStream("levels/level2.txt")));
+
+    }
+
+    public void updateLevelInformation(String levelName) {
+        Scanner scanner = new Scanner(Objects.requireNonNull(getClass().getResourceAsStream("levels/"+levelName+".txt")));
         // Read level information
-        String levelName = scanner.nextLine().split(": ")[1];
-        int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
+        this.levelName = scanner.nextLine().split(": ")[1];
+        this.timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
         this.width = width;
         this.height = height;
-        this.entityCount = countFileLines(getClass().getResourceAsStream("levels/level2.txt")) - 4 - height;
+        this.entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
     }
 
     /**
@@ -225,8 +229,6 @@ public class LevelLoader {
                         Integer.parseInt(String.valueOf(tile[1])), x, y);
             case 'I':
                 return new Ice(x, y, tile[1]);
-            case 'O':
-                return new Block(x, y);
             case 'L':
                 return new LockedDoor(x, y, tile[1]);
             default:
@@ -244,6 +246,8 @@ public class LevelLoader {
                 return new PinkBall(2, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
             case 'Z':
                 return new Bug(3, 'd', new int[]{entity[1]-'0', entity[2]-'0'}, false);
+            case 'O':
+                return new Block(entity[1]-'0', entity[2]-'0');
             default:
                 return null;
         }
@@ -315,9 +319,17 @@ public class LevelLoader {
 
     public static Tile getTile(int x, int y) {
         try {
-            return tileGrid.get(x).get(y); // y might have to be reversed (height-y), since canvas y is flipped?
+            return tileGrid.get(x).get(y);
         } catch (IndexOutOfBoundsException e) {
             return new Wall(x, y);
+        }
+    }
+
+    public static Entity getEntity(int x, int y) {
+        try {
+            return entityGrid.get(x).get(y);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
         }
     }
 
