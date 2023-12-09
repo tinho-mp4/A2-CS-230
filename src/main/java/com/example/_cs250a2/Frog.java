@@ -6,7 +6,8 @@ import javafx.scene.image.Image;
 /**
  * javadoc to go here
  */
-//TODO test when level available
+//TODO test more
+    //seems to be working relatively well
 public class Frog extends Monster {
 
     private static int speed;
@@ -27,9 +28,14 @@ public class Frog extends Monster {
         arrayLocationX = countMonsters*2;
         arrayLocationY = (countMonsters*2)+1;
         countMonsters++;
+        monsterLocations.add(x);
+        monsterLocations.add(y);
         FrogList.add(this);
     }
 
+    public static int getSpeed() {
+        return speed;
+    }
 
     //this move method will try and make the frog x equal to player x then do the same with y
     public void move() {

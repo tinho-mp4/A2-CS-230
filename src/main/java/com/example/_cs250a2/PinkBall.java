@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 /**
  * javadoc to go here
  */
+//TODO test
 public class PinkBall extends Monster {
 
     private static int speed;

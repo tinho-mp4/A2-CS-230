@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.geometry.Pos?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.ChoiceBox?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example._cs250a2.GameController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example._cs250a2.GameController">
 
 
     <center>
-        <Canvas fx:id="canvas" width="700" height="400"/>
+        <Canvas fx:id="canvas" height="400" width="700" />
     </center>
 
     <top>
@@ -38,11 +32,12 @@
 
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
-                        <Button fx:id = "startButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Start">
+                        <Button fx:id="startButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Start">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
                         </Button>
+                  <Button fx:id="showHighScoresButton" mnemonicParsing="false" prefHeight="18.0" prefWidth="90.0" text="HighScore" />
                     </children></VBox>
             </children>
         </HBox>
@@ -98,4 +93,9 @@
             </children>
         </VBox>
     </right>
+    <BorderPane>
+        <left>
+        </left>
+        <!-- Other nodes... -->
+    </BorderPane>
 </BorderPane>

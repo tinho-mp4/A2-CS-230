@@ -135,7 +135,6 @@ public class TestGameMonsters extends Application{
         this.levelLoader.drawEntities(gc);
         this.levelLoader.drawItems(gc);
 
-
         // Draw player at current location
         player.draw(gc, player.getX(),player.getY() , 32);
         //Draw key at current location
@@ -153,12 +152,13 @@ public class TestGameMonsters extends Application{
         System.out.println("tick");
         //if statements let you do things at different speeds (every tick -> every 5 ticks)
         Monster.tickMove(tickCount);
+        tickCount++;
+        drawGame();
         if (tickCount >= MAXIMUMTICKS) {
             tickCount = 0;
         }
         // We then redraw the whole canvas.
-        drawGame();
-        tickCount++;
+
     }
 
     /**
