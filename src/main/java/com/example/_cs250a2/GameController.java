@@ -267,6 +267,7 @@ public class GameController {
 
             setCurrentLevel(currentLevel);
             levelName = currentLevel.getName();
+            levelLoader.updateLevelInformation(levelName);
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
 

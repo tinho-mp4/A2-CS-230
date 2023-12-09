@@ -333,6 +333,19 @@ public class LevelLoader {
         }
     }
 
+    public static Entity getEntityWithCoords(int x, int y) {
+        for (ArrayList<Entity> row : entityGrid) {
+            for (Entity entity : row) {
+                if (entity != null) {
+                    if (entity.getX() == x && entity.getY() == y) {
+                        return entity;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public static void setTile(int x, int y, Tile newTile) {
         try {
             tileGrid.get(x).set(y, newTile);

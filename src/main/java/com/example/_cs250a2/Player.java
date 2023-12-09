@@ -63,12 +63,20 @@ public class Player{
 
     private void interact(int newX, int newY) {
         Tile currentTile = LevelLoader.getTile(newX, newY);
+        Entity currentEntity = LevelLoader.getEntityWithCoords(newX, newY);
+
+        if (currentEntity != null) {
+            currentEntity.event(x, y, newX, newY);
+        }
+
         if (currentTile.getName() != "ice") { // Player movement on ice is handled in Ice.java
             Player.setX(newX);
             Player.setY(newY);
         }
 
-        switch(currentTile.getName()) {
+
+
+        switch (currentTile.getName()) {
             case "dirt":
                 Dirt dirt = (Dirt) currentTile;
                 dirt.compact();
