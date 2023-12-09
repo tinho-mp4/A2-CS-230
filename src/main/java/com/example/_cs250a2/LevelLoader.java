@@ -241,9 +241,9 @@ public class LevelLoader {
             case 'F':
                 return new Frog(5, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
             case 'G':
-                return new PinkBall(5, 'd', new int[]{entity[1]-'0', entity[2]-'0'});
+                return new PinkBall(2, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
             case 'Z':
-                return new Bug(5, 'd', new int[]{entity[1]-'0', entity[2]-'0'}, false);
+                return new Bug(3, 'd', new int[]{entity[1]-'0', entity[2]-'0'}, false);
             default:
                 return null;
         }

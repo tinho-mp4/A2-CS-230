@@ -94,6 +94,12 @@ public abstract class Monster extends Entity {
    //method to check if monster move is legal
    protected boolean checkTile(int[] tileLocation) {
       boolean safeTile = false;
+      boolean withinBounds = true;
+      try {
+         checkLocation(tileLocation);
+      } catch (IllegalArgumentException e) {
+         withinBounds = false;
+      }
       String nextTile = LevelLoader.getTile(tileLocation[0], tileLocation[1]).getName();
       for (String tile : allowedTiles) {
          if (nextTile.equals(tile)) {
@@ -104,7 +110,11 @@ public abstract class Monster extends Entity {
       for (int i = 0; i < countMonsters; i++) {
 
       }
-      return safeTile;
+      if (safeTile && withinBounds) {
+         return true;
+      } else {
+         return false;
+      }
    }
 
    protected void playerKill() {

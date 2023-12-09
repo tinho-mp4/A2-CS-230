@@ -11,7 +11,7 @@ public class PinkBall extends Monster {
 
     private static int speed;
 
-    private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/ball.png"));
+    private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/pinkBall.png"));
     public PinkBall(int ticks, char startingDirection, int[] startingLocation) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
@@ -29,6 +29,10 @@ public class PinkBall extends Monster {
         monsterLocations.add(x);
         monsterLocations.add(y);
         PinkBallList.add(this);
+    }
+
+    public static int getSpeed() {
+        return speed;
     }
 
     public void move() {
