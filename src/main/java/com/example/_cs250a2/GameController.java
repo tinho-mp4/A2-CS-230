@@ -7,6 +7,8 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,6 +49,11 @@ public class GameController {
     private Color bgColor = Color.LIGHTBLUE;
     private static Game instance;
     public LevelLoader levelLoader;
+
+    @FXML
+    private Label timeRemainingLabel;
+
+    private StringProperty timeRemainingProperty;
 
     public String levelName = "level3";
 
@@ -169,11 +176,19 @@ public class GameController {
         }
         System.out.println("Time left: " + timeLimit);
         System.out.println("Score: " + score);
+        System.out.println("Level: " + levelName);
+        //print the profiles score for the current level
+        if (currentProfile != null) {
+            System.out.println("Score for " + levelName + ": " + currentProfile.getScoreForLevel(levelName));
+        }
 
         //sets the score for the current profile
         if (currentProfile != null) {
             currentProfile.setScoreForLevel(levelName, timeLimit);
         }
+
+        // Update time remaining label
+        updateTimeRemaining(timeLimit);
 
     }
 
@@ -202,10 +217,13 @@ public class GameController {
         selectLevelButton.setOnAction(event -> handleSelectLevelButton());
         startButton.setOnAction(event -> handleStartButton());
 
+        timeRemainingProperty = new SimpleStringProperty();
+        timeRemainingLabel.textProperty().bind(timeRemainingProperty);
 
-        selectedProfileLabel.textProperty().bind(Bindings.createStringBinding(() ->
-                        "Selected profile: \n" + (currentProfile != null ? currentProfile.getName() : ""),
-                currentProfileProperty()));
+
+
+
+        selectedProfileLabel.textProperty().bind(currentProfileProperty.asString());
 
         selectedLevelLable.textProperty().bind(Bindings.createStringBinding(() ->
                         "Selected level: \n" + (currentLevel != null ? currentLevel.getName() : ""),
@@ -226,12 +244,14 @@ public class GameController {
                 levelLoader = new LevelLoader();
             }
 
+            setCurrentLevel(currentLevel);
+            levelName = currentLevel.getName();
+
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
             levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
 
-            setCurrentLevel(currentLevel);
-            levelName = currentLevel.getName();
+
 
 
             setTimeLimit(levelLoader.getTimeLimit());
@@ -253,7 +273,6 @@ public class GameController {
     private void handleSelectButton() {
         currentProfile = profileChoiceBox.getValue();
         System.out.println("Selected profile: " + currentProfile.getName());
-        currentProfileProperty.set(null);
         currentProfileProperty.set(currentProfile);
     }
 
@@ -282,13 +301,10 @@ public class GameController {
             }
             currentLevel = selectedLevel;
             System.out.println("Selected level: " + currentLevel.getName());
-            currentLevelProperty.set(null);
             currentLevelProperty.set(currentLevel);
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
-
-
     }
 
     public ObjectProperty<Profile> currentProfileProperty() {
@@ -304,6 +320,10 @@ public class GameController {
     public void setCurrentProfile(Profile profile) {
 
         currentProfileProperty.set(profile);
+    }
+
+    public void updateTimeRemaining(int timeRemaining) {
+        timeRemainingProperty.set("Time Remaining: \n" + timeRemaining);
     }
 
     public ObjectProperty<Level> currentLevelProperty() {

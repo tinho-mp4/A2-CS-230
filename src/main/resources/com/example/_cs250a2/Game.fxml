@@ -94,7 +94,7 @@
                         <Insets />
                     </VBox.margin>
                 </Button>
-                <Label fx:id="timeRemaingLable" alignment="TOP_LEFT" prefHeight="46.0" prefWidth="104.0" text="Time Remaining:" />
+                <Label fx:id="timeRemainingLabel" alignment="TOP_LEFT" prefHeight="46.0" prefWidth="104.0" text="Time Remaining:" />
             </children>
         </VBox>
     </right>
