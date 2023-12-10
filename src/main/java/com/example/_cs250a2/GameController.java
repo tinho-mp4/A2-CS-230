@@ -3,7 +3,6 @@ package com.example._cs250a2;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,50 +12,50 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.util.List;
 
-
+/**
+ * The GameController class handles the game logic, user interface, and event handling.
+ * It is responsible for managing profiles, levels, and the game state.
+ * The class is linked with the corresponding FXML file for UI components.
+ *
+ * @author [Ben Foord]
+ * @version 1.0
+ */
 public class GameController {
 
-    private static final int CANVAS_WIDTH = 700;
-    private static final int CANVAS_HEIGHT = 400;
+
+    //Constant for the maximum number of ticks
     private static final int MAXIMUMTICKS = 5;
 
+    //canvas for the game
     @FXML
     public Canvas canvas;
 
+    //button to show the high scores
     @FXML
     private Button showHighScoresButton;
 
     @FXML
     private TextArea highScoresTextArea;
 
-    // Loaded images
-
-    // Create Player
+    //player object
     Player player = new Player(1, 1);
 
-    // Timeline which will cause tick method to be called periodically.
     public Timeline tickTimeline;
 
     public int score = 0;
     private int tickCount = 0;
 
-    private Color bgColor = Color.LIGHTBLUE;
-    private static Game instance;
     public LevelLoader levelLoader;
 
     @FXML
@@ -64,15 +63,14 @@ public class GameController {
 
     private StringProperty timeRemainingProperty;
 
-    public String levelName = "level3";
+    public String levelName;
 
-    private int timeLimit = 100;
+    private int timeLimit;
 
     private Profile currentProfile;
 
     @FXML
     public Label selectedLevelLable;
-    public Canvas levelCanvas;
 
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
@@ -117,10 +115,13 @@ public class GameController {
 
     private final ObjectProperty<Level> currentLevelProperty = new SimpleObjectProperty<>();
 
-    public void handleButtonClick(ActionEvent actionEvent) {
-        System.out.println("This is a button");
-    }
 
+    /**
+     * Processes the key event to move the player, redraws the game, and consumes the event.
+     * The player's movement is determined by the provided KeyEvent.
+     *
+     * @param event The KeyEvent representing the key press event.
+     */
     public void processKeyEvent(KeyEvent event) {
         player.move(event);
 
@@ -132,7 +133,8 @@ public class GameController {
     }
 
     /**
-     * Draw the game on the canvas.
+     * Draws the game on the canvas, including the level, entities, items, player, and key.
+     * Uses the GraphicsContext of the canvas for drawing.
      */
     public void drawGame() {
         // Get the Graphic Context of the canvas. This is what we draw on.
@@ -178,7 +180,12 @@ public class GameController {
         }
         drawGame();
     }
-    //reduce the time by one or until it reaches 0`
+
+    /**
+     * Updates the game timer, decrements the remaining time, and handles game over conditions.
+     * If the time limit reaches or falls below zero, the game over sequence is initiated, and the tick timeline stops.
+     * Additionally, it prints time, score, level information, and updates the time remaining label.
+     */
     public void updateTimer() {
         timeLimit--;
         if (timeLimit <= 0) {
@@ -203,14 +210,27 @@ public class GameController {
 
     }
 
+    /**
+     * Sets the name of the current game level.
+     *
+     * @param levelName The name of the level to be set.
+     */
     public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
 
+    /**
+     * Sets the time limit for the game.
+     *
+     * @param timeLimit The time limit to be set for the game, representing the remaining time.
+     */
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
     }
 
+    /**
+     * Initializes the game controller, including loading profiles and levels, and binding UI components.
+     */
     @FXML
     public void initialize() {
         List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
@@ -253,6 +273,9 @@ public class GameController {
                 currentLevelProperty()));
     }
 
+    /**
+     * Handles the start button event, including loading the level, updating the time limit, and starting the tick timeline.
+     */
     private void handleStartButton() {
         List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
         ProfileFileManager.printAllProfiles(loadedProfiles);
@@ -299,18 +322,27 @@ public class GameController {
         }
     }
 
+    /**
+     * Handles the select button event, including setting the current profile
+     */
     private void handleSelectButton() {
         currentProfile = profileChoiceBox.getValue();
         System.out.println("Selected profile: " + currentProfile.getName());
         currentProfileProperty.set(currentProfile);
     }
 
+    /**
+     * Handles the delete button event, including removing the selected profile from the list of profiles.
+     */
     private void handleDeleteButton() {
         Profile selectedProfile = profileChoiceBox.getValue();
         profiles.remove(selectedProfile);
         System.out.println("Deleted profile: " + selectedProfile.getName());
     }
 
+    /**
+     * Handles the create button event, including creating a new profile and adding it to the list of profiles.
+     */
     private void handleCreateButton() {
         String newProfileName = createName.getText();
         Profile newProfile = new Profile(newProfileName);
@@ -325,7 +357,6 @@ public class GameController {
 
         System.out.println("Show high scores button clicked");
 
-        // Assuming 'highScore' is an instance of the modified HighScore class
         highScore.addScore(levelName, currentProfile.getName(), timeLimit);
 
         for (Level level : levels) {
@@ -344,6 +375,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Handles the select level button event, including setting the current level.
+     */
     private void handleSelectLevelButton() {
         try {
             Level selectedLevel = levelChoiceBox.getValue();
@@ -377,18 +411,38 @@ public class GameController {
         currentProfileProperty.set(profile);
     }
 
+    /**
+     * Updates the time remaining label with the provided time remaining.
+     *
+     * @param timeRemaining The time remaining to be set.
+     */
     public void updateTimeRemaining(int timeRemaining) {
         timeRemainingProperty.set("Time Remaining: \n" + timeRemaining);
     }
 
+    /**
+     * Returns the current level.
+     *
+     * @return The current level.
+     */
     public ObjectProperty<Level> currentLevelProperty() {
         return currentLevelProperty;
     }
 
+    /**
+     * Returns the current level.
+     *
+     * @return The current level.
+     */
     public Level getCurrentLevel() {
         return currentLevelProperty.get();
     }
 
+    /**
+     * Sets the current level.
+     *
+     * @param level The level to be set.
+     */
     public void setCurrentLevel(Level level) {
         currentLevelProperty.set(level);
     }

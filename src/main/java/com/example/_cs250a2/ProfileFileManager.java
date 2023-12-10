@@ -4,8 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.*;
 
+/**
+ * A class for managing the saving and loading of profiles.
+ * @auther [Ben Foord]
+ * @version [1.0]
+ */
 public class ProfileFileManager {
 
+    /**
+     * Save all profiles to a file.
+     * @param profiles The profiles to save.
+     */
     public static void saveAllProfiles(List<Profile> profiles) {
         String directoryPath = "src/main/resources/com/example/_cs250a2/Profiles";
         String filePath = directoryPath + "/allProfiles.ser";
@@ -25,6 +34,10 @@ public class ProfileFileManager {
         }
     }
 
+    /**
+     * Load all profiles from a file.
+     * @return The profiles that were loaded.
+     */
     public static List<Profile> loadAllProfiles() {
         String directoryPath = "src/main/resources/com/example/_cs250a2/Profiles";
         String filePath = directoryPath + "/allProfiles.ser";
@@ -42,13 +55,16 @@ public class ProfileFileManager {
         return loadedProfiles;
     }
 
+    /**
+     * Print all profiles to the console.
+     * @param profiles The profiles to print.
+     */
     public static void printAllProfiles(List<Profile> profiles) {
         System.out.println("All Profiles:");
 
         for (Profile profile : profiles) {
             System.out.println("Name: " + profile.getName());
             System.out.println("Level Reached: " + profile.getLevelReached());
-            // Add more information as needed
             System.out.println("------------------------");
         }
     }
