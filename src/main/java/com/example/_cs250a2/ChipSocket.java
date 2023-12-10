@@ -13,9 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ChipSocket extends Tile {
     private final int CHIPS_NEEDED;
-    private static final Image CHIP_SOCKET_IMAGE =
-    new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket.png"));
-
     private static final Image CHIP_SOCKET1_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket1.png"));
     private static final Image CHIP_SOCKET2_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket2.png"));
     private static final Image CHIP_SOCKET3_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket3.png"));
