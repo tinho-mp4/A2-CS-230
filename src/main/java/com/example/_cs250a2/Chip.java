@@ -1,18 +1,36 @@
 package com.example._cs250a2;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Chip extends Item {
-    private static final Image CHIP_IMAGE = new Image(Chip.class.getResourceAsStream("sprites/chip.png"));
+    /**
+     * image of chip.
+     */
+    private static final Image CHIP_IMAGE =
+    new Image(Chip.class.getResourceAsStream("sprites/chip.png"));
 
-    public Chip(int x, int y) {
-        super("chip",x, y);
+    /**
+     * constructor.
+     * @param x x
+     * @param y y
+     */
+    public Chip(final int x, final int y) {
+        super("chip", x, y);
     }
 
 
+    /**
+     * draws the chip.
+     * @param gc graphics context
+     * @param x x coordnate
+     * @param y y coordinate
+     * @param size size
+     */
     @Override
-    public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(CHIP_IMAGE, x*size, y*size);
+    public void draw(final GraphicsContext gc,
+                     final double x,
+                     final double y,
+                     final double size) {
+        gc.drawImage(CHIP_IMAGE, x * size, y * size);
     }
 }
