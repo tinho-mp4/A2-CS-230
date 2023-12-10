@@ -4,7 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * wirte it.
+ * The {@code Bug} class represents a bug (monster) in the game
+ * @author idk
+ * @version 1.0
  */
 //TODO test more
 public class Bug extends Monster {

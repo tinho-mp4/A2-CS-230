@@ -1,12 +1,14 @@
 package com.example._cs250a2;
+
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//more tests dont hurt
 /**
- * javadoc to go here
+ * The {@code Monster} abstract class represents a framework for all monsters in the game
+ * @author idk
+ * @version 1.0
  */
 public abstract class Monster extends Entity {
 

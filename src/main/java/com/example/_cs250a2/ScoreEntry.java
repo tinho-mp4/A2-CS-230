@@ -1,7 +1,7 @@
 package com.example._cs250a2;
 
 /**
- * The ScoreEntry class represents an entry in the high scores list,
+ * The {@code ScoreEntry} class represents an entry in the high scores list,
  * containing the profile name and the corresponding score achieved.
  *
  * @version 1.0

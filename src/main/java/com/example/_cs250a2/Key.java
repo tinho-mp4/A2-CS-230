@@ -3,6 +3,11 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * The {@code Key} class represents a key in the game
+ * @author idk
+ * @version 1.0
+ */
 enum DoorColour {RED, GREEN, BLUE, YELLOW};
 
 

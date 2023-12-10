@@ -24,11 +24,10 @@ import java.io.File;
 import java.util.List;
 
 /**
- * The GameController class handles the game logic, user interface, and event handling.
+ * The {@code GameController} class handles the game logic, user interface, and event handling.
  * It is responsible for managing profiles, levels, and the game state.
  * The class is linked with the corresponding FXML file for UI components.
- *
- * @author [Ben Foord]
+ * @author Ben Foord
  * @version 1.0
  */
 public class GameController {

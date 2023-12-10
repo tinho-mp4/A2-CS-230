@@ -3,6 +3,11 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * The {@code Dirt} class represents a dirt block in the game
+ * @author idk
+ * @version 1.0
+ */
 public class Dirt extends Tile{
     private static final Image DIRT_IMAGE = new Image(Dirt.class.getResourceAsStream("sprites/dirt.png"));
     private boolean compacted;

@@ -7,14 +7,14 @@ import java.util.Map;
 import java.util.*;
 
 /**
- * A class representing a player profile.
+ * The {@code Profile} class handles player profiles in the game.
  * <p>
  *     A profile contains the player's name, the highest level they have reached, and their scores for each level.
  *     It also contains the high scores for each level.
  *     The profile can be saved to a file and loaded from a file.
  *     The profile is serializable.
- *     @author [Ben Foord]
- *     @version [1.0]
+ *     @author Ben Foord
+ *     @version 1.0
  */
 public class Profile implements Serializable{
 

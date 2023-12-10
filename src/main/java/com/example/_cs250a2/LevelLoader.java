@@ -7,6 +7,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The {@code LevelLoader} class handles loading of levels in the game
+ * @author idk
+ * @version 1.0
+ */
 public class LevelLoader {
 
     private static Map<Integer, Button> buttons = new HashMap<>();

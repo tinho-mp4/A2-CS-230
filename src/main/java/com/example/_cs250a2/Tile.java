@@ -2,6 +2,11 @@ package com.example._cs250a2;
 
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * The {@code Tile} abstract class represents a framework for all items in the game
+ * @author idk
+ * @version 1.0
+ */
 public abstract class Tile {
     protected String name;
     protected int x;

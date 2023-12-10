@@ -7,6 +7,11 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * The {@code Player} class represents the player in the game
+ * @author idk
+ * @version 1.0
+ */
 public class Player{
 
     private GameController gameController;

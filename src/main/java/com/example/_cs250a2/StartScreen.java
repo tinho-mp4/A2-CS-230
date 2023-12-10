@@ -9,6 +9,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The {@code StartScreen} class represents the start screen in the game
+ * @author idk
+ * @version 1.0
+ */
 public class StartScreen extends Application {
     @Override
     public void start(Stage primaryStage) {

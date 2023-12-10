@@ -6,6 +6,11 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * The {@code ChipSocket} class represents a chip socket in the game
+ * @author Mwenya Sikazwe
+ * @version 1.0
+ */
 public class ChipSocket extends Tile {
     /**
      * image of chip scoket.

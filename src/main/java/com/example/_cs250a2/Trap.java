@@ -3,6 +3,11 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * The {@code Trap} class represents a trap in the game
+ * @author idk
+ * @version 1.0
+ */
 public class Trap extends Tile {
     private static final Image TRAP_IMAGE = new Image(Trap.class.getResourceAsStream("sprites/trapInactive.png"));
     private final int trapNum;

@@ -2,6 +2,11 @@ package com.example._cs250a2;
 
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * The {@code Entity} abstract class represents a framework for all entities in the game
+ * @author idk
+ * @version 1.0
+ */
 public abstract class Entity {
 
     protected int x;

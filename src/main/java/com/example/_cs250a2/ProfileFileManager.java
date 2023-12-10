@@ -5,9 +5,9 @@ import java.util.List;
 import java.nio.file.*;
 
 /**
- * A class for managing the saving and loading of profiles.
- * @auther [Ben Foord]
- * @version [1.0]
+ * The {@code ProfileFileManager} class handles the saving and loading of profiles.
+ * @author Ben Foord
+ * @version 1.0
  */
 public class ProfileFileManager {
 

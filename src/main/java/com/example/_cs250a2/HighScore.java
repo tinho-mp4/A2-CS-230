@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Stores the high scores for each level.
+ * The {@code HighScore} Stores the high scores for each level.
  * <p>
  *     The high scores are stored in a map,
  *     where the key is the level name and the value is a list of the top 10

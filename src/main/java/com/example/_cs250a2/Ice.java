@@ -3,6 +3,11 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * The {@code Ice} class represents an ice block in the game
+ * @author idk
+ * @version 1.0
+ */
 enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, NONE};
 public class Ice extends Tile {
     private static final Image ICE_IMAGE = new Image(Ice.class.getResourceAsStream("sprites/ice.png"));
