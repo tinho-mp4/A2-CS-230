@@ -58,6 +58,8 @@ public class GameController {
     private TextArea highScoresTextArea;
 
 
+
+
     /**
      * The score for the game.
      */
@@ -113,6 +115,14 @@ public class GameController {
      */
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
+
+    @FXML
+    public TableColumn<ScoreEntry, String> profileNameColumn;
+    @FXML
+    public TableColumn<ScoreEntry, Integer> scoreColumn;
+    @FXML
+    public TableView<ScoreEntry> highScoresTable;
+
 
     /**
      * object property for the current profile. used to update the current profiles name
@@ -512,13 +522,26 @@ public class GameController {
         ProfileFileManager.saveAllProfiles(profiles);
     }
 
-    @FXML
     public void handleShowHighScoresButton() {
         System.out.println("Show high scores button clicked");
 
         // Assuming highScore is an instance of HighScoreManager
         highScore.addScore(levelName, currentProfile.getName(), currentProfile.getScoreForLevel(levelName));
 
+        // Assuming highScoresTable is your TableView
+        highScoresTable.getColumns().clear(); // Clear existing columns
+
+        // Create columns
+        TableColumn<ScoreEntry, String> playerNameColumn = new TableColumn<>("Player");
+        playerNameColumn.setCellValueFactory(cellData -> cellData.getValue().profileNameProperty());
+
+        TableColumn<ScoreEntry, Integer> scoreColumn = new TableColumn<>("Score");
+        scoreColumn.setCellValueFactory(cellData -> cellData.getValue().scoreProperty().asObject());
+
+        // Add columns to the table
+        highScoresTable.getColumns().addAll(playerNameColumn, scoreColumn);
+
+        // Load and display data
         for (Level level : levels) {
             List<ScoreEntry> highScoresList = highScore.getHighScores(level.getName());
 
@@ -534,10 +557,8 @@ public class GameController {
                 System.out.println("Saving high scores for " + level.getName() + ":");
                 highScore.saveHighScores(highScoresList, level.getName());
 
-
-                // This might be useful if you want to use the loaded scores for something
-                List<ScoreEntry> loadedScores = highScore.loadHighScores(level.getName());
-                System.out.println("Loaded high scores for " + level.getName() + ": " + loadedScores);
+                // Set the items in the TableView
+                highScoresTable.setItems(FXCollections.observableArrayList(highScoresList));
 
                 System.out.println("end");
             } else {
@@ -545,6 +566,11 @@ public class GameController {
             }
         }
     }
+
+
+
+
+
 
 
     /**
@@ -567,6 +593,10 @@ public class GameController {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+
+
+
 
     public ObjectProperty<Profile> currentProfileProperty() {
 

@@ -1,46 +1,66 @@
 package com.example._cs250a2;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-/**
- * The {@code ScoreEntry} class represents an entry in the high scores list,
- * containing the profile name and the corresponding score achieved.
- *
- * @version 1.0
- * @author Ben Foord
- */
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class ScoreEntry implements Serializable {
     private static final long serialVersionUID = 1L;
+    private transient SimpleStringProperty profileNameProperty; // transient to exclude it from default serialization
+    private transient SimpleIntegerProperty scoreProperty; // transient to exclude it from default serialization
     private final String profileName;
     private final int score;
 
-    /**
-     * Constructs a new ScoreEntry with the given profile name and score.
-     *
-     * @param profileName The name of the profile associated with the score.
-     * @param score The score achieved.
-     */
     public ScoreEntry(String profileName, int score) {
         this.profileName = profileName;
         this.score = score;
+        initializeProperties();
     }
 
-    /**
-     * Gets the profile name associated with the score entry.
-     *
-     * @return The profile name.
-     */
+    private void initializeProperties() {
+        this.profileNameProperty = new SimpleStringProperty(profileName);
+        this.scoreProperty = new SimpleIntegerProperty(score);
+    }
+
     public String getProfileName() {
         return profileName;
     }
 
-    /**
-     * Gets the score associated with the score entry.
-     *
-     * @return The score.
-     */
     public int getScore() {
         return score;
+    }
+
+    public SimpleStringProperty profileNameProperty() {
+        if (profileNameProperty == null) {
+            initializeProperties();
+        }
+        return profileNameProperty;
+    }
+
+    public SimpleIntegerProperty scoreProperty() {
+        if (scoreProperty == null) {
+            initializeProperties();
+        }
+        return scoreProperty;
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(profileNameProperty.get());
+        out.writeObject(scoreProperty.get());
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        String profileNameValue = (String) in.readObject();
+        int scoreValue = (int) in.readObject();
+        initializeProperties();
+        profileNameProperty.set(profileNameValue);
+        scoreProperty.set(scoreValue);
     }
 
     @Override
@@ -51,4 +71,3 @@ public class ScoreEntry implements Serializable {
                 '}';
     }
 }
-
