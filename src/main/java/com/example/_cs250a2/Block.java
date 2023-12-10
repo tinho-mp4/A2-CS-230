@@ -94,7 +94,7 @@ public class Block extends Entity {
         Tile tile = LevelLoader.getTile(newX, newY);
         if (tile instanceof Trap) {
             Trap trap = (Trap) tile;
-            if (trap.isActive()) {
+            if (trap.isStuck()) {
                 setStuck(true);
                 return;
             } else {

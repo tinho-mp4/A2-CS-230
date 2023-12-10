@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 /**
  * The {@code Item} abstract class represents a framework for all items in the game
- * @author idk
+ * @author Ryan Pietras
  * @version 1.0
  */
 public abstract class Item {

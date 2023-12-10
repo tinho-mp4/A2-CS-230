@@ -39,3 +39,6 @@ build/
 /src/main/resources/com/example/_cs250a2/Profiles/allProfiles.ser
 /path/to/save/profile
 /.idea/inspectionProfiles/Project_Default.xml
+/src/main/resources/com/example/_cs250a2/HighScores/HighScores/level1.dat
+/src/main/resources/com/example/_cs250a2/HighScores/HighScores/level2_highscores.txt
+/.idea/checkstyleidea-libs/readme.txt

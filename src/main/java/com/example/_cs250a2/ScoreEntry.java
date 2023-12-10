@@ -1,26 +1,41 @@
 package com.example._cs250a2;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * Represents an entry for a score in the game, including the profile name and the score.
+ * This class supports JavaFX properties and is serializable for easy storage and retrieval.
+ */
 public class ScoreEntry implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private transient SimpleStringProperty profileNameProperty; // transient to exclude it from default serialization
-    private transient SimpleIntegerProperty scoreProperty; // transient to exclude it from default serialization
+
+    // Transient properties to exclude from default serialization
+    private transient SimpleStringProperty profileNameProperty;
+    private transient SimpleIntegerProperty scoreProperty;
+
+    // Fields for score entry data
     private final String profileName;
     private final int score;
 
+    /**
+     * Constructs a ScoreEntry with a profile name and a score.
+     *
+     * @param profileName Name of the profile.
+     * @param score       Score achieved.
+     */
     public ScoreEntry(String profileName, int score) {
         this.profileName = profileName;
         this.score = score;
         initializeProperties();
     }
 
+    /**
+     * Initializes the JavaFX properties.
+     */
     private void initializeProperties() {
         this.profileNameProperty = new SimpleStringProperty(profileName);
         this.scoreProperty = new SimpleIntegerProperty(score);
@@ -48,12 +63,14 @@ public class ScoreEntry implements Serializable {
         return scoreProperty;
     }
 
+    @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(profileNameProperty.get());
         out.writeObject(scoreProperty.get());
     }
 
+    @Serial
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         String profileNameValue = (String) in.readObject();
@@ -65,9 +82,13 @@ public class ScoreEntry implements Serializable {
 
     @Override
     public String toString() {
-        return "ScoreEntry{" +
-                "profileName='" + profileName + '\'' +
-                ", score=" + score +
+        return "ScoreEntry{"
+                +
+                "profileName='"
+                + profileName + '\''
+                +
+                ", score=" + score
+                +
                 '}';
     }
 }
