@@ -24,8 +24,8 @@ public class PinkBall extends Monster {
         arrayLocationX = countMonsters*2;
         arrayLocationY = countMonsters*2 + 1;
         countMonsters++;
-        monsterLocations.add(x);
-        monsterLocations.add(y);
+        monsterLocations.add(this.getX());
+        monsterLocations.add(this.getY());
         PinkBallList.add(this);
     }
 
@@ -35,15 +35,15 @@ public class PinkBall extends Monster {
     }
 
     public void move() {
-        int[] currentTile = {x, y};
+        int[] currentTile = {this.getX(), this.getY()};
         //w is up, s is down, a is left and d is right
         if (direction == 'w') {
             //next location is 1 tile above current position
-            int[] locationNext = {x, y+1};
+            int[] locationNext = {this.getX(), this.getY()+1};
             //method to check the tile is legal
             if (checkTile(locationNext, currentTile)) {
-                y++;
-                locationUpdate(arrayLocationY, y);
+                this.setY(this.getY()+1);
+                locationUpdate(arrayLocationY, this.getY());
                 playerKill();
             } else {
                 direction = 's';
@@ -51,32 +51,32 @@ public class PinkBall extends Monster {
             }
         } else if (direction == 's') {
             //next location is 1 tile below current position
-            int[] locationNext = {x, y-1};
+            int[] locationNext = {this.getX(), this.getY()-1};
             //check tile legality
             if (checkTile(locationNext, currentTile)) {
-                y--;
+                this.setY(this.getY()-1);
                 playerKill();
-                locationUpdate(arrayLocationY, y);
+                locationUpdate(arrayLocationY, this.getY());
             } else {
                 direction = 'w';
                 move();
             }
         } else if (direction == 'a') {
-            int[] locationNext = {x-1, y};
+            int[] locationNext = {this.getX()-1, this.getY()};
             if (checkTile(locationNext, currentTile)) {
-                x--;
+                this.setX(this.getX()-1);
                 playerKill();
-                locationUpdate(arrayLocationX, x);
+                locationUpdate(arrayLocationX, this.getX());
             } else {
                 direction = 'd';
                 move();
             }
         } else if (direction == 'd') {
-            int[] locationNext = {x+1, y};
+            int[] locationNext = {this.getX()+1, this.getY()};
             if (checkTile(locationNext, currentTile)) {
-                x++;
+                this.setX(this.getX()+1);
                 playerKill();
-                locationUpdate(arrayLocationX, x);
+                locationUpdate(arrayLocationX, this.getX());
             } else {
                 direction = 'a';
                 move();

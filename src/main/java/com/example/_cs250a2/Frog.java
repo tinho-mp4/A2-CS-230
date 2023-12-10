@@ -21,8 +21,8 @@ public class Frog extends Monster {
         speed = ticks;
         direction = startingDirection;
         location = startingLocation;
-        x = location[0];
-        y = location[1];
+        this.setX(location[0]);
+        this.setY(location[1]);
         checkDirection(startingDirection);
         checkLocation(startingLocation);
         //saves the index that the monsters' x and y coordinates are stored
@@ -30,8 +30,8 @@ public class Frog extends Monster {
         arrayLocationX = countMonsters*2;
         arrayLocationY = (countMonsters*2)+1;
         countMonsters++;
-        monsterLocations.add(x);
-        monsterLocations.add(y);
+        monsterLocations.add(this.getX());
+        monsterLocations.add(this.getY());
         FrogList.add(this);
     }
 
@@ -43,93 +43,93 @@ public class Frog extends Monster {
 
     //this move method will try and make the frog x equal to player x then do the same with y
     public void move() {
-        int[] currentTile = {x, y};
-        int[] checkLeft = {x-1, y};
-        int[] checkRight = {x+1, y};
-        int[] checkBelow = {x, y-1};
-        int[] checkAbove = {x, y+1};
+        int[] currentTile = {this.getX(), this.getY()};
+        int[] checkLeft = {this.getX()-1, this.getY()};
+        int[] checkRight = {this.getX()+1, this.getY()};
+        int[] checkBelow = {this.getX(), this.getY()-1};
+        int[] checkAbove = {this.getX(), this.getY()+1};
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
         int playerX = player.getX();
         int playerY = player.getY();
-        if (x > playerX && checkTile(checkLeft, currentTile)) {
-            x--;
+        if (this.getX() > playerX && checkTile(checkLeft, currentTile)) {
+            this.setX(this.getX()-1);
             playerKill();
-            locationUpdate(arrayLocationX, x);
+            locationUpdate(arrayLocationX, this.getX());
             direction = 'a';
-        } else if (x < playerX && checkTile(checkRight, currentTile)) {
-            x++;
+        } else if (this.getX() < playerX && checkTile(checkRight, currentTile)) {
+            this.setX(this.getX()+1);
             playerKill();
-            locationUpdate(arrayLocationX, x);
+            locationUpdate(arrayLocationX, this.getX());
             direction = 'd';
-        } else if (y > playerY && checkTile(checkBelow, currentTile)) {
-            y--;
+        } else if (this.getY() > playerY && checkTile(checkBelow, currentTile)) {
+            this.setY(this.getY()-1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 's';
-        } else if (y < playerY && checkTile(checkAbove, currentTile)) {
-            y++;
+        } else if (this.getY() < playerY && checkTile(checkAbove, currentTile)) {
+            this.setY(this.getY()+1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 'w';
         } else if (direction == 'a' && checkTile(checkAbove, currentTile)) {
-            y++;
+            this.setY(this.getY()+1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 'w';
         } else if (direction == 'a' && checkTile(checkBelow, currentTile)) {
-            y--;
+            this.setY(this.getY()-1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 's';
         } else if (direction == 'a') {
-            x++;
+            this.setX(this.getX()+1);
             playerKill();
-            locationUpdate(arrayLocationX, x);
+            locationUpdate(arrayLocationX, this.getX());
             direction = 'd';
         } else if (direction == 'w' && checkTile(checkLeft, currentTile)) {
-            x--;
+            this.setX(this.getX()-1);
             playerKill();
-            locationUpdate(arrayLocationX, x);
+            locationUpdate(arrayLocationX, this.getX());
             direction = 'a';
         } else if (direction == 'w' && checkTile(checkRight, currentTile)) {
-            x++;
+            this.setX(this.getX()+1);
             playerKill();
-            locationUpdate(arrayLocationX, x);
+            locationUpdate(arrayLocationX, this.getX());
             direction = 'd';
         } else if (direction == 'w') {
-            y--;
+            this.setY(this.getY()-1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 's';
         } else if (direction == 's' && checkTile(checkRight, currentTile)) {
-            x++;
+            this.setX(this.getX()+1);
             playerKill();
-            locationUpdate(arrayLocationX, x);
+            locationUpdate(arrayLocationX, this.getX());
             direction = 'd';
         } else if (direction == 's' && checkTile(checkLeft, currentTile)) {
-            x--;
+            this.setX(this.getX()-1);
             playerKill();
-            locationUpdate(arrayLocationX, x);
+            locationUpdate(arrayLocationX, this.getX());
             direction = 'a';
         } else if (direction == 's') {
-            y++;
+            this.setY(this.getY()+1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 'w';
         } else if (direction == 'd' && checkTile(checkBelow, currentTile)) {
-            y--;
+            this.setY(this.getY()-1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 's';
         } else if (direction == 'd' && checkTile(checkAbove, currentTile)) {
-            y++;
+            this.setY(this.getY()+1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 'w';
         } else if (direction == 'd') {
-            y--;
+            this.setY(this.getY()-1);
             playerKill();
-            locationUpdate(arrayLocationY, y);
+            locationUpdate(arrayLocationY, this.getY());
             direction = 'a';
         }
     }
