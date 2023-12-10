@@ -61,7 +61,7 @@ public class Game extends Application {
         primaryStage.show();
 
         // load the level
-        GraphicsContext gc = controller.canvas.getGraphicsContext2D();
+        GraphicsContext gc = controller.getCanvas().getGraphicsContext2D();
     }
 
     /**

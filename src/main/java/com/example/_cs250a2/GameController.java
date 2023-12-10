@@ -13,8 +13,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import java.io.File;
@@ -30,6 +30,16 @@ import java.util.List;
  */
 public class GameController {
 
+    private static final int STRING_STARTING_INDEX = 0;
+
+    private static final int STRING_ENDING_INDEX = 4;
+
+    private static final int CHIP_VALUE = 15;
+
+    private static final int PLAYER_SIZE = 32;
+
+    private static final int LEVEL_NUMBER = 5;
+
 
     //Constant for the maximum number of ticks
     /**
@@ -42,7 +52,7 @@ public class GameController {
      * The canvas for the game.
      */
     @FXML
-    public Canvas canvas;
+    private Canvas canvas;
 
     //button to show the high scores
     /**
@@ -61,7 +71,7 @@ public class GameController {
     /**
      * The score for the game.
      */
-    public int score;
+    private int score;
 
     /**
      * The tick count for the game.
@@ -96,23 +106,17 @@ public class GameController {
     private Profile currentProfile;
 
     /**
-     * The label for the selected profile.
-     */
-    @FXML
-    public Label getSelectedLevelLabel;
-
-    /**
      * The choice box for the profiles.
      */
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
 
     @FXML
-    public TableColumn<ScoreEntry, String> profileNameColumn;
+    private TableColumn<ScoreEntry, String> profileNameColumn;
     @FXML
-    public TableColumn<ScoreEntry, Integer> scoreColumn;
+    private TableColumn<ScoreEntry, Integer> scoreColumn;
     @FXML
-    public TableView<ScoreEntry> highScoresTable;
+    private TableView<ScoreEntry> highScoresTable;
 
 
     /**
@@ -164,7 +168,7 @@ public class GameController {
     /**
      * The name of the current level.
      */
-    public String levelName;
+    private String levelName;
 
     /**
      * The time limit for the game.
@@ -229,8 +233,21 @@ public class GameController {
         // Redraw game as the player may have moved.
         drawGame();
 
-        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
+        // Consume the event.
+        // This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
+    public String getLevelName() {
+        return levelName;
     }
 
     /**
@@ -252,7 +269,7 @@ public class GameController {
 
         // Draw player at current location
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
-        player.draw(gc, player.getX(), player.getY(), 32);
+        player.draw(gc, player.getX(), player.getY(), PLAYER_SIZE);
         //Draw key at current location
 
     }
@@ -322,8 +339,9 @@ public class GameController {
         int score = timeLimit;
         // Add 15 points for every chip in the inventory
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
-        if (player != null)
-            score += 15 * player.getChips();
+        if (player != null) {
+            score += CHIP_VALUE * player.getChips();
+        }
         return score;
     }
 
@@ -366,7 +384,7 @@ public class GameController {
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName();
-                String levelName = fileName.substring(0, fileName.length() - 4);
+                String levelName = fileName.substring(STRING_STARTING_INDEX, fileName.length() - STRING_ENDING_INDEX);
                 levels.add(new Level(levelName));
             }
         }
@@ -395,10 +413,14 @@ public class GameController {
                         "Selected level: \n" + (currentLevel != null ? currentLevel.getName() : ""),
                 currentLevelProperty()));
     }
-    Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
+    private Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
+
 
     /**
-     * Handles the start button event, including loading the level, updating the time limit, and starting the tick timeline.
+     * Handles the start button event,
+     * including loading the level,
+     * updating the time limit,
+     * and starting the tick timeline.
      */
     private void handleStartButton() {
 
@@ -551,7 +573,9 @@ public class GameController {
                 System.out.println("High scores for " + level.getName() + ":");
                 int rank = 1;
                 for (ScoreEntry highScoreEntry : highScoresList) {
-                    System.out.println(rank + ". " + highScoreEntry.getProfileName() + " - " + highScoreEntry.getScore());
+                    System.out.println(rank + ". "
+                            + highScoreEntry.getProfileName()
+                            + " - " + highScoreEntry.getScore());
                     rank++;
                 }
                 System.out.println(currentProfile.getLevelReached());
@@ -583,7 +607,7 @@ public class GameController {
             if (selectedLevel == null) {
                 throw new IllegalArgumentException("No level selected.");
             }
-            int selectedLevelNumber = Integer.parseInt(selectedLevel.getName().substring(5));
+            int selectedLevelNumber = Integer.parseInt(selectedLevel.getName().substring(LEVEL_NUMBER));
             if (currentProfile == null || selectedLevelNumber > currentProfile.getLevelReached() + 1) {
                 throw new IllegalArgumentException("You must complete the previous level first.");
             }
