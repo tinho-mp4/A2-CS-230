@@ -167,15 +167,15 @@ public class LevelLoader {
         currentLevel = new Level(levelName, timeLimit, width, height, tileGrid, itemList, entityList);
         levels.add(currentLevel);
 
-        loadLevel(gc, currentLevel);
+        drawLevel(gc, currentLevel);
     }
 
 
-    public static void loadLevel(GraphicsContext gc, Level level) {
+    public static void drawLevel(GraphicsContext gc, Level level) {
         tileGrid = level.getTileGrid();
         itemList = level.getItemList();
         entityList = level.getEntityList();
-        drawLevel(gc);
+        drawTiles(gc);
         drawEntities(gc);
         drawItems(gc);
     }
@@ -306,7 +306,7 @@ public class LevelLoader {
         itemList.remove(item);
     }
 
-    public static void drawLevel(GraphicsContext gc) {
+    public static void drawTiles(GraphicsContext gc) {
         for (ArrayList<Tile> row : getTileGrid()) {
             for (Tile tile : row) {
                 tile.draw(gc, tile.getX(), tile.getY(), 32);

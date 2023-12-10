@@ -90,16 +90,6 @@ public class GameController {
     private StringProperty timeRemainingProperty;
 
     /**
-     * The name of the current level.
-     */
-    public String levelName;
-
-    /**
-     * The time limit for the game.
-     */
-    private int timeLimit;
-
-    /**
      * The current profile.
      */
     private Profile currentProfile;
@@ -169,6 +159,16 @@ public class GameController {
      * The current level.
      */
     private Level currentLevel;
+
+    /**
+     * The name of the current level.
+     */
+    public String levelName;
+
+    /**
+     * The time limit for the game.
+     */
+    private int timeLimit;
 
     /**
      * The choice box for the levels.
@@ -242,12 +242,11 @@ public class GameController {
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+//        LevelLoader.drawLevel(gc, currentLevel);
 
-
-        LevelLoader.drawLevel(gc);
+        LevelLoader.drawTiles(gc);
         LevelLoader.drawEntities(gc);
         LevelLoader.drawItems(gc);
-
 
         // Draw player at current location
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
