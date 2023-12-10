@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player{
+    private boolean canMove = true;
+    private boolean playerOnButton = false;
     private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
 
     // X and Y coordinate of player on the grid.
     private static int x;
     private static int y;
     private final ArrayList<Item> inventory;
-    private boolean playerOnButton = false;
-    private boolean canMove = true;
 
     public Player(int x, int y) {
         Player.x = x;
@@ -30,7 +30,6 @@ public class Player{
                     if (LevelLoader.getTile(x + 1, y).getName() != "block"
                             && (!LevelLoader.getTile(x + 1, y).isSolid())) {
                         // && Block.isBlocked(x+1, y, x+2, y))): // not really sure what this is for :/
-                        setX(x + 1);
                         interact(x + 1, y);
                     }
                     break;
@@ -39,7 +38,6 @@ public class Player{
                     if (LevelLoader.getTile(x - 1, y).getName() != "block"
                             && (!LevelLoader.getTile(x - 1, y).isSolid())) {
                         // && Block.isBlocked(x-1, y, x-2, y))):
-                        setX(x - 1);
                         interact(x - 1, y);
                     }
                     break;
@@ -48,7 +46,6 @@ public class Player{
                     if (LevelLoader.getTile(x, y - 1).getName() != "block"
                             && (!LevelLoader.getTile(x, y - 1).isSolid())) {
                         // && Block.isBlocked(x, y-1, x, y-2))):
-                        setY(y - 1);
                         interact(x, y - 1);
                     }
                     break;
@@ -57,7 +54,6 @@ public class Player{
                     if (LevelLoader.getTile(x, y + 1).getName() != "block"
                             && (!LevelLoader.getTile(x, y + 1).isSolid())) {
                         // && Block.isBlocked(x, y+1, x, y+2))):
-                        setY(y + 1);
                         interact(x, y + 1);
                     }
                     break;
