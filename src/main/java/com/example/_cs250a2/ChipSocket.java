@@ -15,7 +15,24 @@ public class ChipSocket extends Tile {
     private final int CHIPS_NEEDED;
     private static final Image CHIP_SOCKET_IMAGE =
     new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket.png"));
+
+    private static final Image CHIP_SOCKET1_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket1.png"));
+    private static final Image CHIP_SOCKET2_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket2.png"));
+    private static final Image CHIP_SOCKET3_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket3.png"));
+    private static final Image CHIP_SOCKET4_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket4.png"));
+    private static final Image CHIP_SOCKET5_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket5.png"));
+    private static final Image CHIP_SOCKET6_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket6.png"));
+    private static final Image CHIP_SOCKET7_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket7.png"));
+    private static final Image CHIP_SOCKET8_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket8.png"));
+    private static final Image CHIP_SOCKET9_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket9.png"));
+
+
+
+
+
     //other chips sprites.
+
+
 
     /**
      * Creates a computer chip at coordinates (x,y).
@@ -95,10 +112,40 @@ public class ChipSocket extends Tile {
      * @param size size
      */
     @Override
-    public void draw(final GraphicsContext gc,
-                     final double x,
-                     final double y,
-                     final double size) {
-        gc.drawImage(CHIP_SOCKET_IMAGE, x * size, y * size);
+    //case chipsneeded 1-5, draw chipsocket dependant on which it is
+    public void draw(GraphicsContext gc, double x, double y, double size) {
+        Image chipSocketImage = null;
+        switch (CHIPS_NEEDED) {
+            case 1:
+                chipSocketImage = CHIP_SOCKET1_IMAGE;
+                break;
+            case 2:
+                chipSocketImage = CHIP_SOCKET2_IMAGE;
+                break;
+            case 3:
+                chipSocketImage = CHIP_SOCKET3_IMAGE;
+                break;
+            case 4:
+                chipSocketImage = CHIP_SOCKET4_IMAGE;
+                break;
+            case 5:
+                chipSocketImage = CHIP_SOCKET5_IMAGE;
+                break;
+            case 6:
+                chipSocketImage = CHIP_SOCKET6_IMAGE;
+                break;
+            case 7:
+                chipSocketImage = CHIP_SOCKET7_IMAGE;
+                break;
+            case 8:
+                chipSocketImage = CHIP_SOCKET8_IMAGE;
+                break;
+            case 9:
+                chipSocketImage = CHIP_SOCKET9_IMAGE;
+                break;
+
+        }
+
+        gc.drawImage(chipSocketImage, x*size, y*size);
     }
 }
