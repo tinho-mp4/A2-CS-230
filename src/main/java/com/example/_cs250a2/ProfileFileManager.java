@@ -1,31 +1,34 @@
 package com.example._cs250a2;
-import java.io.*;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
- * The {@code ProfileFileManager}
- * class handles the saving and loading of profiles to file.
- * @author Ben Foord
- * @version 1.0
+ * Handles the saving, loading, and printing of profiles to and from a file.
+ * This class provides static methods to manage the persistence of profile data.
+ * @author Ben
  */
 public class ProfileFileManager {
 
     /**
-     * Save all profiles to a file.
-     * @param profiles The profiles to save.
+     * Saves all profiles to a file.
+     *
+     * @param profiles The list of profiles to be saved.
      */
     public static void saveAllProfiles(final List<Profile> profiles) {
-        String directoryPath =
-                "src/main/resources/com/example/_cs250a2/Profiles";
+        String directoryPath = "src/main/resources/com/example/_cs250a2/Profiles";
         String filePath = directoryPath + "/allProfiles.ser";
 
         try {
-            // Create the directory if it doesn't exist
             Files.createDirectories(Paths.get(directoryPath));
-
-            // Convert List to ArrayList
             ArrayList<Profile> profilesList = new ArrayList<>(profiles);
 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
@@ -37,9 +40,11 @@ public class ProfileFileManager {
     }
 
     /**
-     * Load all profiles from a file.
-     * @return The profiles that were loaded.
+     * Loads all profiles from a file.
+     *
+     * @return A list of loaded profiles.
      */
+    @SuppressWarnings("unchecked") // Suppresses unchecked cast warning
     public static List<Profile> loadAllProfiles() {
         String directoryPath = "src/main/resources/com/example/_cs250a2/Profiles";
         String filePath = directoryPath + "/allProfiles.ser";
@@ -58,12 +63,12 @@ public class ProfileFileManager {
     }
 
     /**
-     * Print all profiles to the console.
-     * @param profiles The profiles to print.
+     * Prints all profiles to the console.
+     *
+     * @param profiles The list of profiles to be printed.
      */
     public static void printAllProfiles(List<Profile> profiles) {
         System.out.println("All Profiles:");
-
         for (Profile profile : profiles) {
             System.out.println("Name: " + profile.getName());
             System.out.println("Level Reached: " + profile.getLevelReached());
