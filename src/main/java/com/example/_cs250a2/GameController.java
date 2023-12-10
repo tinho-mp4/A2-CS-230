@@ -278,10 +278,7 @@ public class GameController {
     public void tick() {
         //update the timer every tick if its 0 end the game
         System.out.println("tick");
-        if (tickCount % 2 == 0) {
-            updateTimer();
-        }
-
+        updateTimer();
         //move the monster every tick
         for (Entity entity : LevelLoader.getEntityList()) {
             if (entity instanceof Monster monster) {
