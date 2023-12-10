@@ -90,6 +90,7 @@ public class Player{
                 break;
             case "exit":
                 Exit.event();
+                gameController.clearLevel();
                 break;
             case "button":
                 Button button = (Button) currentTile;
@@ -159,6 +160,7 @@ public class Player{
         }
 
         if(Level.isOnMonster()) {
+            gameController.clearLevel();
             GameOver.playerDeathMonster();
         }
 
@@ -178,6 +180,11 @@ public class Player{
         for (Item item : inventory) {
             System.out.println("- " + item);
         }
+    }
+
+    public void setPosition(int newX, int newY) {
+        this.x = newX;
+        this.y = newY;
     }
 
 

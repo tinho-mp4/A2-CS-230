@@ -10,7 +10,6 @@ public class GameOver {
 
     public static void playerDeathMonster() {
         System.out.println("You were eaten by a monster!");
-        System.exit(0);
     }
 
     public static void gameEndTime(){

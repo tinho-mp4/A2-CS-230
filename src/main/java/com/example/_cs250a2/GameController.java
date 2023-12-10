@@ -372,6 +372,8 @@ public class GameController {
      */
     private void handleStartButton() {
 
+        clearLevel();
+
 
         try {
             if (currentLevel == null) {
@@ -397,6 +399,10 @@ public class GameController {
             levelLoader.updateLevelInformation(levelName);
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
+
+            player.setPosition(1, 1);
+
+
 
             // Clear the level before loading a new one
             levelLoader.clearLevel();
