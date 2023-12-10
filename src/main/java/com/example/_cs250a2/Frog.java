@@ -35,7 +35,7 @@ public class Frog extends Monster {
         FrogList.add(this);
     }
 
-    public static int getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 

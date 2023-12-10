@@ -27,7 +27,7 @@ public abstract class Monster extends Entity {
    protected ArrayList<String> allowedTiles = new ArrayList<>(Arrays.asList("path", "button", "trap"));
 
    //speed decided based on how many ticks between moves
-   protected static int speed;
+   protected int speed;
    protected int arrayLocationX;
    protected int arrayLocationY;
 
@@ -41,8 +41,8 @@ public abstract class Monster extends Entity {
 
    }
 
-   public static int getSpeed() {
-      return speed;
+   public int getSpeed() {
+      return this.speed;
    }
 
    public static ArrayList<PinkBall> getPinkBallList() {
@@ -58,31 +58,16 @@ public abstract class Monster extends Entity {
    public abstract void move();
 
    //called by the tick method to move monsters
-   public static void tickMove(int count) {
-      if (!PinkBallList.isEmpty()) {
-         if (count % PinkBall.getSpeed() == 0) {
-            for (PinkBall pinkBall : Monster.getPinkBallList()) {
-               pinkBall.move();
-            }
-         }
-      } if (!BugList.isEmpty()) {
-         if (count % Bug.getSpeed() == 0) {
-            for (Bug bug : Monster.getBugList()) {
-               bug.move();
-            }
-         }
-      } if (!FrogList.isEmpty()) {
-         if (count % Frog.getSpeed() == 0) {
-            for (Frog frog : Monster.getFrogList()) {
-               frog.move();
-            }
-         }
+   public void tickMove(int count) {
+      if (count % this.getSpeed() == 0) {
+         this.move();
       }
    }
 
    //these check the parameters when the constructor is called for a monster
    protected void checkLocation(int[] location) {
-      if (location[0] < LevelLoader.getWidth() && location[1] < LevelLoader.getHeight() && (location[0] >= 0 && location[1] >= 0)) {
+      System.out.println(location[0] + " " + location[1]);
+      if (!(location[0] < LevelLoader.getWidth() && location[1] < LevelLoader.getHeight()) && (location[0] >= 0 && location[1] >= 0)) {
          throw new IllegalArgumentException("the monster has to start within the coordinates of the game space");
       }
    }

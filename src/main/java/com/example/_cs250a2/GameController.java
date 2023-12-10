@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -264,7 +265,14 @@ public class GameController {
             updateTimer();
         }
 
-        Monster.tickMove(tickCount);
+        //move the monster every tick
+        for (ArrayList<Entity> entityArrayList : levelLoader.getEntityGrid()) {
+            for (Entity entity : entityArrayList) {
+                if (entity instanceof Monster monster) {
+                    monster.tickMove(tickCount);
+                }
+            }
+        }
         tickCount++;
         if (tickCount >= MAXIMUMTICKS) {
             tickCount = 0;

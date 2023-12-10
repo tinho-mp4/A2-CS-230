@@ -18,23 +18,10 @@ public class PinkBall extends Monster {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
         direction = startingDirection;
-        location = startingLocation;
-        x = location[0];
-        y = location[1];
-        checkDirection(startingDirection);
-        checkLocation(startingLocation);
-        //saves the index that the monsters' x and y coordinates are stored
-        //X is stored at 2 * the number of monsters since each monster stores two values and y is after that
-        arrayLocationX = countMonsters*2;
-        arrayLocationY = (countMonsters*2)+1;
-        countMonsters++;
-        monsterLocations.add(x);
-        monsterLocations.add(y);
-        PinkBallList.add(this);
     }
 
     public void event (int x, int y, int newX, int newY) {}
-    public static int getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 

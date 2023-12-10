@@ -300,7 +300,7 @@ public class LevelLoader {
 
     public static void drawEntities(GraphicsContext gc) {
         System.out.println("drawing entites" + entityGrid);
-        for (ArrayList<Entity> row : getentityGrid()) {
+        for (ArrayList<Entity> row : getEntityGrid()) {
             for (Entity entity : row) {
                 if (entity != null) {
                     entity.draw(gc, entity.getX(), entity.getY(), 32);
@@ -343,7 +343,7 @@ public class LevelLoader {
         }
     }
 
-    public static Entity getEntity(int x, int y) {
+    public static Entity getEntities(int x, int y) {
         try {
             return entityGrid.get(x).get(y);
         } catch (IndexOutOfBoundsException e) {
@@ -408,7 +408,7 @@ public class LevelLoader {
         return tileGrid;
     }
 
-    public static ArrayList<ArrayList<Entity>> getentityGrid() {
+    public static ArrayList<ArrayList<Entity>> getEntityGrid() {
         return entityGrid;
     }
 
