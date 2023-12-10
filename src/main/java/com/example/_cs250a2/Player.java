@@ -33,6 +33,8 @@ public class Player extends Entity{
      */
     public Player(int x, int y, GameController gameController) {
         super(x, y);
+        this.x = x;
+        this.y = y;
         INVENTORY = new ArrayList<>();
         this.GAME_CONTROLLER = gameController;
     }
@@ -88,7 +90,7 @@ public class Player extends Entity{
                 case DOWN:
                     // Down key was pressed. So move the player down by one cell.
                     if (!LevelLoader.getTile(x, y + 1).isSolid()
-                        && !((LevelLoader.getEntityWithCoords(x, y + 1) instanceof Block) && !LevelLoader.getTile(x, y + 2).isPushableBlock())) {
+                            && !((LevelLoader.getEntityWithCoords(x, y + 1) instanceof Block) && !LevelLoader.getTile(x, y + 2).isPushableBlock())) {
                         interact(x, y + 1);
                     }
                     break;
@@ -116,6 +118,9 @@ public class Player extends Entity{
         }
 
         if (nextEntity instanceof Block block) {
+            if (LevelLoader.getTile(newX + 2*(newX - x), newY + 2*(newY - y)).isSolid()) {
+                return;
+            }
             Ice.event(block.getX(), block.getY(), block.getX() + (newX - x), block.getY() + (newY - y));
         }
 
@@ -133,6 +138,8 @@ public class Player extends Entity{
         if (currentTile.getName() != "ice") { // Player movement on ice is handled in Ice.java
             this.setX(newX);
             this.setY(newY);
+            this.setPosition(newX, newY);
+
         }
 
         switch (currentTile.getName()) {
@@ -304,4 +311,5 @@ public class Player extends Entity{
     public  int getChips() {
         return (int) INVENTORY.stream().filter(item -> item instanceof Chip).count();
     }
+
 }

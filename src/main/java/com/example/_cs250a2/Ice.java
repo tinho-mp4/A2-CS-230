@@ -47,37 +47,37 @@ public class Ice extends Tile {
         }
     }
 
-    public static void event(int playerX, int playerY, int newPlayerX, int newPlayerY) {
+    public static void event(int entityX, int entityY, int newEntityX, int newEntityY) {
         // log coords
-        // System.out.println("playerX: " + playerX + " playerY: " + playerY + " newPlayerX: " + newPlayerX + " newPlayerY: " + newPlayerY);
+        // System.out.println("entityX: " + entityX + " entityY: " + entityY + " newEntityX: " + newEntityX + " newEntityY: " + newEntityY);
         // delta will act as the direction in which the player is going
-        // NOTE: deltaX -1 is left, deltaX 1 is right, deltaY 1 is up, deltaY -1 is down, this might need changing
-        Entity currentEntity = LevelLoader.getEntityWithCoords(playerX, playerY);
+        // NOTE: deltaX -1 is left, deltaX 1 is right, deltaY -1 is up, deltaY 1 is down
+        Entity currentEntity = LevelLoader.getEntityWithCoords(entityX, entityY);
 
-        int deltaX = newPlayerX - playerX;
-        int deltaY = newPlayerY - playerY;
+        int deltaX = newEntityX - entityX;
+        int deltaY = newEntityY - entityY;
 
-        if (!LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) {
+        if (!LevelLoader.getTile(newEntityX, newEntityY).isSolid()) {
             // Corner checking
-            if (LevelLoader.getTile(newPlayerX, newPlayerY).getName() == "ice") {
-                currentEntity.setX(newPlayerX);
-                currentEntity.setY(newPlayerY);
+            if (LevelLoader.getTile(newEntityX, newEntityY).getName() == "ice") {
+                if (LevelLoader.getTile(newEntityX+deltaX, newEntityY+deltaY).isSolid()) {
+                    return;
+                }
+                updateEntity(currentEntity, newEntityX, newEntityY);
 
-                Corner blockedCorner = ((Ice)LevelLoader.getTile(newPlayerX, newPlayerY)).getBlockedCorner();
+                Corner blockedCorner = ((Ice)LevelLoader.getTile(newEntityX, newEntityY)).getBlockedCorner();
 
-                int targetX = newPlayerX;
-                int targetY = newPlayerY;
+                int targetX = newEntityX;
+                int targetY = newEntityY;
 
-                if (hitIceWall(playerX, playerY, newPlayerX, newPlayerY, blockedCorner)) {
-                    // if the player came from a path, player should stay on the path
-                    if (LevelLoader.getTile(playerX, playerY).getName() != "ice") {
-                        currentEntity.setX(playerX);
-                        currentEntity.setY(playerY);
+                if (hitIceWall(entityX, entityY, newEntityX, newEntityY, blockedCorner)) {
+                    // if the entity came from a path, player should stay on the path
+                    if (LevelLoader.getTile(entityX, entityY).getName() != "ice") {
+                        updateEntity(currentEntity, entityX, entityY);
                         return;
                     }
-                    currentEntity.setX(playerX - deltaX);
-                    currentEntity.setY(playerY - deltaY);
-                    event(playerX, playerY, playerX - deltaX, playerY - deltaY);
+                    updateEntity(currentEntity, entityX - deltaX, entityY - deltaY);
+                    event(entityX, entityY, entityX - deltaX, entityY - deltaY);
                     return;
                 }
 
@@ -104,23 +104,41 @@ public class Ice extends Tile {
                         break;
                 }
 
-                event(newPlayerX, newPlayerY, targetX, targetY);
+                event(newEntityX, newEntityY, targetX, targetY);
             } else {
-                currentEntity.setX(newPlayerX);
-                currentEntity.setY(newPlayerY);
+                if (LevelLoader.getEntityWithCoords(newEntityX, newEntityY) instanceof Block) {
+                    if (LevelLoader.getTile(newEntityX + deltaX, newEntityY + deltaY).isSolid()) { // checks if the block is hitting a wall
+                        event(newEntityX- deltaX, newEntityY - deltaY, newEntityX - 2*deltaX, newEntityY - 2*deltaY);
+                        return;
+                    } else {
+                        event(newEntityX, newEntityY, newEntityX + deltaX, newEntityY + deltaY);
+                    }
+                }
+                updateEntity(currentEntity, newEntityX, newEntityY);
             }
-        } else if (LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) { // Go in the reverse direction
-            if (LevelLoader.getTile(playerX - 2*deltaX, playerY - 2*deltaY).getName() == "ice") {
-                event(playerX - deltaX, playerY - deltaY, playerX - 2*deltaX, playerY - 2*deltaY);
+        } else { // Go in the reverse direction
+            if (LevelLoader.getTile(entityX - 2*deltaX, entityY - 2*deltaY).getName() == "ice") {
+                event(entityX - deltaX, entityY - deltaY, entityX - 2*deltaX, entityY - 2*deltaY);
             } else {
-                event(playerX, playerY, playerX - deltaX, playerY - deltaY);
+                event(entityX, entityY, entityX - deltaX, entityY - deltaY);
             }
         }
     }
 
-    public static boolean hitIceWall(int playerX, int playerY, int newPlayerX, int newPlayerY, Corner blockedCorner) {
-        int deltaX = newPlayerX - playerX;
-        int deltaY = newPlayerY - playerY;
+    public static void updateEntity(Entity entity, int newX, int newY) {
+        if (entity instanceof Player player) {
+            player.setX(newX);
+            player.setY(newY);
+            player.setPosition(newX, newY);
+        } else if (entity instanceof Block block) {
+            block.setX(newX);
+            block.setY(newY);
+        }
+    }
+
+    public static boolean hitIceWall(int entityX, int entityY, int newEntityX, int newEntityY, Corner blockedCorner) {
+        int deltaX = newEntityX - entityX;
+        int deltaY = newEntityY - entityY;
 
         // this code acts as a way of checking if the player is hitting a wall, if it does,
         switch (blockedCorner) {
