@@ -15,11 +15,26 @@ public class LevelLoader {
     private static final int PINK_BALL_SPEED = 1;
     private static final int BUG_SPEED = 1;
 
+    /**
+     * Stores a mapping of buttons in the game, where each button is identified by an integer key.
+     */
     private static final Map<Integer, Button> BUTTONS = new HashMap<>();
+
+    /**
+     * Stores a mapping of traps in the game, with each trap associated with an integer key.
+     */
     private static final Map<Integer, Trap> TRAPS = new HashMap<>();
 
+    /**
+     * Holds a list of all levels available in the game.
+     */
     private final static ArrayList<Level> levels = new ArrayList<>();
+
+    /**
+     * Represents the current level that the player is navigating through.
+     */
     private static Level currentLevel;
+
 
 
     /**
@@ -37,12 +52,11 @@ public class LevelLoader {
      * This value is set during the level loading process.
      */
     private static int width;
-    private static int entityCount;
+
     /**
-     * Represents the name of the level.
-     * This value is set during the level loading process.
+     * Holds the count of entities in the current level.
      */
-    private String levelName;
+    private static int entityCount;
 
     /**
      * The starting position [x, y] of the player in the level.
@@ -63,6 +77,13 @@ public class LevelLoader {
     private static ArrayList<Entity> entityList = new ArrayList<>();
     private static ArrayList<Item> itemList = new ArrayList<>();
 
+    /**
+     * Updates level information from a given level file.
+     * Reads and sets various properties of the level including the name, time limit,
+     * dimensions, and counts of entities.
+     *
+     * @param levelName The name of the level file (without extension) to be loaded.
+     */
     public static void updateLevelInformation(String levelName) {
         Scanner scanner =
                 new Scanner(Objects.requireNonNull(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")));
@@ -279,6 +300,15 @@ public class LevelLoader {
 
     }
 
+    /**
+     * Processes and organizes entities based on their type and coordinates.
+     * It creates different entity objects based on the character codes and adds them to the game.
+     *
+     * @param gc The GraphicsContext for drawing entities.
+     * @param entity Array of characters representing the entity.
+     * @param gameController The GameController handling the game logic.
+     * @return The created Entity object.
+     */
     public static Entity processEntity(GraphicsContext gc, char[] entity, GameController gameController) {
         switch (entity[0]){
             case 'F':
@@ -303,6 +333,13 @@ public class LevelLoader {
         }
     }
 
+    /**
+     * Processes and returns an Item object based on the provided character array.
+     *
+     * @param gc The GraphicsContext for drawing items.
+     * @param item Character array representing the item's properties.
+     * @return The created Item object.
+     */
     public static Item processItem(GraphicsContext gc, char[] item) {
         int x = item[1] - '0';
         int y = item[2] - '0';
@@ -317,10 +354,20 @@ public class LevelLoader {
                 return null;
         }
     }
+    /**
+     * Removes the specified item from the current level's item list.
+     *
+     * @param item The item to be removed.
+     */
     public static void removeItem(Item item) {
         itemList.remove(item);
     }
 
+    /**
+     * Draws the current level's tiles on the screen.
+     *
+     * @param gc The GraphicsContext used for drawing.
+     */
     public static void drawTiles(GraphicsContext gc) {
         for (ArrayList<Tile> row : getTileGrid()) {
             for (Tile tile : row) {
@@ -329,6 +376,11 @@ public class LevelLoader {
         }
     }
 
+    /**
+     * Draws the entities of the current level.
+     *
+     * @param gc The GraphicsContext used for drawing entities.
+     */
     public static void drawEntities(GraphicsContext gc) {
         System.out.println("drawing entites" + entityList);
         for (Entity entity : getEntityList()) {
@@ -338,7 +390,11 @@ public class LevelLoader {
         }
     }
 
-
+    /**
+     * Draws all items in the current level.
+     *
+     * @param gc The GraphicsContext used for drawing items.
+     */
     public static void drawItems(GraphicsContext gc) {
         for (Item item : getItemList()) {
             if (item != null) {
@@ -347,7 +403,12 @@ public class LevelLoader {
         }
     }
 
-
+    /**
+     * Counts the number of lines in a file from an InputStream.
+     *
+     * @param inputStream The InputStream of the file to be counted.
+     * @return The total number of lines in the file.
+     */
     private static int countFileLines(InputStream inputStream) {
         Scanner scanner = new Scanner(inputStream);
         int count = 0;
@@ -358,10 +419,23 @@ public class LevelLoader {
         return count;
     }
 
+    /**
+     * Retrieves the current count of entities in the level.
+     *
+     * @return The total number of entities.
+     */
     public static int getEntityCount() {
         return entityCount;
     }
 
+    /**
+     * Returns the tile at the specified coordinates.
+     * If the coordinates are out of bounds, returns a Wall tile.
+     *
+     * @param x The x-coordinate of the tile.
+     * @param y The y-coordinate of the tile.
+     * @return The Tile object at the given coordinates.
+     */
     public static Tile getTile(int x, int y) {
         try {
             return tileGrid.get(x).get(y);
@@ -370,6 +444,12 @@ public class LevelLoader {
         }
     }
 
+    /**
+     * Retrieves the first entity of the specified class from the current level.
+     *
+     * @param cls The class of the entity to retrieve.
+     * @return The first entity of the specified class, or null if none found.
+     */
     public static Entity getEntityByClass(Class<?> cls) {
         for (Entity entity : entityList) {
             if (entity != null) {
@@ -382,6 +462,13 @@ public class LevelLoader {
     }
 
 
+    /**
+     * Retrieves the entity located at the specified coordinates.
+     *
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @return The Entity at the specified coordinates, or null if none found.
+     */
     public static Entity getEntityWithCoords(int x, int y) {
         for (Entity entity : entityList) {
             if (entity != null) {
@@ -393,6 +480,13 @@ public class LevelLoader {
         return null;
     }
 
+    /**
+     * Replaces the tile at the specified coordinates with a new tile.
+     *
+     * @param x The x-coordinate of the tile.
+     * @param y The y-coordinate of the tile.
+     * @param newTile The new Tile to place at the coordinates.
+     */
     public static void setTile(int x, int y, Tile newTile) {
         try {
             tileGrid.get(x).set(y, newTile);
@@ -401,21 +495,46 @@ public class LevelLoader {
         }
     }
 
+    /**
+     * Gets the height of the current level.
+     *
+     * @return The height of the level.
+     */
     public static int getHeight() {
         return height;
     }
+
+    /**
+     * Gets the width of the current level.
+     *
+     * @return The width of the level.
+     */
     public static int getWidth() {
         return width;
     }
 
+    /**
+     * Gets the time limit of the current level.
+     *
+     * @return The time limit of the level.
+     */
     public static int getTimeLimit() {
         return timeLimit;
     }
 
+    /**
+     * Sets the time limit of the current level.
+     *
+     * @param limit The new time limit.
+     */
     private static void setTimeLimit(int limit) {
         timeLimit = limit;
     }
 
+    /**
+     * Links buttons to their corresponding traps in the level.
+     * Each button is linked to a trap with the same number.
+     */
     public static void linkButtonsToTraps() {
         for (Map.Entry<Integer, Button> entry : BUTTONS.entrySet()) {
             int buttonNum = entry.getKey();
@@ -428,23 +547,36 @@ public class LevelLoader {
         }
     }
 
-    public static Map<Integer, Button> getButtons() {
-        return BUTTONS;
-    }
-
-
+    /**
+     * Gets the grid of tiles for the current level.
+     *
+     * @return A 2D ArrayList representing the grid of tiles.
+     */
     public static ArrayList<ArrayList<Tile>> getTileGrid() {
         return tileGrid;
     }
 
+    /**
+     * Gets the list of entities in the current level.
+     *
+     * @return An ArrayList of Entity objects.
+     */
     public static ArrayList<Entity> getEntityList() {
         return entityList;
     }
 
+    /**
+     * Gets the list of items in the current level.
+     *
+     * @return An ArrayList of Item objects.
+     */
     public static ArrayList<Item> getItemList() {
         return itemList;
     }
 
+    /**
+     * Clears all tiles, entities, and items from the current level.
+     */
     public static void clearLevel() {
         tileGrid.clear();
         entityList.clear();
