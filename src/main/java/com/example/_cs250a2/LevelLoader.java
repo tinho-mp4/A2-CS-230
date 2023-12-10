@@ -14,6 +14,10 @@ import java.util.regex.Pattern;
  */
 public class LevelLoader {
 
+    private static final int FROG_SPEED = 5;
+    private static final int PINK_BALL_SPEED = 2;
+    private static final int BUG_SPEED = 3;
+
     private static final Map<Integer, Button> buttons = new HashMap<>();
     private static final Map<Integer, Trap> traps = new HashMap<>();
 
@@ -274,11 +278,14 @@ public class LevelLoader {
     public static Entity processEntity(GraphicsContext gc, char[] entity, GameController gameController) {
         switch (entity[0]){
             case 'F':
-                return new Frog(5, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
+                return new Frog(FROG_SPEED, 'w', new int[]{entity[1]-'0', entity[2]-'0'},
+                        gameController);
             case 'G':
-                return new PinkBall(2, 'a', new int[]{entity[1]-'0', entity[2]-'0'});
+                return new PinkBall(PINK_BALL_SPEED, 's', new int[]{entity[1]-'0', entity[2]-'0'},
+                        gameController);
             case 'Z':
-                return new Bug(1, 'd', new int[]{entity[1]-'0', entity[2]-'0'}, false);
+                return new Bug(BUG_SPEED, 'd', new int[]{entity[1]-'0', entity[2]-'0'},
+                        false, gameController);
             case 'O':
                 return new Block(entity[1]-'0', entity[2]-'0');
             case 'Q':

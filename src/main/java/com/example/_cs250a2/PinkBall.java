@@ -13,12 +13,15 @@ public class PinkBall extends Monster {
 
     private static int speed;
 
+    private final GameController gameController;
+
     private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/pinkBall.png"));
-    public PinkBall(int ticks, char startingDirection, int[] startingLocation) {
+    public PinkBall(int ticks, char startingDirection, int[] startingLocation, GameController gameController) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
         direction = startingDirection;
         location = startingLocation;
+        this.gameController = gameController;
         checkDirection(direction);
         checkLocation(location);
         arrayLocationX = countMonsters*2;
@@ -35,6 +38,7 @@ public class PinkBall extends Monster {
     }
 
     public void move() {
+        moveCount++;
         int[] currentTile = {this.getX(), this.getY()};
         //w is up, s is down, a is left and d is right
         if (direction == 'w') {
@@ -44,10 +48,13 @@ public class PinkBall extends Monster {
             if (checkTile(locationNext, currentTile)) {
                 this.setY(this.getY()+1);
                 locationUpdate(arrayLocationY, this.getY());
-                playerKill();
-            } else {
+                playerKill(gameController);
+                moveCount = 0;
+            } else if (moveCount < MAXTURNS){
                 direction = 's';
                 move();
+            } else {
+                moveCount = 0;
             }
         } else if (direction == 's') {
             //next location is 1 tile below current position
@@ -55,31 +62,37 @@ public class PinkBall extends Monster {
             //check tile legality
             if (checkTile(locationNext, currentTile)) {
                 this.setY(this.getY()-1);
-                playerKill();
+                playerKill(gameController);
                 locationUpdate(arrayLocationY, this.getY());
-            } else {
+            } else if (moveCount < MAXTURNS){
                 direction = 'w';
                 move();
+            } else {
+                moveCount = 0;
             }
         } else if (direction == 'a') {
             int[] locationNext = {this.getX()-1, this.getY()};
             if (checkTile(locationNext, currentTile)) {
                 this.setX(this.getX()-1);
-                playerKill();
+                playerKill(gameController);
                 locationUpdate(arrayLocationX, this.getX());
-            } else {
+            } else if (moveCount < MAXTURNS){
                 direction = 'd';
                 move();
+            } else {
+                moveCount = 0;
             }
         } else if (direction == 'd') {
-            int[] locationNext = {this.getX()+1, this.getY()};
+            int[] locationNext = {this.getX() + 1, this.getY()};
             if (checkTile(locationNext, currentTile)) {
-                this.setX(this.getX()+1);
-                playerKill();
+                this.setX(this.getX() + 1);
+                playerKill(gameController);
                 locationUpdate(arrayLocationX, this.getX());
-            } else {
+            } else if (moveCount < MAXTURNS){
                 direction = 'a';
                 move();
+            } else {
+                moveCount = 0;
             }
         }
     }
