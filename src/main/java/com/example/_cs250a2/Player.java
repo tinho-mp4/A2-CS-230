@@ -14,9 +14,9 @@ import java.util.Objects;
  */
 public class Player{
 
-    private GameController gameController;
+    private final GameController gameController;
     private boolean canMove = true;
-    private boolean playerOnButton = false;
+    private final boolean playerOnButton = false;
     private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
 
     // X and Y coordinate of player on the grid.
@@ -188,8 +188,8 @@ public class Player{
     }
 
     public void setPosition(int newX, int newY) {
-        this.x = newX;
-        this.y = newY;
+        x = newX;
+        y = newY;
     }
 
 

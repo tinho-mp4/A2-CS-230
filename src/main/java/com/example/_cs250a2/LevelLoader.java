@@ -17,6 +17,9 @@ public class LevelLoader {
     private static final Map<Integer, Button> buttons = new HashMap<>();
     private static final Map<Integer, Trap> traps = new HashMap<>();
 
+    private static ArrayList<Level> levels = new ArrayList<>();
+    private static Level currentLevel;
+
 
     /**
      * Represents the time limit for completing the level.
@@ -162,12 +165,15 @@ public class LevelLoader {
             }
         }
 
-
+        currentLevel = new Level(levelName, timeLimit, width, height, tileGrid, itemGrid, entityGrid);
+        levels.add(currentLevel);
 
         drawLevel(gc);
         drawEntities(gc);
         drawItems(gc);
     }
+
+
 
     public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
         int rows = strings.size();

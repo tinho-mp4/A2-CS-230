@@ -8,8 +8,8 @@ package com.example._cs250a2;
  * @author Ben Foord
  */
 public class ScoreEntry {
-    private String profileName;
-    private int score;
+    private final String profileName;
+    private final int score;
 
     /**
      * Constructs a new ScoreEntry with the given profile name and score.
