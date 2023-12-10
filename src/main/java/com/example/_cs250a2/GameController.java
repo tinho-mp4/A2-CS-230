@@ -203,7 +203,7 @@ public class GameController {
     /**
      * The high score object.
      */
-    private final HighScore highScore = new HighScore();
+    private final HighScoreManager highScore = new HighScoreManager();
 
 
     /**
