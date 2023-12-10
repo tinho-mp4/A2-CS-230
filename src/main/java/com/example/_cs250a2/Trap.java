@@ -42,42 +42,6 @@ public class Trap extends Tile {
     }
 
     /**
-     * Checks if the trap is linked to a button.
-     *
-     * @return true if the trap is linked to a button, false otherwise.
-     */
-    public boolean isAssociatedWithButton() {
-        return associatedButton != null;
-    }
-
-    /**
-     * Gets the associated button of this trap.
-     *
-     * @return The associated button.
-     */
-    public Button getAssociatedButton() {
-        return associatedButton;
-    }
-
-    /**
-     * Sets the associated button of this trap.
-     *
-     * @param button The button to be linked with the trap.
-     */
-    public void setAssociatedButton(Button button) {
-        this.associatedButton = button;
-    }
-
-    /**
-     * Returns the unique identifier number of the trap.
-     *
-     * @return The trap number.
-     */
-    public int getTrapNum() {
-        return trapNum;
-    }
-
-    /**
      * Sets the trap to inactive state.
      */
     public void inactive() {

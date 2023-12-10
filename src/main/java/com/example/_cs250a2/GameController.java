@@ -19,7 +19,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
