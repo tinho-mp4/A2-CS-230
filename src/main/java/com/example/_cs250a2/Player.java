@@ -32,6 +32,8 @@ public class Player extends Entity{
 
     public Player(int x, int y, GameController gameController) {
         super(x, y);
+        this.x = x;
+        this.y = y;
         inventory = new ArrayList<>();
         this.gameController = gameController;
     }
@@ -93,11 +95,16 @@ public class Player extends Entity{
 
     private void interact(int newX, int newY) {
         Tile currentTile = LevelLoader.getTile(newX, newY);
-        Entity currentEntity = LevelLoader.getEntityWithCoords(newX, newY);
+        Entity currentEntity = LevelLoader.getEntityWithCoords(newX - (newX - x), newY - (newY - y));
+        Entity nextEntity = LevelLoader.getEntityWithCoords(newX, newY);
 
         if (currentTile instanceof Button) {
             Button button = (Button) currentTile;
             button.press();
+        }
+
+        if (nextEntity instanceof Block block) {
+            Ice.event(block.getX(), block.getY(), block.getX() + (newX - x), block.getY() + (newY - y));
         }
 
         Tile prevTile = LevelLoader.getTile(prevX, prevY);
@@ -243,16 +250,8 @@ public class Player extends Entity{
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public void draw(GraphicsContext gc, double x, double y, double size) {

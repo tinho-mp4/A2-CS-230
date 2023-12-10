@@ -19,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,8 +57,6 @@ public class GameController {
      */
     @FXML
     private TextArea highScoresTextArea;
-
-
 
 
     /**
@@ -98,7 +97,7 @@ public class GameController {
      * The label for the selected profile.
      */
     @FXML
-    public Label selectedLevelLable;
+    public Label getSelectedLevelLabel;
 
     /**
      * The choice box for the profiles.
@@ -204,7 +203,7 @@ public class GameController {
     /**
      * The high score object.
      */
-    private final HighScoreManager highScore = new HighScoreManager();
+    private final HighScore highScore = new HighScore();
 
 
     /**
@@ -242,11 +241,12 @@ public class GameController {
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-//        LevelLoader.drawLevel(gc, currentLevel);
+//      LevelLoader.drawLevel(gc, currentLevel);
 
         LevelLoader.drawTiles(gc);
         LevelLoader.drawEntities(gc);
         LevelLoader.drawItems(gc);
+
 
         // Draw player at current location
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
@@ -269,13 +269,13 @@ public class GameController {
         }
 
         //move the monster every tick
-
-        for (Entity entity : LevelLoader.getEntityList()) {
-            if (entity instanceof Monster monster) {
-                monster.tickMove(tickCount);
+        for (ArrayList<Entity> entityArrayList : LevelLoader.getEntityGrid()) {
+            for (Entity entity : entityArrayList) {
+                if (entity instanceof Monster monster) {
+                    monster.tickMove(tickCount);
+                }
             }
         }
-
         tickCount++;
         if (tickCount >= MAXIMUMTICKS) {
             tickCount = 0;
@@ -487,7 +487,6 @@ public class GameController {
 
 
     private void handleLoadGameButton() {
-
         clearLevel();
     }
 
@@ -521,7 +520,10 @@ public class GameController {
         ProfileFileManager.saveAllProfiles(profiles);
     }
 
+    @FXML
     public void handleShowHighScoresButton() {
+
+
 
         System.out.println("Show high scores button clicked");
 
@@ -569,13 +571,8 @@ public class GameController {
                 System.out.println("No high scores for " + level.getName());
             }
         }
+        clearLevel();
     }
-
-
-
-
-
-
 
     /**
      * Handles the select level button event, including setting the current level.
@@ -597,10 +594,6 @@ public class GameController {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
-
-
-
 
     public ObjectProperty<Profile> currentProfileProperty() {
 
