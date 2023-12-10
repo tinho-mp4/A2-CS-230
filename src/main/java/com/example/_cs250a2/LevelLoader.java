@@ -53,8 +53,8 @@ public class LevelLoader {
      * This value is set during the level loading process.
      */
     private static ArrayList<ArrayList<Tile>> tileGrid = new ArrayList<>();
-    private static ArrayList<ArrayList<Entity>> entityGrid = new ArrayList<>();
-    private static ArrayList<ArrayList<Item>> itemGrid = new ArrayList<>();
+    private static ArrayList<Entity> entityList = new ArrayList<>();
+    private static ArrayList<Item> itemList = new ArrayList<>();
 
     public LevelLoader() {
 
@@ -152,27 +152,19 @@ public class LevelLoader {
         for (int k = 0; k < getEntityCount(); k++) {
             ArrayList<String> entityLine = entityMatchesGrid.get(k);
             String[] entitiesMatchesArray = entityLine.toArray(new String[0]);
-            ArrayList<Entity> entityRow = new ArrayList<>();
-            ArrayList<Item> itemRow = new ArrayList<>();
             try {
                 for (int j = 0; j < entitiesMatchesArray.length; j++) {
                     if (entitiesMatchesArray[j].toCharArray()[0] == 'C' || entitiesMatchesArray[j].toCharArray()[0] == 'K') {
-                        itemRow.add(processItem(gc, entitiesMatchesArray[j].toCharArray()));
+                        itemList.add(processItem(gc, entitiesMatchesArray[j].toCharArray()));
                     } else
-                        entityRow.add(processEntity(gc, entitiesMatchesArray[j].toCharArray(), gameController));
+                        entityList.add(processEntity(gc, entitiesMatchesArray[j].toCharArray(), gameController));
                 }
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Index out of bounds");
             }
-            if (entityRow.size() > 0) {
-                entityGrid.add(entityRow);
-            }
-            if (itemRow.size() > 0) {
-                itemGrid.add(itemRow);
-            }
         }
 
-        currentLevel = new Level(levelName, timeLimit, width, height, tileGrid, itemGrid, entityGrid);
+        currentLevel = new Level(levelName, timeLimit, width, height, tileGrid, itemList, entityList);
         levels.add(currentLevel);
 
         loadLevel(gc, currentLevel);
@@ -181,8 +173,8 @@ public class LevelLoader {
 
     public static void loadLevel(GraphicsContext gc, Level level) {
         tileGrid = level.getTileGrid();
-        itemGrid = level.getItemGrid();
-        entityGrid = level.getEntityGrid();
+        itemList = level.getItemList();
+        entityList = level.getEntityList();
         drawLevel(gc);
         drawEntities(gc);
         drawItems(gc);
@@ -311,9 +303,7 @@ public class LevelLoader {
         }
     }
     public static void removeItem(Item item) {
-        for(ArrayList<Item> row: itemGrid) {
-            row.removeIf(i -> i == item);
-        }
+        itemList.remove(item);
     }
 
     public static void drawLevel(GraphicsContext gc) {
@@ -325,23 +315,19 @@ public class LevelLoader {
     }
 
     public static void drawEntities(GraphicsContext gc) {
-        System.out.println("drawing entites" + entityGrid);
-        for (ArrayList<Entity> row : getEntityGrid()) {
-            for (Entity entity : row) {
-                if (entity != null) {
-                    entity.draw(gc, entity.getX(), entity.getY(), 32);
-                }
+        System.out.println("drawing entites" + entityList);
+        for (Entity entity : getEntityList()) {
+            if (entity != null) {
+                entity.draw(gc, entity.getX(), entity.getY(), 32);
             }
         }
     }
 
 
     public static void drawItems(GraphicsContext gc) {
-        for (ArrayList<Item> row : getItemGrid()) {
-            for (Item item : row) {
-                if (item != null) {
-                    item.draw(gc, item.getX(), item.getY(), 32);
-                }
+        for (Item item : getItemList()) {
+            if (item != null) {
+                item.draw(gc, item.getX(), item.getY(), 32);
             }
         }
     }
@@ -369,21 +355,19 @@ public class LevelLoader {
         }
     }
 
-    public static Entity getEntities(int x, int y) {
-        try {
-            return entityGrid.get(x).get(y);
-        } catch (IndexOutOfBoundsException e) {
-            return null;
-        }
-    }
+//    public static Entity getEntities(int x, int y) {
+//        try {
+//            return entityList.get(x).get(y);
+//        } catch (IndexOutOfBoundsException e) {
+//            return null;
+//        }
+//    }
 
     public static Entity getEntityByClass(Class<?> cls) {
-        for (ArrayList<Entity> row : entityGrid) {
-            for (Entity entity : row) {
-                if (entity != null) {
-                    if (entity.getClass() == cls) {
-                        return entity;
-                    }
+        for (Entity entity : entityList) {
+            if (entity != null) {
+                if (entity.getClass() == cls) {
+                    return entity;
                 }
             }
         }
@@ -391,12 +375,10 @@ public class LevelLoader {
     }
 
     public static Entity getEntityWithCoords(int x, int y) {
-        for (ArrayList<Entity> row : entityGrid) {
-            for (Entity entity : row) {
-                if (entity != null) {
-                    if (entity.getX() == x && entity.getY() == y) {
-                        return entity;
-                    }
+        for (Entity entity : entityList) {
+            if (entity != null) {
+                if (entity.getX() == x && entity.getY() == y) {
+                    return entity;
                 }
             }
         }
@@ -447,17 +429,17 @@ public class LevelLoader {
         return tileGrid;
     }
 
-    public static ArrayList<ArrayList<Entity>> getEntityGrid() {
-        return entityGrid;
+    public static ArrayList<Entity> getEntityList() {
+        return entityList;
     }
 
-    public static ArrayList<ArrayList<Item>> getItemGrid() {
-        return itemGrid;
+    public static ArrayList<Item> getItemList() {
+        return itemList;
     }
 
     public static void clearLevel() {
         tileGrid.clear();
-        entityGrid.clear();
-        itemGrid.clear();
+        entityList.clear();
+        itemList.clear();
     }
 }

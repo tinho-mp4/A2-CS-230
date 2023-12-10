@@ -14,17 +14,20 @@ public class Level {
     private int width;
     private int height;
     private ArrayList<ArrayList<Tile>> tileGrid;
-    private ArrayList<ArrayList<Item>> itemGrid;
-    private ArrayList<ArrayList<Entity>> entityGrid;
+    private ArrayList<Item> itemList;
+    private ArrayList<Entity> entityList;
 
-    public Level(String name, int timeLimit, int width, int height, ArrayList<ArrayList<Tile>> tileGrid, ArrayList<ArrayList<Item>> itemGrid, ArrayList<ArrayList<Entity>> entityGrid) {
+    public Level(String name, int timeLimit, int width, int height,
+                 ArrayList<ArrayList<Tile>> tileGrid,
+                 ArrayList<Item> itemList,
+                 ArrayList<Entity> entityList) {
         this.name = name;
         this.timeLimit = timeLimit;
         this.width = width;
         this.height = height;
         this.tileGrid = tileGrid;
-        this.itemGrid = itemGrid;
-        this.entityGrid = entityGrid;
+        this.itemList = itemList;
+        this.entityList = entityList;
     }
 
 
@@ -40,13 +43,13 @@ public class Level {
         int playerX = player.getX();
         int playerY = player.getY();
 
-        for (ArrayList<Item> row : LevelLoader.getItemGrid()) {
-            for (Item item : row) {
-                if (item.getX() == playerX && item.getY() == playerY) {
-                    return item;
-                }
+
+        for (Item item : LevelLoader.getItemList()) {
+            if (item.getX() == playerX && item.getY() == playerY) {
+                return item;
             }
         }
+
         return null;
     }
 
@@ -86,12 +89,12 @@ public class Level {
         return tileGrid;
     }
 
-    public ArrayList<ArrayList<Item>> getItemGrid() {
-        return itemGrid;
+    public ArrayList<Item> getItemList() {
+        return itemList;
     }
 
-    public ArrayList<ArrayList<Entity>> getEntityGrid() {
-        return entityGrid;
+    public ArrayList<Entity> getEntityList() {
+        return entityList;
     }
 
     @Override

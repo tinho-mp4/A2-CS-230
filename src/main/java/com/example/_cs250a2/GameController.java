@@ -19,7 +19,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -261,13 +260,13 @@ public class GameController {
         }
 
         //move the monster every tick
-        for (ArrayList<Entity> entityArrayList : LevelLoader.getEntityGrid()) {
-            for (Entity entity : entityArrayList) {
-                if (entity instanceof Monster monster) {
-                    monster.tickMove(tickCount);
-                }
+
+        for (Entity entity : LevelLoader.getEntityList()) {
+            if (entity instanceof Monster monster) {
+                monster.tickMove(tickCount);
             }
         }
+
         tickCount++;
         if (tickCount >= MAXIMUMTICKS) {
             tickCount = 0;
