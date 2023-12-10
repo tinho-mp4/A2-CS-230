@@ -204,6 +204,10 @@ public class Player{
         inventory.remove(item);
     }
 
+    public void clearInventory() {
+        inventory.clear();
+    }
+
     public static int getX() {
         return x;
     }

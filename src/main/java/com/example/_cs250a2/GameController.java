@@ -437,7 +437,12 @@ public class GameController {
         // Clear other level-related resources
         timeLimit = 0;
         levelLoader.clearLevel();
+        //move to positon
+        player.setPosition(1, 1);
+        // Clear the inventory
+        player.clearInventory();
     }
+
 
     private void handleLoadGameButton() {
         clearLevel();
@@ -476,6 +481,8 @@ public class GameController {
     @FXML
     public void handleShowHighScoresButton() {
 
+
+
         System.out.println("Show high scores button clicked");
 
         highScore.addScore(levelName, currentProfile.getName(), timeLimit);
@@ -494,6 +501,7 @@ public class GameController {
                 System.out.println("No high scores for " + level.getName());
             }
         }
+        clearLevel();
     }
 
     /**

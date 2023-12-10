@@ -7,7 +7,7 @@ import javax.xml.transform.Source;
 
 /**
  * The {@code Button} class represents a button in the game.
- * @author idk
+ * @author Pele
  * @version 1.0
  */
 public class Button extends Tile {
