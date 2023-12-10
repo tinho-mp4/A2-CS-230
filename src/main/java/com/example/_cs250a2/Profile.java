@@ -45,6 +45,10 @@ public class Profile implements Serializable{
         return name;
     }
 
+    public void nextLevel() {
+        levelReached = (levelReached + 1);
+    }
+
     /**
      * Get the highest level reached by the player.
      * @return The highest level reached by the player.

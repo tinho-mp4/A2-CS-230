@@ -522,6 +522,7 @@ public class GameController {
     }
 
     public void handleShowHighScoresButton() {
+
         System.out.println("Show high scores button clicked");
 
         // Assuming highScore is an instance of HighScoreManager
@@ -551,6 +552,10 @@ public class GameController {
                     System.out.println(rank + ". " + highScoreEntry.getProfileName() + " - " + highScoreEntry.getScore());
                     rank++;
                 }
+                System.out.println(currentProfile.getLevelReached());
+                currentProfile.nextLevel();
+                System.out.println(currentProfile.getLevelReached());
+
 
                 // Save the high scores for the current level
                 System.out.println("Saving high scores for " + level.getName() + ":");
