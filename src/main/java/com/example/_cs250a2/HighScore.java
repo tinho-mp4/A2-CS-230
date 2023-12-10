@@ -1,9 +1,14 @@
 package com.example._cs250a2;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import java.util.List;
 
 /**
  * The {@code HighScore} Stores the high scores for each level.
@@ -15,6 +20,10 @@ import java.util.Map;
  * @version 1.1
  */
 public class HighScore {
+
+    private static final String DIRECTORY_PATH = "src/main/resources/com/example/_cs250a2/HighScores/HighScores/";
+    private static final String FILE_PATH = DIRECTORY_PATH + "highscores.txt";
+
     /**
      * The maximum number of scores to store for each level.
      */
@@ -30,9 +39,10 @@ public class HighScore {
 
     /**
      * Adds a new score to the high scores for the given level.
-     * @param levelName The name of the level.
+     *
+     * @param levelName   The name of the level.
      * @param profileName The name of the profile that achieved the score.
-     * @param score The score achieved.
+     * @param score       The score achieved.
      */
     public void addScore(final String levelName,
                          final String profileName,
@@ -61,6 +71,7 @@ public class HighScore {
 
     /**
      * Gets the high scores for the given level.
+     *
      * @param levelName The name of the level.
      * @return A list of the top 10 scores for the given level.
      */
@@ -70,6 +81,7 @@ public class HighScore {
 
     /**
      * Gets the lowest score in the given list of scores.
+     *
      * @param scores The list of scores.
      * @return The lowest score in the list.
      */
@@ -78,6 +90,29 @@ public class HighScore {
             return 0;
         }
         return scores.get(scores.size() - 1).getScore();
+    }
+
+    public static void saveHighScores(List<ScoreEntry> highScores) {
+
+        try {
+            // Create the directory if it doesn't exist
+            Files.createDirectories(Paths.get(DIRECTORY_PATH));
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+                oos.writeObject(highScores);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<ScoreEntry> loadHighScores() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            return (List<ScoreEntry>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            return List.of();
+        }
     }
 }
 

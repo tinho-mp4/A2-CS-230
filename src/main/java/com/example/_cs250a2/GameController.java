@@ -284,7 +284,7 @@ public class GameController {
             tickTimeline.stop();
         }
         System.out.println("Time left: " + timeLimit);
-        System.out.println("Score: " + score);
+        System.out.println("Score: " + calculateScore());
         System.out.println("Level: " + levelName);
         //print the profiles score for the current level
         if (currentProfile != null) {
@@ -293,12 +293,24 @@ public class GameController {
 
         //sets the score for the current profile
         if (currentProfile != null) {
-            currentProfile.setScoreForLevel(levelName, timeLimit);
+            currentProfile.setScoreForLevel(levelName, calculateScore());
         }
 
         // Update time remaining label
         updateTimeRemaining(timeLimit);
 
+    }
+
+    /**
+     * Calculates the score based on the time limit and chips in the inventory.
+     *
+     * @return The calculated score.
+     */
+    private int calculateScore() {
+        int score = timeLimit;
+        // Add 15 points for every chip in the inventory
+        score += 15 * player.getChips();
+        return score;
     }
 
     /**
@@ -372,6 +384,8 @@ public class GameController {
     private void handleStartButton() {
 
         clearLevel();
+
+        score = calculateScore();
 
 
         try {
@@ -575,7 +589,6 @@ public class GameController {
     public void setCurrentLevel(Level level) {
         currentLevelProperty.set(level);
     }
-
 
 }
 
