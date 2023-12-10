@@ -21,7 +21,7 @@
             <children>
                 <VBox prefHeight="30.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Chips Challange" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                        <Label text="Chips Challenge" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="41.0" />
                             </font>

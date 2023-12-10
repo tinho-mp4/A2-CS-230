@@ -14,8 +14,8 @@ import java.util.regex.Pattern;
  */
 public class LevelLoader {
 
-    private static Map<Integer, Button> buttons = new HashMap<>();
-    private static Map<Integer, Trap> traps = new HashMap<>();
+    private static final Map<Integer, Button> buttons = new HashMap<>();
+    private static final Map<Integer, Trap> traps = new HashMap<>();
 
 
     /**
@@ -58,13 +58,13 @@ public class LevelLoader {
         Scanner scanner = new Scanner(Objects.requireNonNull(getClass().getResourceAsStream("levels/"+levelName+".txt")));
         // Read level information
         this.levelName = scanner.nextLine().split(": ")[1];
-        this.timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
+        timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
-        this.width = width;
-        this.height = height;
-        this.entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
+        LevelLoader.width = width;
+        LevelLoader.height = height;
+        entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
     }
 
     /**
@@ -214,7 +214,7 @@ public class LevelLoader {
      * Locked Door: L - maybe n not sure yet
      * Frog: F
      * Pink Ball: G
-     * Bug: E
+     * Bug: Z
      * Player:?
      * Computer Chip: C
      * Key: K - maybe n not sure yet
@@ -290,7 +290,7 @@ public class LevelLoader {
         }
     }
 
-    public static void drawLevel(GraphicsContext gc) {;
+    public static void drawLevel(GraphicsContext gc) {
         for (ArrayList<Tile> row : getTileGrid()) {
             for (Tile tile : row) {
                 tile.draw(gc, tile.getX(), tile.getY(), 32);
