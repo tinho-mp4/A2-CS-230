@@ -104,6 +104,9 @@ public class Player extends Entity{
         }
 
         if (nextEntity instanceof Block block) {
+            if (LevelLoader.getTile(newX + 2*(newX - x), newY + 2*(newY - y)).isSolid()) {
+                return;
+            }
             Ice.event(block.getX(), block.getY(), block.getX() + (newX - x), block.getY() + (newY - y));
         }
 

@@ -60,6 +60,9 @@ public class Ice extends Tile {
         if (!LevelLoader.getTile(newEntityX, newEntityY).isSolid()) {
             // Corner checking
             if (LevelLoader.getTile(newEntityX, newEntityY).getName() == "ice") {
+                if (LevelLoader.getTile(newEntityX+deltaX, newEntityY+deltaY).isSolid()) {
+                    return;
+                }
                 updateEntity(currentEntity, newEntityX, newEntityY);
 
                 Corner blockedCorner = ((Ice)LevelLoader.getTile(newEntityX, newEntityY)).getBlockedCorner();
@@ -103,8 +106,13 @@ public class Ice extends Tile {
 
                 event(newEntityX, newEntityY, targetX, targetY);
             } else {
-                if (LevelLoader.getEntityWithCoords(newEntityX, newEntityY) instanceof Block block) {
-                    event(newEntityX, newEntityY, newEntityX + deltaX, newEntityY + deltaY);
+                if (LevelLoader.getEntityWithCoords(newEntityX, newEntityY) instanceof Block) {
+                    if (LevelLoader.getTile(newEntityX + deltaX, newEntityY + deltaY).isSolid()) { // checks if the block is hitting a wall
+                        event(newEntityX- deltaX, newEntityY - deltaY, newEntityX - 2*deltaX, newEntityY - 2*deltaY);
+                        return;
+                    } else {
+                        event(newEntityX, newEntityY, newEntityX + deltaX, newEntityY + deltaY);
+                    }
                 }
                 updateEntity(currentEntity, newEntityX, newEntityY);
             }
