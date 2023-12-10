@@ -10,7 +10,10 @@
 
 
     <center>
-        <Canvas fx:id="canvas" height="400" width="700" />
+        <VBox alignment="CENTER">
+            <!-- Your existing UI components -->
+            <Canvas fx:id="canvas" width="400" height="700" />
+        </VBox>
     </center>
 
     <top>
