@@ -13,7 +13,7 @@ public class Dirt extends Tile{
     private boolean compacted;
 
     public Dirt(int x, int y) {
-        super("dirt",x, y, false);
+        super("dirt", x, y, false);
         setPushableBlock(false);
         this.compacted = false;
     }
