@@ -3,6 +3,8 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 /**
  * The {@code Bug} class represents a bug (monster) in the game.
  * @author idk
@@ -15,7 +17,7 @@ public class Bug extends Monster {
      * image of bug.
      */
     private static final Image BUG_IMAGE
-    = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
+    = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/bug.png")));
 
     //which wall to 'hug' when it moves
     /**
