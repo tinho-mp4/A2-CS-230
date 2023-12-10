@@ -3,70 +3,115 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 /**
- * The {@code Trap} class represents a trap in the game.
- * @author idk
- * @version 1.0
+ * Represents a trap tile in the game.
+ * A trap can be linked to a button and has states for active
+ * or inactive (stuck or not stuck).
+ * The class extends {@code Tile} and uses an image for its visual representation.
  */
 public class Trap extends Tile {
-    private static final Image TRAP_IMAGE = new Image(Trap.class.getResourceAsStream("sprites/trapInactive.png"));
+    private static final Image TRAP_IMAGE =
+            new Image(Objects.requireNonNull(Trap.class.getResourceAsStream("sprites/trapInactive.png")));
     private final int trapNum;
     private Button associatedButton;
     private boolean stuck = true;
-    public boolean isActive() {
-        return stuck;
-    }
 
-
-
-
+    /**
+     * Initializes a trap tile with a unique number, position, and initial state.
+     * The trap is initially set as pushable.
+     *
+     * @param trapNum Unique identifier for the trap.
+     * @param x       X-coordinate of the trap.
+     * @param y       Y-coordinate of the trap.
+     */
     public Trap(int trapNum, int x, int y) {
-        super("trap",x, y, false);
+        super("trap", x, y, false);
         this.trapNum = trapNum;
         setPushableBlock(true);
     }
 
+    /**
+     * Links this trap to a specified button.
+     *
+     * @param button The button to be linked with the trap.
+     */
     public void linkToButton(Button button) {
         this.associatedButton = button;
     }
 
+    /**
+     * Checks if the trap is linked to a button.
+     *
+     * @return true if the trap is linked to a button, false otherwise.
+     */
     public boolean isAssociatedWithButton() {
         return associatedButton != null;
     }
 
-
+    /**
+     * Gets the associated button of this trap.
+     *
+     * @return The associated button.
+     */
     public Button getAssociatedButton() {
         return associatedButton;
     }
 
+    /**
+     * Sets the associated button of this trap.
+     *
+     * @param button The button to be linked with the trap.
+     */
     public void setAssociatedButton(Button button) {
         this.associatedButton = button;
     }
 
+    /**
+     * Returns the unique identifier number of the trap.
+     *
+     * @return The trap number.
+     */
     public int getTrapNum() {
         return trapNum;
     }
 
-
-
+    /**
+     * Sets the trap to inactive state.
+     */
     public void inactive() {
         System.out.println("Trap is inactive!");
         stuck = false;
     }
 
+    /**
+     * Sets the trap to active state.
+     */
     public void active() {
         System.out.println("Trap is active!");
         stuck = true;
     }
 
+    /**
+     * Checks if the trap is in the stuck (active) state.
+     *
+     * @return true if the trap is stuck, false otherwise.
+     */
     public boolean isStuck() {
         return stuck;
     }
 
-
-
+    /**
+     * Draws the trap tile on the canvas.
+     *
+     * @param gc   GraphicsContext for drawing.
+     * @param x    X-coordinate for drawing.
+     * @param y    Y-coordinate for drawing.
+     * @param size Size of the tile.
+     */
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(TRAP_IMAGE, x*size, y*size);
+        gc.drawImage(TRAP_IMAGE, x * size, y * size);
     }
 }
