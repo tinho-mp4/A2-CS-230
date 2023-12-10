@@ -95,7 +95,8 @@
                     </VBox.margin>
                 </Button>
                 <Label fx:id="timeRemainingLabel" alignment="TOP_LEFT" prefHeight="46.0" prefWidth="104.0" text="Time Remaining:" />
-                <Label fx:id="Score" alignment="TOP_LEFT" prefHeight="46.0" prefWidth="104.0" text="Score:" />
+                <Label fx:id="scoreLabel" alignment="TOP_LEFT" prefHeight="46.0" prefWidth="104.0" text="Score:" />
+
             </children>
         </VBox>
     </right>
