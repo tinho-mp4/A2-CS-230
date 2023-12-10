@@ -3,16 +3,16 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example._cs250a2.GameController">
 
-
     <center>
-        <VBox alignment="CENTER">
+        <VBox alignment="CENTER" prefHeight="700" prefWidth="369.0">
             <!-- Your existing UI components -->
-            <Canvas fx:id="canvas" width="400" height="700" />
+            <Canvas fx:id="canvas" height="700" width="394.0" />
         </VBox>
     </center>
 
@@ -32,7 +32,6 @@
                     </children>
                 </VBox>
 
-
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Button fx:id="startButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Start">
@@ -40,15 +39,16 @@
                                 <Insets />
                             </VBox.margin>
                         </Button>
-                  <Button fx:id="showHighScoresButton" mnemonicParsing="false" prefHeight="18.0" prefWidth="90.0" text="HighScore" />
-                  <Button fx:id= "saveGameButton" mnemonicParsing="false" prefHeight="23.0" prefWidth="91.0" text="Save Game" />
-                  <Button fx:id= "loadGameButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Load Game" />
-                    </children></VBox>
+                        <Button fx:id="showHighScoresButton" mnemonicParsing="false" prefHeight="18.0" prefWidth="90.0" text="HighScore" />
+                        <Button fx:id="saveGameButton" mnemonicParsing="false" prefHeight="23.0" prefWidth="91.0" text="Save Game" />
+                        <Button fx:id="loadGameButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Load Game" />
+                    </children>
+                </VBox>
             </children>
         </HBox>
     </top>
     <right>
-        <VBox alignment="TOP_RIGHT" prefHeight="222.0" prefWidth="102.0" BorderPane.alignment="CENTER">
+        <VBox alignment="TOP_RIGHT" prefHeight="700.0" prefWidth="92.0" BorderPane.alignment="CENTER">
             <children>
                 <Label fx:id="selectedProfileLabel" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="104.0" text="Selected profile:" />
 
@@ -69,7 +69,6 @@
                         <Insets />
                     </VBox.margin>
                 </Button>
-
 
                 <TextField fx:id="createName" prefWidth="134.0">
                     <VBox.margin>
@@ -100,8 +99,27 @@
             </children>
         </VBox>
     </right>
-    <BorderPane>
-        <left>
-        </left>
-    </BorderPane>
+    <left>
+        <VBox prefHeight="700.0" prefWidth="200.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+            <children>
+                <TableView fx:id="highScoresTable" maxWidth="-Infinity" prefHeight="687.0" prefWidth="201.0">
+                    <columns>
+                        <!-- TableColumn for player name -->
+                        <TableColumn fx:id="profileNameColumn" prefWidth="101.0" text="PLayer">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="playerName" />
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <!-- TableColumn for score -->
+                        <TableColumn fx:id="scoreColumn" prefWidth="98.0" text="Score">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="score" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </left>
 </BorderPane>
