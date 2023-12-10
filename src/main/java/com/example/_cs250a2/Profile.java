@@ -4,39 +4,38 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Comparator;
+import java.util.Collections;
+import java.util.ArrayList;
 
 /**
- * The {@code Profile} class handles player profiles in the game.
- * <p>
- *     A profile contains the player's name, the highest level they have reached, and their scores for each level.
- *     It also contains the high scores for each level.
- *     The profile can be saved to a file and loaded from a file.
- *     The profile is serializable.
- *     @author Ben Foord
- *     @version 1.0
+ * Handles player profiles in the game.
+ * A profile contains the player's name, the highest level they have reached, their scores for each level,
+ * and the high scores for each level. The profile can be saved to and loaded from a file.
+ *
+ * @author Ben
  */
-public class Profile implements Serializable{
+public class Profile implements Serializable {
 
     private final String name;
-
     private int levelReached;
     private Map<String, Integer> levelScores;
     private Map<String, PriorityQueue<ScoreEntry>> highScores;
-
-
+    public static final int MAX_LEVEL = 5;
+    public static final int LEVEL_HIGH_SCORE = 10;
 
     /**
-     * Create a new profile with the given name.
+     * Creates a new profile with the given name.
+     *
      * @param name The name of the profile.
      */
     public Profile(String name) {
         this.name = name;
-        this.levelReached = 5;
+        this.levelReached = MAX_LEVEL;
         this.levelScores = new HashMap<>();
         this.highScores = new HashMap<>();
     }
-
 
     /**
      *  Create a new profile with the given name and load it from the given file.
@@ -82,9 +81,9 @@ public class Profile implements Serializable{
         levelScores.put(level, score);
     }
 
-
     /**
-     * Save the profile to a file.
+     * Saves the profile to a file.
+     *
      * @param filePath The path to the file to save the profile to.
      */
     public void saveToFile(String filePath) {
@@ -121,8 +120,8 @@ public class Profile implements Serializable{
     public void addScoreToHighScores(String level, int score) {
         highScores.putIfAbsent(level, new PriorityQueue<>(Comparator.comparingInt(ScoreEntry::getScore)));
         PriorityQueue<ScoreEntry> levelHighScores = highScores.get(level);
-        if (levelHighScores.size() < 10 || score > levelHighScores.peek().getScore()) {
-            if (levelHighScores.size() == 10) {
+        if (levelHighScores.size() < LEVEL_HIGH_SCORE || score > levelHighScores.peek().getScore()) {
+            if (levelHighScores.size() == LEVEL_HIGH_SCORE) {
                 levelHighScores.poll();
             }
             levelHighScores.add(new ScoreEntry(name, score));
@@ -143,7 +142,12 @@ public class Profile implements Serializable{
         return scores;
     }
 
-
+    /**
+     * Provides a string representation of the profile.
+     * Currently, it returns the name of the profile.
+     *
+     * @return The name of the profile.
+     */
     @Override
     public String toString() {
         return name;
