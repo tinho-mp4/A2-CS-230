@@ -2,20 +2,18 @@ package com.example._cs250a2;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * The {@code Player} class represents the player in the game
- * @author idk
- * @version 1.0
+ * Represents the player in the game.
+ * Manages player's position, movement, interactions, and inventory.
+ * @author Evans
  */
 public class Player extends Entity{
     private final GameController GAME_CONTROLLER;
-    private final boolean PLAYER_ON_BUTTON = false;
     private final ArrayList<Item> INVENTORY;
     private static final Image PLAYER_TILE =
     new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
@@ -26,10 +24,11 @@ public class Player extends Entity{
     private int prevY;
 
     /**
-     * Creates the player at coordinates (x,y).
-     * @param x x coordinate
-     * @param y y coordinate
-     * @param gameController the {@code GameController} //<- look at this
+     * Creates a player at specified coordinates and associates it with a game controller.
+     *
+     * @param x              X-coordinate of the player.
+     * @param y              Y-coordinate of the player.
+     * @param gameController GameController to manage the game logic.
      */
     public Player(int x, int y, GameController gameController) {
         super(x, y);
@@ -41,10 +40,10 @@ public class Player extends Entity{
 
     /**
      * Handles an event in the game.
-     * @param x x coordinate
-     * @param y y coordinate
-     * @param newX The new x coordinate
-     * @param newY The new y coordinate
+     * @param x     x coordinate
+     * @param y     y coordinate
+     * @param newX  The new x coordinate
+     * @param newY  The new y coordinate
      */
     public void event(
             final int x,
@@ -56,7 +55,6 @@ public class Player extends Entity{
 
     /**
      * Moves the player in the game.
-     * @param event
      */
     public void move(KeyEvent event) {
 
@@ -69,28 +67,32 @@ public class Player extends Entity{
                 case RIGHT:
                     // Right key was pressed. So move the player right by one cell.
                     if (!LevelLoader.getTile(x + 1, y).isSolid()
-                            && !((LevelLoader.getEntityWithCoords(x + 1, y) instanceof Block) && !LevelLoader.getTile(x + 2, y).isPushableBlock())) {
+                            && !((LevelLoader.getEntityWithCoords(x + 1, y) instanceof Block)
+                            && !LevelLoader.getTile(x + 2, y).isPushableBlock())) {
                         interact(x + 1, y);
                     }
                     break;
                 case LEFT:
                     // Left key was pressed. So move the player left by one cell.
                     if (!LevelLoader.getTile(x - 1, y).isSolid()
-                            && !((LevelLoader.getEntityWithCoords(x - 1, y) instanceof Block) && !LevelLoader.getTile(x - 2, y).isPushableBlock())) {
+                            && !((LevelLoader.getEntityWithCoords(x - 1, y) instanceof Block)
+                            && !LevelLoader.getTile(x - 2, y).isPushableBlock())) {
                         interact(x - 1, y);
                     }
                     break;
                 case UP:
                     // Up key was pressed. So move the player up by one cell.
                     if (!LevelLoader.getTile(x, y - 1).isSolid()
-                            && !((LevelLoader.getEntityWithCoords(x, y - 1) instanceof Block) && !LevelLoader.getTile(x, y - 2).isPushableBlock())) {
+                            && !((LevelLoader.getEntityWithCoords(x, y - 1) instanceof Block)
+                            && !LevelLoader.getTile(x, y - 2).isPushableBlock())) {
                         interact(x, y - 1);
                     }
                     break;
                 case DOWN:
                     // Down key was pressed. So move the player down by one cell.
                     if (!LevelLoader.getTile(x, y + 1).isSolid()
-                            && !((LevelLoader.getEntityWithCoords(x, y + 1) instanceof Block) && !LevelLoader.getTile(x, y + 2).isPushableBlock())) {
+                            && !((LevelLoader.getEntityWithCoords(x, y + 1) instanceof Block)
+                            && !LevelLoader.getTile(x, y + 2).isPushableBlock())) {
                         interact(x, y + 1);
                     }
                     break;
@@ -222,12 +224,12 @@ public class Player extends Entity{
             }
         }
 
-        if(Level.isOnMonster()) {
+        if (Level.isOnMonster()) {
             GAME_CONTROLLER.clearLevel();
             GameOver.playerDeathMonster();
         }
 
-        if(Level.isOnBlock()) {
+        if (Level.isOnBlock()) {
             Block block = new Block(x, y);
             block.moveBlock(newX, newY);
         }
@@ -297,14 +299,15 @@ public class Player extends Entity{
     }
 
     /**
-     *Draws the player.
-     * @param gc
-     * @param x
-     * @param y
-     * @param size
+     * Draws the player on the given graphics context at specified coordinates and size.
+     *
+     * @param gc   GraphicsContext to draw on.
+     * @param x    X-coordinate for drawing.
+     * @param y    Y-coordinate for drawing.
+     * @param size Size of the player image.
      */
     public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(PLAYER_TILE, x*size, y*size);
+        gc.drawImage(PLAYER_TILE, x * size, y * size);
     }
 
     /**
