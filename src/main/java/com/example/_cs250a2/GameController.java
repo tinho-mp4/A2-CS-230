@@ -31,42 +31,27 @@ import java.util.List;
 public class GameController {
 
     private static final int STRING_STARTING_INDEX = 0;
-
     private static final int STRING_ENDING_INDEX = 4;
-
     private static final int CHIP_VALUE = 15;
-
     private static final int PLAYER_SIZE = 32;
-
     private static final int LEVEL_NUMBER = 5;
 
-
-    //Constant for the maximum number of ticks
     /**
      * The maximum number of ticks.
      */
     private static final int MAXIMUMTICKS = 5;
 
-    //canvas for the game
     /**
      * The canvas for the game.
      */
     @FXML
     private Canvas canvas;
 
-    //button to show the high scores
     /**
      * The button to show the high scores.
      */
     @FXML
     private Button showHighScoresButton;
-
-    /**
-     * The text area for the high scores.
-     */
-    @FXML
-    private TextArea highScoresTextArea;
-
 
     /**
      * The score for the game.
@@ -106,10 +91,9 @@ public class GameController {
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
 
-    @FXML
-    private TableColumn<ScoreEntry, String> profileNameColumn;
-    @FXML
-    private TableColumn<ScoreEntry, Integer> scoreColumn;
+    /**
+     * The button to show the high scores.
+     */
     @FXML
     private TableView<ScoreEntry> highScoresTable;
 
@@ -176,6 +160,9 @@ public class GameController {
     @FXML
     private ChoiceBox<Level> levelChoiceBox;
 
+    /**
+     * The button to load the game.
+     */
     @FXML
     private Button loadGameButton;
 
@@ -224,25 +211,26 @@ public class GameController {
         if (player != null) {
             player.move(event);
         }
-
-        // Redraw game as the player may have moved.
         drawGame();
-
-        // Consume the event.
-        // This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
     }
 
+    /**
+     * Returns the canvas for the game.
+     *
+     * @return The canvas for the game.
+     */
     public Canvas getCanvas() {
         return canvas;
     }
 
+    /**
+     * Sets the canvas for the game.
+     *
+     * @param canvas The canvas to be set.
+     */
     public void setCanvas(Canvas canvas) {
         this.canvas = canvas;
-    }
-
-    public String getLevelName() {
-        return levelName;
     }
 
     /**
@@ -255,17 +243,14 @@ public class GameController {
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-
         LevelLoader.drawTiles(gc);
         LevelLoader.drawEntities(gc);
         LevelLoader.drawItems(gc);
-
 
         // Draw player at current location
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
         player.draw(gc, player.getX(), player.getY(), PLAYER_SIZE);
         //Draw key at current location
-
     }
 
     /**
@@ -315,10 +300,8 @@ public class GameController {
         if (currentProfile != null) {
             currentProfile.setScoreForLevel(levelName, calculateScore());
         }
-
         // Update time remaining label
         updateTimeRemaining(timeLimit);
-
     }
 
     /**
@@ -336,19 +319,13 @@ public class GameController {
         return score;
     }
 
+    /**
+     * Updates the score display.
+     */
     private void updateScoreDisplay() {
         scoreLabel.setText("Score: " + calculateScore());
     }
 
-
-    /**
-     * Sets the name of the current game level.
-     *
-     * @param levelName The name of the level to be set.
-     */
-    public void setLevelName(String levelName) {
-        this.levelName = levelName;
-    }
 
     /**
      * Sets the time limit for the game.
@@ -404,7 +381,7 @@ public class GameController {
                         "Selected level: \n" + (currentLevel != null ? currentLevel.getName() : ""),
                 currentLevelProperty()));
     }
-    private Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
+    private final Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
 
 
     /**
@@ -485,6 +462,10 @@ public class GameController {
         resetPlayerPosition();
         Monster.clearMonsterList();
     }
+
+    /**
+     * Resets the player position to the start position.
+     */
     private void resetPlayerPosition() {
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
         if (player != null) {
@@ -495,7 +476,9 @@ public class GameController {
         }
     }
 
-
+    /**
+     * Handles the load game button event, including clearing the level.
+     */
     private void handleLoadGameButton() {
         clearLevel();
     }
@@ -530,6 +513,9 @@ public class GameController {
         ProfileFileManager.saveAllProfiles(profiles);
     }
 
+    /**
+     * Handles the show high scores button event, including adding the current score to the high scores list.
+     */
     @FXML
     public void handleShowHighScoresButton() {
 
@@ -607,21 +593,6 @@ public class GameController {
         }
     }
 
-    public ObjectProperty<Profile> currentProfileProperty() {
-
-        return currentProfileProperty;
-    }
-
-    public Profile getCurrentProfile() {
-
-        return currentProfileProperty.get();
-    }
-
-    public void setCurrentProfile(Profile profile) {
-
-        currentProfileProperty.set(profile);
-    }
-
     /**
      * Updates the time remaining label with the provided time remaining.
      *
@@ -638,15 +609,6 @@ public class GameController {
      */
     public ObjectProperty<Level> currentLevelProperty() {
         return currentLevelProperty;
-    }
-
-    /**
-     * Returns the current level.
-     *
-     * @return The current level.
-     */
-    public Level getCurrentLevel() {
-        return currentLevelProperty.get();
     }
 
     /**
