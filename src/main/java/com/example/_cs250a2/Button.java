@@ -9,14 +9,33 @@ import javafx.scene.image.Image;
  * @version 1.0
  */
 public class Button extends Tile {
-    private static final Image BUTTON_IMAGE = new Image(Button.class.getResourceAsStream("sprites/button.png"));
+    /**
+     * The image of the button tile.
+     */
+    private static final Image BUTTON_IMAGE
+    = new Image(Button.class.getResourceAsStream("sprites/button.png"));
 
+    /**
+     * The number of the button.
+     */
     private final int buttonNum;
+    /**
+     * The trap associated with the button.
+     */
     private Trap associatedTrap;
+    /**
+     *  Whether the button is pressed or not.
+     */
     private boolean pressed;
 
 
-    public Button(int trapNum, int x, int y) {
+    /**
+     * Creates a new button.
+     * @param trapNum The number of the trap associated with the button
+     * @param x The X position of the button
+     * @param y The Y position of the button
+     */
+    public Button(final int trapNum, final  int x, final int y) {
         super("button", x, y, false);
         this.buttonNum = trapNum;
         setPushableBlock(true);

@@ -31,7 +31,8 @@ public class Bug extends Monster {
     private static int speed;
 
     /**
-     * keeps track of how many times the bug has called move to stop infinite loops
+     * keeps track of how many times
+     * the bug has called move to stop infinite loops
      */
     private int moveCount = 0;
 

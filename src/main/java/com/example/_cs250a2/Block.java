@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  * The {@code Block} class represents a block tile in the game.
  * It is responsible for moving the block onto a new position,
  * And checking if the block can be moved onto a new position.
- * @author idk
+ * @author Ryan Pietras
  * @version 1.0
  */
 public class Block extends Entity {
