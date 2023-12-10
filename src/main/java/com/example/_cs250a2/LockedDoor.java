@@ -5,7 +5,11 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
-
+/**
+ * The {@code LockedDoor} class represents a locked door in the game
+ * @author idk
+ * @version 1.0
+ */
 
 public class LockedDoor extends Tile {
     private static final Image RED_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/redLockedDoor.png"));

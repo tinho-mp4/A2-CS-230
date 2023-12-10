@@ -4,17 +4,39 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * javadoc to go here
+ * The {@code Bug} class represents a bug (monster) in the game.
+ * @author idk
+ * @version 1.0
  */
 //TODO test more
 public class Bug extends Monster {
 
-    private static final Image BUG_IMAGE = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
+    /**
+     * image of bug.
+     */
+    private static final Image BUG_IMAGE
+    = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
     //which wall to 'hug' when it moves
+    /**
+     * left or right.
+     */
     private final boolean left;
+    /**
+     * speed of bug.
+     */
     private static int speed;
 
-    public Bug(int ticks, char startingDirection, int[] startingLocation, boolean side) {
+    /**
+     * constructor.
+     * @param ticks speed
+     * @param startingDirection direction
+     * @param startingLocation location
+     * @param side left or right
+     */
+    public Bug(final int ticks,
+               final char startingDirection,
+               final int[] startingLocation,
+               final boolean side) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
         direction = startingDirection;
@@ -25,41 +47,62 @@ public class Bug extends Monster {
         checkDirection(startingDirection);
         checkLocation(startingLocation);
         //saves the index that the monsters' x and y coordinates are stored
-        //X is stored at 2 * the number of monsters since each monster stores two values and y is after that
-        arrayLocationX = countMonsters*2;
-        arrayLocationY = (countMonsters*2)+1;
+        //X is stored at 2 * the number of
+        // monsters since each monster stores two values and y is after that
+        arrayLocationX = countMonsters * 2;
+        arrayLocationY = (countMonsters * 2) + 1;
         countMonsters++;
         monsterLocations.add(x);
         monsterLocations.add(y);
         BugList.add(this);
     }
 
+    /**
+     * gets the speed of the bug.
+     * @return speed
+     */
     public static int getSpeed() {
         return speed;
     }
 
-    public void event (int x, int y, int newX, int newY) {}
+    /**
+     * event ?.
+     * @param x
+     * @param y
+     * @param newX
+     * @param newY
+     */
+    public void event(final int x,
+                       final int y,
+                       final int newX,
+                       final int newY) { }
 
+    /**
+     * moves the bug.
+     */
     public void move() {
-        int[] toTheLeft = {x-1, y};
-        int[] above = {x, y+1};
-        int[] below = {x, y-1};
-        int[] toTheRight = {x+1, y};
+        int[] toTheLeft = {x - 1, y};
+        int[] above = {x, y + 1};
+        int[] below = {x, y - 1};
+        int[] toTheRight = {x + 1, y};
         //checks which side to keep the bug on
         if (left) {
             if (direction == 'w') {
-                //the bug wants to go forwards or to its' left (or right), checks if it can
+                //the bug wants to go forwards
+                // or to its' left (or right), checks if it can
                 if (!checkTile(toTheLeft) && !checkTile(above)) {
-                    //bug cant go where it wants to, so it turns right and tries again
+                    //bug cant go where it wants to,
+                    // so it turns right and tries again
                     direction = 'd';
                     move();
-                    //it can either go one way or both, if it cant go left it goes in its' current facing
-                } else if (!(checkTile(toTheLeft))){
+                    //it can either go one way or both,
+                    // if it cant go left it goes in its' current facing
+                } else if (!(checkTile(toTheLeft))) {
                     y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
-                    //if both tiles are available it is on an outside corner and so
-                    // turns (and moves in the new direction) to go around
+                    //if both tiles are available it is on an outside corner
+                    //and so turns (and moves in the new direction) to go
                 } else {
                     direction = 'a';
                     x--;
@@ -145,7 +188,7 @@ public class Bug extends Monster {
                 } else if (!checkTile(above)) {
                     x++;
                     playerKill();
-                    locationUpdate(arrayLocationX,x);
+                    locationUpdate(arrayLocationX, x);
                 } else {
                     direction = 'w';
                     y++;
@@ -170,8 +213,18 @@ public class Bug extends Monster {
         }
     }
 
+    /**
+     * draws the bug.
+     * @param gc graphics context
+     * @param x location x
+     * @param y location y
+     * @param size size
+     */
     @Override
-    public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(BUG_IMAGE, x*size, y*size);
+    public void draw(final GraphicsContext gc,
+                     final double x,
+                     final double y,
+                     final double size) {
+        gc.drawImage(BUG_IMAGE, x * size, y * size);
     }
 }

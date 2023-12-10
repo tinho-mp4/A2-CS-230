@@ -6,8 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.*;
 
+/**
+ * The {@code Profile} class handles player profiles in the game.
+ * <p>
+ *     A profile contains the player's name, the highest level they have reached, and their scores for each level.
+ *     It also contains the high scores for each level.
+ *     The profile can be saved to a file and loaded from a file.
+ *     The profile is serializable.
+ *     @author Ben Foord
+ *     @version 1.0
+ */
 public class Profile implements Serializable{
-    private String name;
+
+    private final String name;
 
     private int levelReached;
     private Map<String, Integer> levelScores;
@@ -15,46 +26,63 @@ public class Profile implements Serializable{
 
 
 
+    /**
+     * Create a new profile with the given name.
+     * @param name The name of the profile.
+     */
     public Profile(String name) {
         this.name = name;
-        this.levelReached = 3;
+        this.levelReached = 5;
         this.levelScores = new HashMap<>();
         this.highScores = new HashMap<>();
-
     }
 
 
-
+    /**
+     *  Create a new profile with the given name and load it from the given file.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get the highest level reached by the player.
+     * @return The highest level reached by the player.
+     */
     public int getLevelReached() {
         return levelReached;
     }
 
+    /**
+     * Set the highest level reached by the player.
+     * @param levelReached  The highest level reached by the player.
+     */
     public void setLevelReached(int levelReached) {
         this.levelReached = levelReached;
     }
 
+    /**
+     * Get the score for the given level.
+     * @param level The level to get the score for.
+     */
     public int getScoreForLevel(String level) {
         return levelScores.getOrDefault(level, 0);
     }
 
+    /**
+     * Set the score for the given level.
+     * @param level The level to set the score for.
+     * @param score The score to set.
+     */
     public void setScoreForLevel(String level, int score) {
         levelScores.put(level, score);
     }
 
-    public Profile(String name, String filePath) {
-        this.name = name;
-        this.levelReached = 3;
-        this.levelScores = new HashMap<>();
-        this.highScores = new HashMap<>();
 
-        loadFromFile(filePath);
-    }
-
-    // Save the profile to a file
+    /**
+     * Save the profile to a file.
+     * @param filePath The path to the file to save the profile to.
+     */
     public void saveToFile(String filePath) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(this);
@@ -63,7 +91,10 @@ public class Profile implements Serializable{
         }
     }
 
-    // Load the profile from a file
+    /**
+     * Load the profile from a file.
+     * @param filePath The path to the file to load the profile from.
+     */
     private void loadFromFile(String filePath) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             Profile savedProfile = (Profile) ois.readObject();
@@ -78,6 +109,11 @@ public class Profile implements Serializable{
     }
 
 
+    /**
+     * Add a score to the high scores for the given level.
+     * @param level The level to add the score to.
+     * @param score The score to add.
+     */
     public void addScoreToHighScores(String level, int score) {
         highScores.putIfAbsent(level, new PriorityQueue<>(Comparator.comparingInt(ScoreEntry::getScore)));
         PriorityQueue<ScoreEntry> levelHighScores = highScores.get(level);
@@ -89,6 +125,11 @@ public class Profile implements Serializable{
         }
     }
 
+    /**
+     * Get the high scores for the given level.
+     * @param level The level to get the high scores for.
+     * @return The high scores for the given level.
+     */
     public List<ScoreEntry> getHighScores(String level) {
         if (!highScores.containsKey(level)) {
             return Collections.emptyList();

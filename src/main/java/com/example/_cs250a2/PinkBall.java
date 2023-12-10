@@ -4,7 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * javadoc to go here
+ * The {@code PinkBall} class represents a pink ball (monster) in the game
+ * @author idk
+ * @version 1.0
  */
 //TODO test
 public class PinkBall extends Monster {

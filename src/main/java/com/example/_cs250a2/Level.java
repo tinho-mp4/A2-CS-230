@@ -2,6 +2,11 @@ package com.example._cs250a2;
 
 import java.util.ArrayList;
 
+/**
+ * The {@code Level} class represents levels in the game
+ * @author idk
+ * @version 1.0
+ */
 public class Level {
 
     private String name;

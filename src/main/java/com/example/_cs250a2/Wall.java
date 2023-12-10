@@ -3,6 +3,11 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * The {@code Wall} class represents a wall in the game
+ * @author idk
+ * @version 1.0
+ */
 public class Wall extends Tile{
     private static final Image WALL_IMAGE = new Image(Wall.class.getResourceAsStream("sprites/wall.png"));
 

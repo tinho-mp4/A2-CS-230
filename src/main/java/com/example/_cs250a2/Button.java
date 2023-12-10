@@ -3,83 +3,68 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.transform.Source;
 
 /**
- * The {@code Button} class represents a button object that can be pressed and linked to traps.
- * It allows you to set its pressed state and link it to traps that can respond to its state.
- *
- * @author Juned Miah
+ * The {@code Button} class represents a button in the game.
+ * @author Pele
+ * @version 1.0
  */
-public class Button extends Tile{
+public class Button extends Tile {
     private static final Image BUTTON_IMAGE = new Image(Button.class.getResourceAsStream("sprites/button.png"));
 
+    private final int buttonNum;
+    private Trap associatedTrap;
+    private boolean pressed;
 
-    /**
-     * The number paired with this button.
-     */
-    public int pairedNumber;
 
-    /**
-     * A flag indicating whether the button is currently pressed.
-     */
-    private static boolean isPressed;
-
-    /**
-     * A list of traps linked to this button.
-     */
-    private static List<Trap> linkedTraps;
-
-    /**
-     * Initializes a new instance of the {@code Button} class.
-     * The button is initially not pressed, and no traps are linked to it.
-     */
-    public Button(int x, int y, int _pairedNumber) {
+    public Button(int trapNum, int x, int y) {
         super("button", x, y, false);
-        this.setPushableBlock(true);
-        isPressed = false;
-        linkedTraps = new ArrayList<>();
-        pairedNumber = _pairedNumber;
+        this.buttonNum = trapNum;
     }
 
-    public static void event() {
+    public void linkToTrap(Trap trap) {
+        this.associatedTrap = trap;
     }
 
-    /**
-     * Links a trap to this button. When the button's state changes, linked traps will respond accordingly.
-     *
-     * @param trap The trap to be linked to this button.
-     */
-    public void linkTrap(Trap trap) {
-        linkedTraps.add(trap);
+    public void press() {;
+        pressed = true;
+        associatedTrap.inactive();
     }
 
-    /**
-     * Sets the pressed state of the button and triggers linked traps accordingly.
-     *
-     * @param isPressed {@code true} if the button is pressed, {@code false} otherwise.
-     */
-    public void setPressed(boolean isPressed) {
-        Button.isPressed = isPressed;
-        for (Trap trap : linkedTraps) {
-            trap.setActive(!isPressed);
+    public void unpress() {
+        pressed = false;
+        associatedTrap.active();
+
+    }
+
+/*    public void checkIfPlayerOnButton() {
+
+         if () {
+            System.out.println("Player is on the button");
+            associatedTrap.inactive();
+         }
+
+        else {
+            System.out.println("Player is not on the button");
+            associatedTrap.active();
         }
+    }*/
+
+
+    public boolean isPressed() {
+        return pressed;
     }
 
-    /**
-     * Checks whether the button is currently pressed.
-     *
-     * @return {@code true} if the button is pressed, {@code false} otherwise.
-     */
-    public boolean isPressed() {
-        return isPressed;
+
+    public int getButtonNum() {
+        return buttonNum;
     }
 
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(BUTTON_IMAGE, x*size, y*size);
+        gc.drawImage(BUTTON_IMAGE, x * size, y * size);
     }
 }
 

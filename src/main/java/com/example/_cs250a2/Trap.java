@@ -4,66 +4,62 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * The {@code Trap} class represents a trap object that can be activated or deactivated.
- * It allows you to set its active state and check whether it is currently active.
- *
- * @author Juned Miah
+ * The {@code Trap} class represents a trap in the game.
+ * @author idk
+ * @version 1.0
  */
-public class Trap extends Tile{
-    private static final Image TRAP_IMAGE = new Image(Trap.class.getResourceAsStream("sprites/trap.png"));
+public class Trap extends Tile {
+    private static final Image TRAP_IMAGE = new Image(Trap.class.getResourceAsStream("sprites/trapInactive.png"));
+    private final int trapNum;
+    private Button associatedButton;
+    private boolean stuck = true;
 
-    /**
-     * The number paired with this trap.
-     */
-    public int pairedNumber;
-
-    /**
-     * A flag indicating whether the trap is currently active.
-     */
-    private static boolean isActive;
-
-    /**
-     * Initializes a new instance of the {@code Trap} class.
-     * The trap is initially active.
-     */
-    public Trap(int x, int y) {
-        super("trap",x,y, false);
-        isActive = true;
+    public Trap(int trapNum, int x, int y) {
+        super("trap",x, y, false);
+        this.trapNum = trapNum;
     }
 
-    public static void event() {
+    public void linkToButton(Button button) {
+        this.associatedButton = button;
     }
 
-    /**
-     * Sets the active state of the trap.
-     *
-     * @param isActive {@code true} if the trap is active, {@code false} if it is deactivated.
-     */
-    public void setActive(boolean isActive) {
-        Trap.isActive = isActive;
+    public boolean isAssociatedWithButton() {
+        return associatedButton != null;
     }
 
-    /**
-     * Checks whether the trap is currently active.
-     *
-     * @return {@code true} if the trap is active, {@code false} if it is deactivated.
-     */
-    public boolean isActive() {
-        return isActive;
+
+    public Button getAssociatedButton() {
+        return associatedButton;
     }
 
-    /**
-     * Checks whether something can move off the trap. It returns {@code true} if the trap is not active.
-     *
-     * @return {@code true} if something can move off the trap, {@code false} if it is active and blocking.
-     */
-    public boolean canMoveOff() {
-        return !isActive;
+    public void setAssociatedButton(Button button) {
+        this.associatedButton = button;
     }
+
+    public int getTrapNum() {
+        return trapNum;
+    }
+
+
+
+    public void inactive() {
+        System.out.println("Trap is inactive!");
+        stuck = false;
+    }
+
+    public void active() {
+        System.out.println("Trap is active!");
+        stuck = true;
+    }
+
+    public boolean isStuck() {
+        return stuck;
+    }
+
+
 
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(TRAP_IMAGE, x*size, y*size);
     }
 }
-

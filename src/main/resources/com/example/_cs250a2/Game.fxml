@@ -10,7 +10,10 @@
 
 
     <center>
-        <Canvas fx:id="canvas" height="400" width="700" />
+        <VBox alignment="CENTER">
+            <!-- Your existing UI components -->
+            <Canvas fx:id="canvas" width="400" height="700" />
+        </VBox>
     </center>
 
     <top>
@@ -18,7 +21,7 @@
             <children>
                 <VBox prefHeight="30.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Chips Challange" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                        <Label text="Chips Challenge" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="41.0" />
                             </font>
@@ -38,6 +41,8 @@
                             </VBox.margin>
                         </Button>
                   <Button fx:id="showHighScoresButton" mnemonicParsing="false" prefHeight="18.0" prefWidth="90.0" text="HighScore" />
+                  <Button fx:id= "saveGameButton" mnemonicParsing="false" prefHeight="23.0" prefWidth="91.0" text="Save Game" />
+                  <Button fx:id= "loadGameButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Load Game" />
                     </children></VBox>
             </children>
         </HBox>
@@ -77,7 +82,7 @@
                         <Insets />
                     </VBox.margin>
                 </Button>
-                <Label fx:id="selectedLevelLable" alignment="TOP_LEFT" prefHeight="39.0" prefWidth="102.0" text="Selected Level:" />
+                <Label fx:id="selectedLevelLabel" alignment="TOP_LEFT" prefHeight="39.0" prefWidth="102.0" text="Selected Level:" />
 
                 <ChoiceBox fx:id="levelChoiceBox" prefHeight="25.0" prefWidth="102.0">
                     <VBox.margin>
@@ -96,6 +101,5 @@
     <BorderPane>
         <left>
         </left>
-        <!-- Other nodes... -->
     </BorderPane>
 </BorderPane>

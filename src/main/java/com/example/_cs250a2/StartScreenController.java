@@ -16,7 +16,11 @@ import javafx.scene.paint.Color;
 
 import java.io.InputStream;
 
-// Import statements...
+/**
+ * The {@code StartScreenController} class handles the starting screen of the game
+ * @author idk
+ * @version 1.0
+ */
 
 public class StartScreenController {
 

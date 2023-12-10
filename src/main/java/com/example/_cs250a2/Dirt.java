@@ -3,6 +3,11 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * The {@code Dirt} class represents a dirt block in the game.
+ * @author idk
+ * @version 1.0
+ */
 public class Dirt extends Tile{
     private static final Image DIRT_IMAGE = new Image(Dirt.class.getResourceAsStream("sprites/dirt.png"));
     private boolean compacted;
@@ -27,8 +32,18 @@ public class Dirt extends Tile{
         }
     }
 
+    /**
+     * draws the Dirt.
+     * @param gc graphics context
+     * @param x x coordnate
+     * @param y y coordinate
+     * @param size size
+     */
     @Override
-    public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(DIRT_IMAGE, x*size, y*size);
+    public void draw(final GraphicsContext gc,
+                     final double x,
+                     final double y,
+                     final double size) {
+        gc.drawImage(DIRT_IMAGE, x * size, y * size);
     }
 }

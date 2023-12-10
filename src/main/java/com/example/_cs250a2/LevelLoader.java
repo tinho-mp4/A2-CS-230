@@ -7,11 +7,22 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The {@code LevelLoader} class handles loading of levels in the game
+ * @author idk
+ * @version 1.0
+ */
 public class LevelLoader {
+
+    private static final Map<Integer, Button> buttons = new HashMap<>();
+    private static final Map<Integer, Trap> traps = new HashMap<>();
+
+
     /**
      * Represents the time limit for completing the level.
      * This value is set during the level loading process.
      */
+
 
     private static int timeLimit;
     /**
@@ -47,13 +58,13 @@ public class LevelLoader {
         Scanner scanner = new Scanner(Objects.requireNonNull(getClass().getResourceAsStream("levels/"+levelName+".txt")));
         // Read level information
         this.levelName = scanner.nextLine().split(": ")[1];
-        this.timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
+        timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
-        this.width = width;
-        this.height = height;
-        this.entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
+        LevelLoader.width = width;
+        LevelLoader.height = height;
+        entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
     }
 
     /**
@@ -203,7 +214,7 @@ public class LevelLoader {
      * Locked Door: L - maybe n not sure yet
      * Frog: F
      * Pink Ball: G
-     * Bug: E
+     * Bug: Z
      * Player:?
      * Computer Chip: C
      * Key: K - maybe n not sure yet
@@ -219,9 +230,16 @@ public class LevelLoader {
             case 'E':
                 return new Exit(x, y);
             case 'B':
-                return new Button(x, y, tile[1]);
+                int buttonNum = Integer.parseInt(String.valueOf(tile[1]));
+                Button button = new Button(buttonNum, x, y);
+                buttons.put(buttonNum, button);
+                return button;
+
             case 'T':
-                return new Trap(x, y);
+                int trapNum = Integer.parseInt(String.valueOf(tile[1]));
+                Trap trap = new Trap(trapNum, x, y);
+                traps.put(trapNum, trap);
+                return trap;
             case 'W':
                 return new Water(x, y);
             case 'S':
@@ -246,10 +264,9 @@ public class LevelLoader {
                 return new PinkBall(2, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
             case 'Z':
                 return new Bug(3, 'd', new int[]{entity[1]-'0', entity[2]-'0'}, false);
+            default:
             case 'O':
                 return new Block(entity[1]-'0', entity[2]-'0');
-            default:
-                return null;
         }
     }
 
@@ -273,7 +290,7 @@ public class LevelLoader {
         }
     }
 
-    public static void drawLevel(GraphicsContext gc) {;
+    public static void drawLevel(GraphicsContext gc) {
         for (ArrayList<Tile> row : getTileGrid()) {
             for (Tile tile : row) {
                 tile.draw(gc, tile.getX(), tile.getY(), 32);
@@ -282,6 +299,7 @@ public class LevelLoader {
     }
 
     public static void drawEntities(GraphicsContext gc) {
+        System.out.println("drawing entites" + entityGrid);
         for (ArrayList<Entity> row : getentityGrid()) {
             for (Entity entity : row) {
                 if (entity != null) {
@@ -367,6 +385,22 @@ public class LevelLoader {
 
     private static void setTimeLimit(int limit) {
         timeLimit = limit;
+    }
+
+    public static void linkButtonsToTraps() {
+        for (Map.Entry<Integer, Button> entry : buttons.entrySet()) {
+            int buttonNum = entry.getKey();
+            Button button = entry.getValue();
+            Trap trap = traps.get(buttonNum);
+            if (trap != null) {
+                button.linkToTrap(trap);
+                trap.linkToButton(button);
+            }
+        }
+    }
+
+    public static Map<Integer, Button> getButtons() {
+        return buttons;
     }
 
 

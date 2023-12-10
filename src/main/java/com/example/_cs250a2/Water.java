@@ -3,6 +3,11 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * The {@code Water} class represents a water block in the game
+ * @author idk
+ * @version 1.0
+ */
 public class Water extends Tile{
     private static final Image WATER_TILE = new Image(Water.class.getResourceAsStream("sprites/water.png"));
 
