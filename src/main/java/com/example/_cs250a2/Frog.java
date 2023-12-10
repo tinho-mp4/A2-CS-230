@@ -43,6 +43,7 @@ public class Frog extends Monster {
 
     //this move method will try and make the frog x equal to player x then do the same with y
     public void move() {
+        int[] currentTile = {x, y};
         int[] checkLeft = {x-1, y};
         int[] checkRight = {x+1, y};
         int[] checkBelow = {x, y-1};
@@ -50,32 +51,32 @@ public class Frog extends Monster {
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
         int playerX = player.getX();
         int playerY = player.getY();
-        if (x > playerX && checkTile(checkLeft)) {
+        if (x > playerX && checkTile(checkLeft, currentTile)) {
             x--;
             playerKill();
             locationUpdate(arrayLocationX, x);
             direction = 'a';
-        } else if (x < playerX && checkTile(checkRight)) {
+        } else if (x < playerX && checkTile(checkRight, currentTile)) {
             x++;
             playerKill();
             locationUpdate(arrayLocationX, x);
             direction = 'd';
-        } else if (y > playerY && checkTile(checkBelow)) {
+        } else if (y > playerY && checkTile(checkBelow, currentTile)) {
             y--;
             playerKill();
             locationUpdate(arrayLocationY, y);
             direction = 's';
-        } else if (y < playerY && checkTile(checkAbove)) {
+        } else if (y < playerY && checkTile(checkAbove, currentTile)) {
             y++;
             playerKill();
             locationUpdate(arrayLocationY, y);
             direction = 'w';
-        } else if (direction == 'a' && checkTile(checkAbove)) {
+        } else if (direction == 'a' && checkTile(checkAbove, currentTile)) {
             y++;
             playerKill();
             locationUpdate(arrayLocationY, y);
             direction = 'w';
-        } else if (direction == 'a' && checkTile(checkBelow)) {
+        } else if (direction == 'a' && checkTile(checkBelow, currentTile)) {
             y--;
             playerKill();
             locationUpdate(arrayLocationY, y);
@@ -85,12 +86,12 @@ public class Frog extends Monster {
             playerKill();
             locationUpdate(arrayLocationX, x);
             direction = 'd';
-        } else if (direction == 'w' && checkTile(checkLeft)) {
+        } else if (direction == 'w' && checkTile(checkLeft, currentTile)) {
             x--;
             playerKill();
             locationUpdate(arrayLocationX, x);
             direction = 'a';
-        } else if (direction == 'w' && checkTile(checkRight)) {
+        } else if (direction == 'w' && checkTile(checkRight, currentTile)) {
             x++;
             playerKill();
             locationUpdate(arrayLocationX, x);
@@ -100,12 +101,12 @@ public class Frog extends Monster {
             playerKill();
             locationUpdate(arrayLocationY, y);
             direction = 's';
-        } else if (direction == 's' && checkTile(checkRight)) {
+        } else if (direction == 's' && checkTile(checkRight, currentTile)) {
             x++;
             playerKill();
             locationUpdate(arrayLocationX, x);
             direction = 'd';
-        } else if (direction == 's' && checkTile(checkLeft)) {
+        } else if (direction == 's' && checkTile(checkLeft, currentTile)) {
             x--;
             playerKill();
             locationUpdate(arrayLocationX, x);
@@ -115,12 +116,12 @@ public class Frog extends Monster {
             playerKill();
             locationUpdate(arrayLocationY, y);
             direction = 'w';
-        } else if (direction == 'd' && checkTile(checkBelow)) {
+        } else if (direction == 'd' && checkTile(checkBelow, currentTile)) {
             y--;
             playerKill();
             locationUpdate(arrayLocationY, y);
             direction = 's';
-        } else if (direction == 'd' && checkTile(checkAbove)) {
+        } else if (direction == 'd' && checkTile(checkAbove, currentTile)) {
             y++;
             playerKill();
             locationUpdate(arrayLocationY, y);

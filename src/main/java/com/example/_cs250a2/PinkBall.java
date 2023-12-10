@@ -18,6 +18,15 @@ public class PinkBall extends Monster {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
         direction = startingDirection;
+        location = startingLocation;
+        checkDirection(direction);
+        checkLocation(location);
+        arrayLocationX = countMonsters*2;
+        arrayLocationY = countMonsters*2 + 1;
+        countMonsters++;
+        monsterLocations.add(x);
+        monsterLocations.add(y);
+        PinkBallList.add(this);
     }
 
     public void event (int x, int y, int newX, int newY) {}
@@ -26,12 +35,13 @@ public class PinkBall extends Monster {
     }
 
     public void move() {
+        int[] currentTile = {x, y};
         //w is up, s is down, a is left and d is right
         if (direction == 'w') {
             //next location is 1 tile above current position
             int[] locationNext = {x, y+1};
             //method to check the tile is legal
-            if (checkTile(locationNext)) {
+            if (checkTile(locationNext, currentTile)) {
                 y++;
                 locationUpdate(arrayLocationY, y);
                 playerKill();
@@ -43,7 +53,7 @@ public class PinkBall extends Monster {
             //next location is 1 tile below current position
             int[] locationNext = {x, y-1};
             //check tile legality
-            if (checkTile(locationNext)) {
+            if (checkTile(locationNext, currentTile)) {
                 y--;
                 playerKill();
                 locationUpdate(arrayLocationY, y);
@@ -53,7 +63,7 @@ public class PinkBall extends Monster {
             }
         } else if (direction == 'a') {
             int[] locationNext = {x-1, y};
-            if (checkTile(locationNext)) {
+            if (checkTile(locationNext, currentTile)) {
                 x--;
                 playerKill();
                 locationUpdate(arrayLocationX, x);
@@ -63,7 +73,7 @@ public class PinkBall extends Monster {
             }
         } else if (direction == 'd') {
             int[] locationNext = {x+1, y};
-            if (checkTile(locationNext)) {
+            if (checkTile(locationNext, currentTile)) {
                 x++;
                 playerKill();
                 locationUpdate(arrayLocationX, x);

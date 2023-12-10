@@ -16,6 +16,9 @@ public class Bug extends Monster {
      */
     private static final Image BUG_IMAGE
     = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
+
+    //only 4 directions to move in so it doesnt want to turn more than that
+    private static final int MAXTURNS = 4;
     //which wall to 'hug' when it moves
     /**
      * left or right.
@@ -25,6 +28,9 @@ public class Bug extends Monster {
      * speed of bug.
      */
     private static int speed;
+
+    //keeps track of how many times the bug has called move to stop infinite loops
+    private int moveCount = 0;
 
     /**
      * constructor.
@@ -81,6 +87,8 @@ public class Bug extends Monster {
      * moves the bug.
      */
     public void move() {
+        moveCount++;
+        int[] currentTile = {x, y};
         int[] toTheLeft = {x - 1, y};
         int[] above = {x, y + 1};
         int[] below = {x, y - 1};
@@ -90,17 +98,20 @@ public class Bug extends Monster {
             if (direction == 'w') {
                 //the bug wants to go forwards
                 // or to its' left (or right), checks if it can
-                if (!checkTile(toTheLeft) && !checkTile(above)) {
+                if (!checkTile(toTheLeft, currentTile) && !checkTile(above, currentTile)
+                        && moveCount < MAXTURNS) {
                     //bug cant go where it wants to,
                     // so it turns right and tries again
                     direction = 'd';
                     move();
                     //it can either go one way or both,
                     // if it cant go left it goes in its' current facing
-                } else if (!(checkTile(toTheLeft))) {
+                } else if (!(checkTile(toTheLeft, currentTile))) {
                     y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
+                    //reset count on move
+                    moveCount = 0;
                     //if both tiles are available it is on an outside corner
                     //and so turns (and moves in the new direction) to go
                 } else {
@@ -108,106 +119,128 @@ public class Bug extends Monster {
                     x--;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
+                    moveCount = 0;
                 }
             } else if (direction == 's') {
-                if (!checkTile(below) && !checkTile(toTheRight)) {
+                if (!checkTile(below, currentTile) && !checkTile(toTheRight, currentTile)
+                        && moveCount < MAXTURNS) {
                     direction = 'a';
                     move();
-                } else if (!checkTile(toTheRight)) {
+                } else if (!checkTile(toTheRight, currentTile)) {
                     y--;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
+                    moveCount = 0;
                 } else {
                     direction = 'd';
                     x++;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
+                    moveCount = 0;
                 }
             } else if (direction == 'a') {
-                if (!checkTile(toTheLeft) && !checkTile(below)) {
+                if (!checkTile(toTheLeft, currentTile) && !checkTile(below, currentTile)
+                && moveCount < MAXTURNS) {
                     direction = 'w';
                     move();
-                } else if (!checkTile(below)) {
+                } else if (!checkTile(below, currentTile)) {
                     x--;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
+                    moveCount = 0;
                 } else {
                     direction = 's';
                     y--;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
+                    moveCount = 0;
                 }
             } else if (direction == 'd') {
-                if (!checkTile(toTheRight) && !checkTile(above)) {
+                if (!checkTile(toTheRight, currentTile) && !checkTile(above, currentTile)
+                && moveCount < MAXTURNS) {
                     direction = 's';
                     move();
-                } else if (!checkTile(above)) {
+                } else if (!checkTile(above, currentTile)) {
                     x++;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
+                    moveCount = 0;
                 } else {
                     direction = 'w';
                     y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
+                    moveCount = 0;
                 }
             }
         } else {
             if (direction == 'w') {
-                if (!checkTile(toTheRight) && !checkTile(above)) {
+                if (!checkTile(toTheRight, currentTile) && !checkTile(above, currentTile)
+                && moveCount < MAXTURNS) {
                     direction = 'a';
                     move();
-                } else if (!checkTile(toTheRight)) {
+                } else if (!checkTile(toTheRight, currentTile)) {
                     y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
+                    moveCount = 0;
                 } else {
                     direction = 'd';
                     x++;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
+                    moveCount = 0;
                 }
             } else if (direction == 's') {
-                if (!checkTile(toTheLeft) && !checkTile(below)) {
+                if (!checkTile(toTheLeft, currentTile) && !checkTile(below, currentTile)
+                && moveCount < MAXTURNS) {
                     direction = 'd';
                     move();
-                } else if (!checkTile(toTheLeft)) {
+                } else if (!checkTile(toTheLeft, currentTile)) {
                     y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
+                    moveCount = 0;
                 } else {
                     direction = 'a';
                     x--;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
+                    moveCount = 0;
                 }
             } else if (direction == 'a') {
-                if (!checkTile(toTheLeft) && !checkTile(above)) {
+                if (!checkTile(toTheLeft, currentTile) && !checkTile(above, currentTile)
+                && moveCount < MAXTURNS) {
                     direction = 's';
                     move();
-                } else if (!checkTile(above)) {
+                } else if (!checkTile(above, currentTile)) {
                     x++;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
+                    moveCount = 0;
                 } else {
                     direction = 'w';
                     y++;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
+                    moveCount = 0;
                 }
             } else if (direction == 'd') {
-                if (!checkTile(toTheRight) && !checkTile(below)) {
+                if (!checkTile(toTheRight, currentTile) && !checkTile(below, currentTile)
+                && moveCount < MAXTURNS) {
                     direction = 'w';
                     move();
-                } else if (!checkTile(below)) {
+                } else if (!checkTile(below, currentTile)) {
                     x++;
                     playerKill();
                     locationUpdate(arrayLocationX, x);
+                    moveCount = 0;
                 } else {
                     direction = 's';
                     y--;
                     playerKill();
                     locationUpdate(arrayLocationY, y);
+                    moveCount = 0;
                 }
             }
         }

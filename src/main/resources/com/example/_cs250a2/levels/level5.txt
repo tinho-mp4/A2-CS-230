@@ -1,0 +1,14 @@
+Level Name: Level5
+TimeLimit = 30000
+Level Dimensions 6 6
+
+PPPPPP
+PB1PPPP
+PPPPT1P
+PPPPPP
+PPPPPP
+PPPPPP
+O12
+Q11
+Z52
+G41

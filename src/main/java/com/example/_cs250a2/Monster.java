@@ -65,7 +65,6 @@ public abstract class Monster extends Entity {
 
    //these check the parameters when the constructor is called for a monster
    protected void checkLocation(int[] location) {
-      System.out.println(location[0] + " " + location[1]);
       if (!(location[0] < LevelLoader.getWidth() && location[1] < LevelLoader.getHeight()) && (location[0] >= 0 && location[1] >= 0)) {
          throw new IllegalArgumentException("the monster has to start within the coordinates of the game space");
       }
@@ -77,15 +76,24 @@ public abstract class Monster extends Entity {
    }
 
    //method to check if monster move is legal
-   protected boolean checkTile(int[] tileLocation) {
+   protected boolean checkTile(int[] tileLocation, int[] currentTileLocation) {
       boolean safeTile = false;
       boolean withinBounds = true;
+      boolean stuckOnTrap = false;
+      boolean canMove = false;
+      String nextTile = LevelLoader.getTile(tileLocation[0], tileLocation[1]).getName();
+      Tile currentTile = LevelLoader.getTile(currentTileLocation[0], currentTileLocation[1]);
+
+
+      //checks if move is within the game space
       try {
          checkLocation(tileLocation);
       } catch (IllegalArgumentException e) {
          withinBounds = false;
       }
-      String nextTile = LevelLoader.getTile(tileLocation[0], tileLocation[1]).getName();
+
+      //gets the name of the tile and compares it to the tiles monster can walk on
+
       for (String tile : allowedTiles) {
           if (nextTile.equals(tile)) {
               safeTile = true;
@@ -100,7 +108,26 @@ public abstract class Monster extends Entity {
               break;
           }
       }
-       return safeTile && withinBounds;
+      if (currentTile instanceof Trap) {
+         Trap trap = (Trap) currentTile;
+         if (trap.isActive()) {
+            stuckOnTrap = true;
+         }
+      }//checks if the monster is moving onto a button to press it
+      if (safeTile && withinBounds && !stuckOnTrap) {
+         canMove = true;
+      }
+
+      //finally presses / unpresses buttons once the checker knows if a move will happen
+      if (nextTile.equals("button") && canMove) {
+         Button button = (Button) LevelLoader.getTile(tileLocation[0], tileLocation[1]);
+         button.press();
+      }
+      if (currentTile.getName().equals("button") && canMove) {
+         Button button = (Button) currentTile;
+         button.unpress();
+      }
+       return canMove;
    }
 
    protected void playerKill() {
