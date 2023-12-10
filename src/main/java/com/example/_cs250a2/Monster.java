@@ -110,7 +110,7 @@ public abstract class Monster extends Entity {
       }
       if (currentTile instanceof Trap) {
          Trap trap = (Trap) currentTile;
-         if (trap.isActive()) {
+         if (trap.isStuck()) {
             stuckOnTrap = true;
          }
       }//checks if the monster is moving onto a button to press it
