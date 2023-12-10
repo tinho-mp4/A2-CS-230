@@ -12,6 +12,10 @@ import java.util.Arrays;
  */
 public abstract class Monster extends Entity {
 
+   /**
+    * only 4 directions to move in so it doesn't want to turn more than that.
+    */
+   protected static final int MAXTURNS = 4;
    //this keeps track of how many monsters are created so they can each use their position in the ArrayList
    protected static int countMonsters = 0;
 
@@ -22,7 +26,7 @@ public abstract class Monster extends Entity {
 
    //this is an ArrayList for monsters to put their location in with LocationUpdate method (called when the monster moves)
    protected static ArrayList<Integer> monsterLocations = new ArrayList<>();
-   //tile still needs to be created
+
    //Arraylist of tiles the monster cannot move onto
    protected ArrayList<String> allowedTiles = new ArrayList<>(Arrays.asList("path", "button", "trap"));
 
@@ -31,6 +35,11 @@ public abstract class Monster extends Entity {
    protected int arrayLocationX;
    protected int arrayLocationY;
 
+   /**
+    * keeps track of how many times
+    * the monster has called move to stop infinite loops
+    */
+   protected int moveCount = 0;
    //starting direction the monster is moving with single character (W,A,S,D)
    protected char direction;
 
@@ -83,17 +92,13 @@ public abstract class Monster extends Entity {
       boolean canMove = false;
       String nextTile = LevelLoader.getTile(tileLocation[0], tileLocation[1]).getName();
       Tile currentTile = LevelLoader.getTile(currentTileLocation[0], currentTileLocation[1]);
-
-
       //checks if move is within the game space
       try {
          checkLocation(tileLocation);
       } catch (IllegalArgumentException e) {
          withinBounds = false;
       }
-
       //gets the name of the tile and compares it to the tiles monster can walk on
-
       for (String tile : allowedTiles) {
           if (nextTile.equals(tile)) {
               safeTile = true;
@@ -108,6 +113,14 @@ public abstract class Monster extends Entity {
               break;
           }
       }
+      //now checks there isn't a block on the tile
+      for (Entity entity : LevelLoader.getEntityList()) {
+         if (entity instanceof Block && entity.getX() == tileLocation[0] && entity.getY() == tileLocation[1]) {
+            safeTile = false;
+            break;
+         }
+      }
+
       if (currentTile instanceof Trap) {
          Trap trap = (Trap) currentTile;
          if (trap.isStuck()) {
@@ -130,10 +143,11 @@ public abstract class Monster extends Entity {
        return canMove;
    }
 
-   protected void playerKill() {
+   protected void playerKill(GameController gameController) {
       Player player = (Player) LevelLoader.getEntityByClass(Player.class);
       if (this.getX() == player.getX() && this.getY() == player.getY()) {
          GameOver.playerDeathMonster();
+         gameController.clearLevel();
       }
    }
 

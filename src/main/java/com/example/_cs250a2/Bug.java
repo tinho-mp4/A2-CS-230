@@ -16,25 +16,18 @@ public class Bug extends Monster {
      */
     private static final Image BUG_IMAGE
     = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
-    /**
-     * only 4 directions to move in so it doesnt want to turn more than that.
-     */
-    private static final int MAXTURNS = 4;
+
     //which wall to 'hug' when it moves
     /**
      * left or right.
      */
     private final boolean left;
+
+    private final GameController gameController;
     /**
      * speed of bug.
      */
     private static int speed;
-
-    /**
-     * keeps track of how many times
-     * the bug has called move to stop infinite loops
-     */
-    private int moveCount = 0;
 
     /**
      * constructor.
@@ -43,10 +36,8 @@ public class Bug extends Monster {
      * @param startingLocation location
      * @param side left or right
      */
-    public Bug(final int ticks,
-               final char startingDirection,
-               final int[] startingLocation,
-               final boolean side) {
+    public Bug(final int ticks, final char startingDirection, final int[] startingLocation,
+               final boolean side, GameController gameController) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
         direction = startingDirection;
@@ -54,6 +45,7 @@ public class Bug extends Monster {
         this.setX(location[0]);
         this.setY(location[1]);
         left = side;
+        this.gameController = gameController;
         checkDirection(startingDirection);
         checkLocation(startingLocation);
         //saves the index that the monsters' x and y coordinates are stored
@@ -112,7 +104,7 @@ public class Bug extends Monster {
                     // if it cant go left it goes in its' current facing
                 } else if (!(checkTile(toTheLeft, currentTile))) {
                     this.setY(this.getY()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationY, this.getY());
                     //reset count on move
                     moveCount = 0;
@@ -121,7 +113,7 @@ public class Bug extends Monster {
                 } else {
                     direction = 'a';
                     this.setX(this.getX()-1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationX, this.getX());
                     moveCount = 0;
                 }
@@ -132,13 +124,13 @@ public class Bug extends Monster {
                     move();
                 } else if (!checkTile(toTheRight, currentTile)) {
                     this.setY(this.getY()-1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationY, this.getY());
                     moveCount = 0;
                 } else {
                     direction = 'd';
                     this.setX(this.getX()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationX, this.getX());
                     moveCount = 0;
                 }
@@ -149,13 +141,13 @@ public class Bug extends Monster {
                     move();
                 } else if (!checkTile(below, currentTile)) {
                     this.setX(this.getX()-1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationX, this.getX());
                     moveCount = 0;
                 } else {
                     direction = 's';
                     this.setY(this.getY()-1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationY, this.getY());
                     moveCount = 0;
                 }
@@ -166,13 +158,13 @@ public class Bug extends Monster {
                     move();
                 } else if (!checkTile(above, currentTile)) {
                     this.setX(this.getX()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationX, this.getX());
                     moveCount = 0;
                 } else {
                     direction = 'w';
                     this.setY(this.getY()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationY, this.getY());
                     moveCount = 0;
                 }
@@ -185,13 +177,13 @@ public class Bug extends Monster {
                     move();
                 } else if (!checkTile(toTheRight, currentTile)) {
                     this.setY(this.getY()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationY, this.getY());
                     moveCount = 0;
                 } else {
                     direction = 'd';
                     this.setX(this.getX()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationX, this.getX());
                     moveCount = 0;
                 }
@@ -202,13 +194,13 @@ public class Bug extends Monster {
                     move();
                 } else if (!checkTile(toTheLeft, currentTile)) {
                     this.setY(this.getY()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationY, this.getY());
                     moveCount = 0;
                 } else {
                     direction = 'a';
                     this.setX(this.getX()-1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationX, this.getX());
                     moveCount = 0;
                 }
@@ -219,13 +211,13 @@ public class Bug extends Monster {
                     move();
                 } else if (!checkTile(above, currentTile)) {
                     this.setX(this.getX()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationX, this.getX());
                     moveCount = 0;
                 } else {
                     direction = 'w';
                     this.setY(this.getY()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationY, this.getY());
                     moveCount = 0;
                 }
@@ -236,13 +228,13 @@ public class Bug extends Monster {
                     move();
                 } else if (!checkTile(below, currentTile)) {
                     this.setX(this.getX()+1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationX, this.getX());
                     moveCount = 0;
                 } else {
                     direction = 's';
                     this.setY(this.getY()-1);
-                    playerKill();
+                    playerKill(gameController);
                     locationUpdate(arrayLocationY, this.getY());
                     moveCount = 0;
                 }
