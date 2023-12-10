@@ -3,6 +3,8 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ */
 public class Block extends Entity {
     private static final Image BLOCK_IMAGE = new Image(Block.class.getResourceAsStream("sprites/block.png"));
 
@@ -46,6 +48,13 @@ public class Block extends Entity {
     }
 
 
+    /**
+     * Checks if the block can be moved onto a new position, and if so, moves the block onto the new position
+     * @param playerX The current X position of the player
+     * @param playerY The current Y position of the player
+     * @param newX The new X position of the block
+     * @param newY The new Y position of the block
+     */
     public void event(int playerX, int playerY, int newX, int newY) {
         int deltaX = newX - playerX;
         int deltaY = newY - playerY;
@@ -79,6 +88,12 @@ public class Block extends Entity {
 
     }
 
+    /** Draws the block onto the canvas
+     * @param gc The graphics context to draw the block onto
+     * @param x The x position of the block
+     * @param y The y position of the block
+     * @param size The size of the block
+     */
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(BLOCK_IMAGE, x*size, y*size);

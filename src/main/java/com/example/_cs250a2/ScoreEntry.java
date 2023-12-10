@@ -1,5 +1,6 @@
 package com.example._cs250a2;
 
+
 public class ScoreEntry {
     private String profileName;
     private int score;

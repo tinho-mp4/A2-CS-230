@@ -79,7 +79,7 @@
                         <Insets />
                     </VBox.margin>
                 </Button>
-                <Label fx:id="selectedLevelLable" alignment="TOP_LEFT" prefHeight="39.0" prefWidth="102.0" text="Selected Level:" />
+                <Label fx:id="selectedLevelLabel" alignment="TOP_LEFT" prefHeight="39.0" prefWidth="102.0" text="Selected Level:" />
 
                 <ChoiceBox fx:id="levelChoiceBox" prefHeight="25.0" prefWidth="102.0">
                     <VBox.margin>

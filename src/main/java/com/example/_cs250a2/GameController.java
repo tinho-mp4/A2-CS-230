@@ -35,84 +35,179 @@ public class GameController {
 
 
     //Constant for the maximum number of ticks
+    /**
+     * The maximum number of ticks.
+     */
     private static final int MAXIMUMTICKS = 5;
 
     //canvas for the game
+    /**
+     * The canvas for the game.
+     */
     @FXML
     public Canvas canvas;
 
     //button to show the high scores
+    /**
+     * The button to show the high scores.
+     */
     @FXML
     private Button showHighScoresButton;
 
+    /**
+     * The text area for the high scores.
+     */
     @FXML
     private TextArea highScoresTextArea;
 
     //player object
+    /**
+     * The player object.
+     */
     Player player = new Player(1, 1);
 
+    /**
+     * The timeline for the game ticks.
+     */
     public Timeline tickTimeline;
 
+    /**
+     * The score for the game.
+     */
     public int score = 0;
+    /**
+     * The tick count for the game.
+     */
+    /**
+     * The tick count for the game.
+     */
     private int tickCount = 0;
 
+    /**
+     * The level loader for the game.
+     */
     public LevelLoader levelLoader;
 
+    /**
+     * The label for the time remaining.
+     */
     @FXML
     private Label timeRemainingLabel;
 
+    /**
+     * The time remaining property.
+     */
     private StringProperty timeRemainingProperty;
 
+    /**
+     * The name of the current level.
+     */
     public String levelName;
 
+    /**
+     * The time limit for the game.
+     */
     private int timeLimit;
 
+    /**
+     * The current profile.
+     */
     private Profile currentProfile;
 
+    /**
+     * The label for the selected profile.
+     */
     @FXML
     public Label selectedLevelLable;
 
+    /**
+     * The choice box for the profiles.
+     */
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
 
+    /**
+     * object property for the current profile. used to update the current profiles name
+     */
     @FXML
     private final ObjectProperty<Profile> currentProfileProperty = new SimpleObjectProperty<>();
 
+    /**
+     * The button to select the profile.
+     */
     @FXML
     private Button selectNameButton;
 
+    /**
+     * The button to start the game.
+     */
     @FXML
     private Button startButton;
 
+    /**
+     * The button to delete the profile.
+     */
     @FXML
     private Button deleteButton;
 
+    /**
+     * The text field to create a new profile.
+     */
     @FXML
     private TextField createName;
 
+    /**
+     * The button to create a new profile.
+     */
     @FXML
     private Button createButton;
 
+    /**
+     * The list of profiles in the profiles choice box.
+     */
     private ObservableList<Profile> profiles = FXCollections.observableArrayList();
 
+    /**
+     * The current level.
+     */
     private Level currentLevel;
 
+    /**
+     * The choice box for the levels.
+     */
     @FXML
     private ChoiceBox<Level> levelChoiceBox;
 
+    /**
+     * The button to select the level.
+     */
     private ObservableList<Level> levels = FXCollections.observableArrayList();
 
+    /**
+     *  The button to select the level.
+     */
     @FXML
     private Button selectLevelButton;
 
+    /**
+     * The label for the selected profile.
+     */
     @FXML
     private Label selectedProfileLabel;
 
+    /**
+     * The label for the selected level.
+     */
     @FXML
     private Label selectedLevelLabel;
+    /**
+     * The high score object.
+     */
     private HighScore highScore = new HighScore();
 
-
+    /**
+     * The object property for the current level in the level choice box.
+     */
     private final ObjectProperty<Level> currentLevelProperty = new SimpleObjectProperty<>();
 
 
@@ -268,7 +363,7 @@ public class GameController {
 
         selectedProfileLabel.textProperty().bind(currentProfileProperty.asString());
 
-        selectedLevelLable.textProperty().bind(Bindings.createStringBinding(() ->
+        selectedLevelLabel.textProperty().bind(Bindings.createStringBinding(() ->
                         "Selected level: \n" + (currentLevel != null ? currentLevel.getName() : ""),
                 currentLevelProperty()));
     }

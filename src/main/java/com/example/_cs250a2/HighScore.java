@@ -4,13 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Stores the high scores for each level.
+ * <p>
+ *     The high scores are stored in a map, where the key is the level name and the value is a list of the top 10
+ *     scores for that level.
+ * @author Ben Foord
+ * @version 1.1
+ */
 public class HighScore {
     private Map<String, List<ScoreEntry>> highScores;
 
+    /**
+     * Creates a new HighScore object.
+     */
     public HighScore() {
         highScores = new HashMap<>();
     }
 
+    /**
+     * Adds a new score to the high scores for the given level.
+     * @param levelName The name of the level.
+     * @param profileName The name of the profile that achieved the score.
+     * @param score The score achieved.
+     */
     public void addScore(String levelName, String profileName, int score) {
         List<ScoreEntry> scores = highScores.get(levelName);
 
@@ -33,10 +50,20 @@ public class HighScore {
         }
     }
 
+    /**
+     * Gets the high scores for the given level.
+     * @param levelName The name of the level.
+     * @return A list of the top 10 scores for the given level.
+     */
     public List<ScoreEntry> getHighScores(String levelName) {
         return highScores.getOrDefault(levelName, new ArrayList<>());
     }
 
+    /**
+     * Gets the lowest score in the given list of scores.
+     * @param scores The list of scores.
+     * @return The lowest score in the list.
+     */
     private int getLowestScore(List<ScoreEntry> scores) {
         if (scores.isEmpty()) {
             return 0;
