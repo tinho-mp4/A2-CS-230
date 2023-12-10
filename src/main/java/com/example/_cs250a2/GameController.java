@@ -63,7 +63,7 @@ public class GameController {
     /**
      * The score for the game.
      */
-    public int score = 0;
+    public int score;
 
     /**
      * The tick count for the game.
