@@ -32,8 +32,10 @@ public class Block extends Entity {
      * @param newY The new Y position of the block tile
      */
     private void pushBlock(final int newX, final int newY) {
-        this.setX(newX);
-        this.setY(newY);
+        if (!isStuck()) {
+            this.setX(newX);
+            this.setY(newY);
+        }
     }
 // temporary method
 
@@ -89,6 +91,21 @@ public class Block extends Entity {
             final int newY) {
         int deltaX = newX - playerX;
         int deltaY = newY - playerY;
+        Tile tile = LevelLoader.getTile(newX, newY);
+        if (tile instanceof Trap) {
+            Trap trap = (Trap) tile;
+            if (trap.isActive()) {
+                setStuck(true);
+                return;
+            } else {
+                setStuck(false);
+            }
+        }
+
+        if (tile instanceof Button) {
+            Button button = (Button) tile;
+            button.press();
+        }
 
         Player player = (Player) LevelLoader.getEntityWithCoords(playerX, playerY);
 
@@ -135,5 +152,9 @@ public class Block extends Entity {
             final double y,
             final double size) {
         gc.drawImage(BLOCK_IMAGE, x * size, y * size);
+        Tile tile = LevelLoader.getTile(getX(), getY());
+        if (tile instanceof Button) {
+            ((Button) tile).checkIfEntityOnButton(getX(), getY());
+        }
     }
 }

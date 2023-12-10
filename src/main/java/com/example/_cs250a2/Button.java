@@ -19,6 +19,7 @@ public class Button extends Tile {
     public Button(int trapNum, int x, int y) {
         super("button", x, y, false);
         this.buttonNum = trapNum;
+        setPushableBlock(true);
     }
 
     public void linkToTrap(Trap trap) {
@@ -48,6 +49,14 @@ public class Button extends Tile {
             associatedTrap.active();
         }
     }*/
+
+    public void checkIfEntityOnButton(int entityX, int entityY) {
+        if (getX() == entityX && getY() == entityY) {
+            press();
+        } else {
+            unpress();
+        }
+    }
 
 
     public boolean isPressed() {
