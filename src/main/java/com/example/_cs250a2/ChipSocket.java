@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -20,56 +21,56 @@ public class ChipSocket extends Tile {
      * The image of the chip socket tile 1.
      */
     private static final Image CHIP_SOCKET1_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket1.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket1.png")));
     /**
      * The image of the chip socket tile 2.
      */
     private static final Image CHIP_SOCKET2_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket2.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket2.png")));
     /**
      * The image of the chip socket tile 3.
      */
     private static final Image CHIP_SOCKET3_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket3.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket3.png")));
     /**
      * The image of the chip socket tile 4.
      */
     private static final Image CHIP_SOCKET4_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket4.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket4.png")));
     /**
      * The image of the chip socket tile 5.
      */
     private static final Image CHIP_SOCKET5_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket5.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket5.png")));
     /**
      * The image of the chip socket tile 6.
      */
     private static final Image CHIP_SOCKET6_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket6.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket6.png")));
     /**
      * The image of the chip socket tile 7.
      */
     private static final Image CHIP_SOCKET7_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket7.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket7.png")));
     /**
      * The image of the chip socket tile 8.
      */
     private static final Image CHIP_SOCKET8_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket8.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket8.png")));
     /**
      * The image of the chip socket tile 9.
      */
     private static final Image CHIP_SOCKET9_IMAGE =
-            new Image(ChipSocket.class.getResourceAsStream(
-                    "sprites/chipSocket9.png"));
+            new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
+                    "sprites/chipSocket9.png")));
 
 
 

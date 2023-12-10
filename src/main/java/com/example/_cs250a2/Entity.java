@@ -18,7 +18,6 @@ public abstract class Entity {
         this.isStuck = stuck;
     }
 
-
     private int x;
 
     public int getX() {
@@ -38,14 +37,6 @@ public abstract class Entity {
     }
 
     private int y;
-
-    public int[] getLocation() {
-        return location;
-    }
-
-    public void setLocation(int[] location) {
-        this.location = location;
-    }
 
     protected int[] location = {x, y};
 

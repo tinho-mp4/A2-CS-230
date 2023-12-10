@@ -255,7 +255,6 @@ public class GameController {
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-//      LevelLoader.drawLevel(gc, currentLevel);
 
         LevelLoader.drawTiles(gc);
         LevelLoader.drawEntities(gc);
@@ -429,10 +428,6 @@ public class GameController {
             if (currentProfile == null) {
                 throw new IllegalArgumentException("No profile selected.");
             }
-
-//            if (levelLoader == null) {
-//                levelLoader = new LevelLoader();
-//            }
 
             //print all profiles
             List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();

@@ -63,14 +63,6 @@ public class LevelLoader {
     private static ArrayList<Entity> entityList = new ArrayList<>();
     private static ArrayList<Item> itemList = new ArrayList<>();
 
-    public LevelLoader() {
-
-    }
-
-    public void readAllLevels() {
-
-    }
-
     public static void updateLevelInformation(String levelName) {
         Scanner scanner =
                 new Scanner(Objects.requireNonNull(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")));
