@@ -92,17 +92,13 @@ public abstract class Monster extends Entity {
       boolean canMove = false;
       String nextTile = LevelLoader.getTile(tileLocation[0], tileLocation[1]).getName();
       Tile currentTile = LevelLoader.getTile(currentTileLocation[0], currentTileLocation[1]);
-
-
       //checks if move is within the game space
       try {
          checkLocation(tileLocation);
       } catch (IllegalArgumentException e) {
          withinBounds = false;
       }
-
       //gets the name of the tile and compares it to the tiles monster can walk on
-
       for (String tile : allowedTiles) {
           if (nextTile.equals(tile)) {
               safeTile = true;
@@ -117,6 +113,14 @@ public abstract class Monster extends Entity {
               break;
           }
       }
+      //now checks there isn't a block on the tile
+      for (Entity entity : LevelLoader.getEntityList()) {
+         if (entity instanceof Block && entity.getX() == tileLocation[0] && entity.getY() == tileLocation[1]) {
+            safeTile = false;
+            break;
+         }
+      }
+
       if (currentTile instanceof Trap) {
          Trap trap = (Trap) currentTile;
          if (trap.isStuck()) {
