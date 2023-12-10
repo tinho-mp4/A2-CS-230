@@ -13,13 +13,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -49,6 +55,8 @@ public class GameController {
     public int score = 0;
     private int tickCount = 0;
 
+    private Color bgColor = Color.LIGHTBLUE;
+    private static Game instance;
     public LevelLoader levelLoader;
 
     @FXML
@@ -57,8 +65,6 @@ public class GameController {
     private StringProperty timeRemainingProperty;
 
     public String levelName = "level3";
-
-    private boolean levelCompleted = false;
 
     private int timeLimit = 100;
 
@@ -118,14 +124,10 @@ public class GameController {
     public void processKeyEvent(KeyEvent event) {
         player.move(event);
 
-        // Check if the player is on the exit after moving
-        if (player.isOnExit()) {
-            completeLevel();
-            updateScoreAndSaveProfile();
-
-        }
-
+        // Redraw game as the player may have moved.
         drawGame();
+
+        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
     }
 
@@ -158,25 +160,23 @@ public class GameController {
      * over them all and calling their own tick method).
      */
     public void tick() {
-        if (!levelCompleted) {
-            //update the timer every tick if its 0 end the game
-            System.out.println("tick");
-            if (tickCount % 2 == 0) {
-                updateTimer();
-            }
-            //this is redundant if you call update timer
-            //if (timeLimit <= 0) {
-            //    GameOver.gameEndTime();
-            //    tickTimeline.stop();
-            //}
-
-            Monster.tickMove(tickCount);
-            tickCount++;
-            if (tickCount >= MAXIMUMTICKS) {
-                tickCount = 0;
-            }
-            drawGame();
+        //update the timer every tick if its 0 end the game
+        System.out.println("tick");
+        if (tickCount % 2 == 0) {
+            updateTimer();
         }
+        //this is redundant if you call update timer
+        //if (timeLimit <= 0) {
+        //    GameOver.gameEndTime();
+        //    tickTimeline.stop();
+        //}
+
+        Monster.tickMove(tickCount);
+        tickCount++;
+        if (tickCount >= MAXIMUMTICKS) {
+            tickCount = 0;
+        }
+        drawGame();
     }
     //reduce the time by one or until it reaches 0`
     public void updateTimer() {
@@ -203,44 +203,6 @@ public class GameController {
 
     }
 
-    private void completeLevel() {
-        if (currentProfile != null) {
-            int currentLevelReached = currentProfile.getLevelReached();
-            System.out.println("Current Level Reached Before Increment: " + currentLevelReached);
-
-            currentProfile.setLevelReached(currentLevelReached + 1);
-
-            levelCompleted = true; // Set level completion flag
-            canvas.setVisible(false);
-
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-            if (tickTimeline != null) {
-                tickTimeline.stop();
-            }
-
-            updateScoreAndSaveProfile();
-
-            String nextLevelName = "level" + (currentLevelReached + 1);
-            if (levels.stream().anyMatch(level -> level.getName().equals(nextLevelName))) {
-                System.out.println("Level completed. New level reached: " + (currentLevelReached + 1));
-                System.out.println("Press 'N' to continue to the next level.");
-            } else {
-                System.out.println("All levels completed! Congratulations!");
-            }
-        }
-    }
-
-    private void updateScoreAndSaveProfile() {
-        if (currentProfile != null) {
-            currentProfile.setScoreForLevel(levelName, score);
-            String filePath = "path/to/save/profile";
-            currentProfile.saveToFile(filePath);
-            System.out.println("Profile updated and saved.");
-        }
-    }
-
     public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
@@ -256,7 +218,18 @@ public class GameController {
 
         profileChoiceBox.setItems(profiles);
 
-        levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"));
+        // scan the levels directory and add all the levels to the levels list
+        File directory = new File("src/main/resources/com/example/_cs250a2/levels");
+        File[] files = directory.listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                String fileName = file.getName();
+                String levelName = fileName.substring(0, fileName.length() - 4);
+                levels.add(new Level(levelName));
+            }
+        }
+
+        //levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"));
         levelChoiceBox.setItems(levels);
 
         selectNameButton.disableProperty().bind(profileChoiceBox.valueProperty().isNull());
@@ -294,30 +267,29 @@ public class GameController {
             }
 
             if (levelLoader == null) {
-                levelLoader = new LevelLoader(); // Ensure levelLoader is initialized
+                levelLoader = new LevelLoader();
             }
-            canvas.setVisible(true);
+
             setCurrentLevel(currentLevel);
             levelName = currentLevel.getName();
-            System.out.println("Selected level: " + levelName);
+            levelLoader.updateLevelInformation(levelName);
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
             // Clear the level before loading a new one
-            levelLoader.clearLevel(); // Clear existing level data
-            levelLoader.loadLevel(gc, getClass().getResourceAsStream("levels/" + levelName + ".txt"));
+            levelLoader.clearLevel();
+            levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
+
+
+
 
             setTimeLimit(levelLoader.getTimeLimit());
+
             currentProfile.setScoreForLevel(levelName, timeLimit);
 
             System.out.println("Selected profile: " + currentProfile.getName());
             System.out.println("Selected level: " + currentLevel.getName());
-
-            if (tickTimeline != null) {
-                tickTimeline.stop();
-            }
-
-            tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
+            Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
             tickTimeline.setCycleCount(Animation.INDEFINITE);
             tickTimeline.play();
 
@@ -420,4 +392,8 @@ public class GameController {
     public void setCurrentLevel(Level level) {
         currentLevelProperty.set(level);
     }
+
+
 }
+
+

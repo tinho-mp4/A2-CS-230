@@ -17,7 +17,7 @@ public class Profile implements Serializable{
 
     public Profile(String name) {
         this.name = name;
-        this.levelReached = 0;
+        this.levelReached = 5;
         this.levelScores = new HashMap<>();
         this.highScores = new HashMap<>();
     }

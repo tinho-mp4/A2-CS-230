@@ -246,10 +246,9 @@ public class LevelLoader {
                 return new PinkBall(2, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
             case 'Z':
                 return new Bug(3, 'd', new int[]{entity[1]-'0', entity[2]-'0'}, false);
+            default:
             case 'O':
                 return new Block(entity[1]-'0', entity[2]-'0');
-            default:
-                return null;
         }
     }
 
@@ -282,6 +281,7 @@ public class LevelLoader {
     }
 
     public static void drawEntities(GraphicsContext gc) {
+        System.out.println("drawing entites" + entityGrid);
         for (ArrayList<Entity> row : getentityGrid()) {
             for (Entity entity : row) {
                 if (entity != null) {
