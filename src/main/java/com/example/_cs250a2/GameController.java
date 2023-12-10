@@ -195,7 +195,7 @@ public class GameController {
     /**
      * The high score object.
      */
-    private final HighScore highScore = new HighScore();
+    private final HighScoreManager highScore = new HighScoreManager();
 
 
     /**
@@ -468,6 +468,10 @@ public class GameController {
 
 
     private void handleLoadGameButton() {
+        highScore.addScore(levelName, "thisisatest", 1500);
+        highScore.addScore(levelName, "thisisatest", 1600);
+        highScore.addScore(levelName, "thisisatest", 1560);
+
         clearLevel();
     }
 
@@ -503,11 +507,9 @@ public class GameController {
 
     @FXML
     public void handleShowHighScoresButton() {
-
-
-
         System.out.println("Show high scores button clicked");
 
+        // Assuming highScore is an instance of HighScoreManager
         highScore.addScore(levelName, currentProfile.getName(), score);
 
         for (Level level : levels) {
@@ -520,12 +522,23 @@ public class GameController {
                     System.out.println(rank + ". " + highScoreEntry.getProfileName() + " - " + highScoreEntry.getScore());
                     rank++;
                 }
+
+                // Save the high scores for the current level
+                System.out.println("Saving high scores for " + level.getName() + ":");
+                highScore.saveHighScores(highScoresList, level.getName());
+
+
+                // This might be useful if you want to use the loaded scores for something
+                List<ScoreEntry> loadedScores = highScore.loadHighScores(level.getName());
+                System.out.println("Loaded high scores for " + level.getName() + ": " + loadedScores);
+
+                System.out.println("end");
             } else {
                 System.out.println("No high scores for " + level.getName());
             }
         }
-        clearLevel();
     }
+
 
     /**
      * Handles the select level button event, including setting the current level.
