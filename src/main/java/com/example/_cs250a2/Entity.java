@@ -19,7 +19,7 @@ public abstract class Entity {
     }
 
 
-    protected int x;
+    private int x;
 
     public int getX() {
         return x;
@@ -37,7 +37,7 @@ public abstract class Entity {
         this.y = y;
     }
 
-    protected int y;
+    private int y;
 
     public int[] getLocation() {
         return location;
