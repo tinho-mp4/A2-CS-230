@@ -111,6 +111,7 @@ public class Player extends Entity{
         Tile currentTile = LevelLoader.getTile(newX, newY);
         Entity currentEntity = LevelLoader.getEntityWithCoords(newX - (newX - x), newY - (newY - y));
         Entity nextEntity = LevelLoader.getEntityWithCoords(newX, newY);
+        boolean movedAfterBlock = false;
 
         if (currentTile instanceof Button) {
             Button button = (Button) currentTile;
@@ -118,10 +119,12 @@ public class Player extends Entity{
         }
 
         if (nextEntity instanceof Block block) {
-            if (LevelLoader.getTile(newX + 2*(newX - x), newY + 2*(newY - y)).isSolid()) {
-                return;
-            }
-            Ice.event(block.getX(), block.getY(), block.getX() + (newX - x), block.getY() + (newY - y));
+//            if (LevelLoader.getTile(newX + 2*(newX - x), newY + 2*(newY - y)).isSolid()) {
+//                return;
+//            }
+            Ice.event(block.getX(), block.getY(), block.getX() + (newX - x), block.getY() + (newY - y), false);
+            Ice.event(currentEntity.getX(), currentEntity.getY(), newX, newY, true);
+            movedAfterBlock = true;
         }
 
         Tile prevTile = LevelLoader.getTile(prevX, prevY);
@@ -135,7 +138,7 @@ public class Player extends Entity{
             currentEntity.event(x, y, newX, newY);
         }
 
-        if (currentTile.getName() != "ice") { // Player movement on ice is handled in Ice.java
+        if (currentTile.getName() != "ice" && !movedAfterBlock) { // Player movement on ice is handled in Ice.java
             this.setX(newX);
             this.setY(newY);
             this.setPosition(newX, newY);
@@ -177,7 +180,7 @@ public class Player extends Entity{
                 displayInventory();
                 break;
             case "ice":
-                Ice.event(x, y, newX, newY);
+                Ice.event(x, y, newX, newY, false);
                 break;
             default:
 //            Path
