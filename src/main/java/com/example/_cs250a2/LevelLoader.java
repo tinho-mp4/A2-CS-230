@@ -57,17 +57,21 @@ public class LevelLoader {
 
     }
 
-    public void updateLevelInformation(String levelName) {
-        Scanner scanner = new Scanner(Objects.requireNonNull(getClass().getResourceAsStream("levels/"+levelName+".txt")));
+    public void readAllLevels() {
+
+    }
+
+    public static void updateLevelInformation(String levelName) {
+        Scanner scanner = new Scanner(Objects.requireNonNull(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")));
         // Read level information
-        this.levelName = scanner.nextLine().split(": ")[1];
+        levelName = scanner.nextLine().split(": ")[1];
         timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
         LevelLoader.width = width;
         LevelLoader.height = height;
-        entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
+        entityCount = countFileLines(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
     }
 
     /**
@@ -401,7 +405,7 @@ public class LevelLoader {
         return width;
     }
 
-    public int getTimeLimit() {
+    public static int getTimeLimit() {
         return timeLimit;
     }
 

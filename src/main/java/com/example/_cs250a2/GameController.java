@@ -72,7 +72,7 @@ public class GameController {
     /**
      * The level loader for the game.
      */
-    public LevelLoader levelLoader;
+//    public LevelLoader levelLoader;
 
     /**
      * The label for the time remaining.
@@ -261,7 +261,7 @@ public class GameController {
         }
 
         //move the monster every tick
-        for (ArrayList<Entity> entityArrayList : levelLoader.getEntityGrid()) {
+        for (ArrayList<Entity> entityArrayList : LevelLoader.getEntityGrid()) {
             for (Entity entity : entityArrayList) {
                 if (entity instanceof Monster monster) {
                     monster.tickMove(tickCount);
@@ -407,9 +407,9 @@ public class GameController {
                 throw new IllegalArgumentException("No profile selected.");
             }
 
-            if (levelLoader == null) {
-                levelLoader = new LevelLoader();
-            }
+//            if (levelLoader == null) {
+//                levelLoader = new LevelLoader();
+//            }
 
             //print all profiles
             List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
@@ -419,7 +419,7 @@ public class GameController {
 
             setCurrentLevel(currentLevel);
             levelName = currentLevel.getName();
-            levelLoader.updateLevelInformation(levelName);
+            LevelLoader.updateLevelInformation(levelName);
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -431,7 +431,7 @@ public class GameController {
             LevelLoader.linkButtonsToTraps(); // linking buttons to traps
             tickTimeline.play();
 
-            setTimeLimit(levelLoader.getTimeLimit());
+            setTimeLimit(LevelLoader.getTimeLimit());
 
             currentProfile.setScoreForLevel(levelName, timeLimit);
 
