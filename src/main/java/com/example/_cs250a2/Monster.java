@@ -80,7 +80,7 @@ public abstract class Monster extends Entity {
 
    //these check the parameters when the constructor is called for a monster
    protected void checkLocation(int[] location) {
-      if (location[0] > LevelLoader.getWidth() || location[1] > LevelLoader.getHeight()) {
+      if (location[0] < LevelLoader.getWidth() && location[1] < LevelLoader.getHeight() && (location[0] >= 0 && location[1] >= 0)) {
          throw new IllegalArgumentException("the monster has to start within the coordinates of the game space");
       }
    }
