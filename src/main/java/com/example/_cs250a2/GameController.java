@@ -321,7 +321,9 @@ public class GameController {
     private int calculateScore() {
         int score = timeLimit;
         // Add 15 points for every chip in the inventory
-        // score += 15 * player.getChips();
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        if (player != null)
+            score += 15 * player.getChips();
         return score;
     }
 
