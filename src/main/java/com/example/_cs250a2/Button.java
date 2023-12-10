@@ -41,15 +41,25 @@ public class Button extends Tile {
         setPushableBlock(true);
     }
 
-    public void linkToTrap(Trap trap) {
+    /**
+     * Links the button to a trap.
+     * @param trap The trap to be linked to the button
+     */
+    public void linkToTrap(final Trap trap) {
         this.associatedTrap = trap;
     }
 
+    /**
+     * Presses the button.
+     */
     public void press() {
         pressed = true;
         associatedTrap.inactive();
     }
 
+    /**
+     * Unpresses the button.
+     */
     public void unpress() {
         pressed = false;
         associatedTrap.active();
@@ -69,7 +79,12 @@ public class Button extends Tile {
         }
     }*/
 
-    public void checkIfEntityOnButton(int entityX, int entityY) {
+    /**
+     * Checks if an entity is on the button.
+     * @param entityX The X position of the entity
+     * @param entityY The Y position of the entity
+     */
+    public void checkIfEntityOnButton(final int entityX, final int entityY) {
         if (getX() == entityX && getY() == entityY) {
             press();
         } else {
@@ -77,19 +92,18 @@ public class Button extends Tile {
         }
     }
 
-
-    public boolean isPressed() {
-        return pressed;
-    }
-
-
-    public int getButtonNum() {
-        return buttonNum;
-    }
-
-
+    /**
+     * Draws the button.
+     * @param gc The graphics context
+     * @param x The X position of the button
+     * @param y The Y position of the button
+     * @param size The size of the button
+     */
     @Override
-    public void draw(GraphicsContext gc, double x, double y, double size) {
+    public void draw(final GraphicsContext gc,
+                     final double x,
+                     final double y,
+                     final double size) {
         gc.drawImage(BUTTON_IMAGE, x * size, y * size);
     }
 }
