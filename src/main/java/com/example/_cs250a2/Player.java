@@ -14,41 +14,48 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Player extends Entity{
-
-    private final GameController gameController;
-    private boolean canMove = true;
-    private final boolean playerOnButton = false;
-    private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
-
-    // X and Y coordinate of player on the grid.
+    private final GameController GAME_CONTROLLER;
+    private final boolean PLAYER_ON_BUTTON = false;
+    private final ArrayList<Item> INVENTORY;
+    private static final Image PLAYER_TILE =
+    new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
     private int x;
     private int y;
-
+    private boolean canMove = true;
     private int prevX;
-
     private int prevY;
 
-    private final ArrayList<Item> inventory;
-
+    /**
+     * Creates the player at coordinates (x,y).
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param gameController the {@code GameController} //<- look at this
+     */
     public Player(int x, int y, GameController gameController) {
         super(x, y);
-        this.x = x;
-        this.y = y;
-        inventory = new ArrayList<>();
-        this.gameController = gameController;
+        INVENTORY = new ArrayList<>();
+        this.GAME_CONTROLLER = gameController;
     }
 
     /**
-     * event ?.
-     * @param x
-     * @param y
-     * @param newX
-     * @param newY
+     * Handles an event in the game.
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param newX The new x coordinate
+     * @param newY The new y coordinate
      */
-    public void event(final int x,
-                      final int y,
-                      final int newX,
-                      final int newY) { }
+    public void event(
+            final int x,
+            final int y,
+            final int newX,
+            final int newY) {
+
+    }
+
+    /**
+     * Moves the player in the game.
+     * @param event
+     */
     public void move(KeyEvent event) {
 
         prevX = x;
@@ -93,6 +100,11 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     *Performs the player's interactions within the game.
+     * @param newX new x coordinate if the player has been moved by environment.
+     * @param newY new y coordinate if the player has been moved by environment.
+     */
     private void interact(int newX, int newY) {
         Tile currentTile = LevelLoader.getTile(newX, newY);
         Entity currentEntity = LevelLoader.getEntityWithCoords(newX - (newX - x), newY - (newY - y));
@@ -123,8 +135,6 @@ public class Player extends Entity{
             this.setY(newY);
         }
 
-
-
         switch (currentTile.getName()) {
             case "dirt":
                 Dirt dirt = (Dirt) currentTile;
@@ -132,8 +142,8 @@ public class Player extends Entity{
                 break;
             case "exit":
                 Exit.event();
-                gameController.clearLevel();
-                gameController.handleShowHighScoresButton();
+                GAME_CONTROLLER.clearLevel();
+                GAME_CONTROLLER.handleShowHighScoresButton();
                 break;
             case "button":
                 Button button = (Button) currentTile;
@@ -146,17 +156,17 @@ public class Player extends Entity{
                 }
                 break;
             case "water":
-                gameController.clearLevel();
+                GAME_CONTROLLER.clearLevel();
                 GameOver.playerDeathDrown();
                 break;
             case "chipSocket":
                 ChipSocket chipSocket = (ChipSocket) currentTile;
-                chipSocket.event(inventory);
+                chipSocket.event(INVENTORY);
                 ChipSocket.resetAllLocks();
                 break;
             case "lockedDoor":
                 LockedDoor lockedDoor = (LockedDoor) currentTile;
-                lockedDoor.event(inventory);
+                lockedDoor.event(INVENTORY);
                 displayInventory();
                 break;
             case "ice":
@@ -178,7 +188,7 @@ public class Player extends Entity{
                 for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
                     for (Tile t : row) {
                         if (t instanceof ChipSocket socket) {
-                            socket.checkUnlock(inventory);
+                            socket.checkUnlock(INVENTORY);
                         }
                     }
                 }
@@ -194,7 +204,7 @@ public class Player extends Entity{
                 for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
                     for (Tile t : row) {
                         if (t instanceof LockedDoor door) {
-                            door.checkUnlock(inventory);
+                            door.checkUnlock(INVENTORY);
                         }
                     }
                 }
@@ -203,7 +213,7 @@ public class Player extends Entity{
         }
 
         if(Level.isOnMonster()) {
-            gameController.clearLevel();
+            GAME_CONTROLLER.clearLevel();
             GameOver.playerDeathMonster();
         }
 
@@ -213,14 +223,21 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     *Checks if the player is on an exit tile.
+     * @return an instance of exit
+     */
     public boolean isOnExit() {
         Tile currentTile = LevelLoader.getTile(x, y);
         return currentTile instanceof Exit;
     }
 
+    /**
+     *Prints the Player's inventory
+     */
     private void displayInventory() {
         System.out.println("Inventory:");
-        for (Item item : inventory) {
+        for (Item item : INVENTORY) {
             System.out.println("- " + item);
         }
     }
@@ -230,38 +247,61 @@ public class Player extends Entity{
         y = newY;
     }
 
-
-
-
-
+    /**
+     *Adds an item to the player's inventory
+     * @param item The item being added to the inventory.
+     */
     public void addToInventory(Item item){
-        inventory.add(item);
+        INVENTORY.add(item);
     }
 
+    /**
+     *Removes an item from the player's inventory.
+     * @param item The item being removed from the inventory.
+     */
     public void removeFromInventory(Item item){
-        inventory.remove(item);
+        INVENTORY.remove(item);
     }
 
+    /**
+     * Clears player's inventory.
+     */
     public void clearInventory() {
-        inventory.clear();
+        INVENTORY.clear();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     *Draws the player.
+     * @param gc
+     * @param x
+     * @param y
+     * @param size
+     */
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(PLAYER_TILE, x*size, y*size);
     }
 
+    /**
+     * Get the chips in the player's inventory.
+     * @return The amount of chips in player's inventory.
+     */
     public  int getChips() {
-        return (int) inventory.stream().filter(item -> item instanceof Chip).count();
+        return (int) INVENTORY.stream().filter(item -> item instanceof Chip).count();
     }
-
-
-
 }

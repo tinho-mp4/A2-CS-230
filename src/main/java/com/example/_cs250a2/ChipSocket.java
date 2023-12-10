@@ -59,7 +59,8 @@ public class ChipSocket extends Tile {
     }
 
     /**
-     * Event that happens when player is on the chip socket.
+     * Removes the required chips out of the players inventory.
+     * Transforms the chip socket into a path.
      * @param inventory player's inventory.
      */
     public void event(final ArrayList<Item> inventory) {
@@ -77,8 +78,8 @@ public class ChipSocket extends Tile {
     }
 
     /**
-     * checks if the player has enough chips in inventory.
-     * @param inventory player's Inventory
+     * Checks if the player has enough chips in inventory.
+     * @param inventory player's Inventory.
      * @return true if the player has enough chips, otherwise false.
      */
     private boolean enoughChips(final ArrayList<Item> inventory) {
