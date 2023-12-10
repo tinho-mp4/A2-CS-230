@@ -1,11 +1,12 @@
 Level Name: Level2
-TimeLimit = 300
-Level Dimensions 6 5
+TimeLimit = 30000
+Level Dimensions 6 6
 
-B1PPPPT1
+PPPPPP
+PB1PPPP
+PPPPT1P
 PPPPPP
 PPPPPP
 PPPPPP
-PPPPPP
-Q20
-O22
+O12
+Q11
