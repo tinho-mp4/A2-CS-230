@@ -152,6 +152,8 @@ public class LevelLoader {
         for (int k = 0; k < getEntityCount(); k++) {
             ArrayList<String> entityLine = entityMatchesGrid.get(k);
             String[] entitiesMatchesArray = entityLine.toArray(new String[0]);
+            ArrayList<Entity> entityRow = new ArrayList<>();
+            ArrayList<Item> itemRow = new ArrayList<>();
             try {
                 for (int j = 0; j < entitiesMatchesArray.length; j++) {
                     if (entitiesMatchesArray[j].toCharArray()[0] == 'C' || entitiesMatchesArray[j].toCharArray()[0] == 'K') {
@@ -180,7 +182,9 @@ public class LevelLoader {
         drawItems(gc);
     }
 
-        public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
+
+
+    public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
         int rows = strings.size();
         int cols = strings.get(0).size();
 
