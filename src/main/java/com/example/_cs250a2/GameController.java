@@ -17,12 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.util.List;
 
 /**
- * The {@code GameController} class handles the game logic, user interface, and event handling.
+ * The {@code GameController} class handles the game logic,
+ * user interface, and event handling.
  * It is responsible for managing profiles, levels, and the game state.
  * The class is linked with the corresponding FXML file for UI components.
  * @author Ben Foord
@@ -79,6 +79,9 @@ public class GameController {
     @FXML
     private Label timeRemainingLabel;
 
+    /**
+     * The label for the score.
+     */
     @FXML
     private Label scoreLabel;
 
