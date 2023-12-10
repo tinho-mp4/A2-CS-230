@@ -21,8 +21,13 @@ public class Player extends Entity{
     private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
 
     // X and Y coordinate of player on the grid.
-    private static int x;
-    private static int y;
+    private int x;
+    private int y;
+
+    private int prevX;
+
+    private int prevY;
+
     private final ArrayList<Item> inventory;
 
     public Player(int x, int y, GameController gameController) {
@@ -43,37 +48,38 @@ public class Player extends Entity{
                       final int newX,
                       final int newY) { }
     public void move(KeyEvent event) {
+
+        prevX = x;
+        prevY = y;
+
+
         if (canMove) {
             switch (event.getCode()) {
                 case RIGHT:
                     // Right key was pressed. So move the player right by one cell.
-                    if (LevelLoader.getTile(x + 1, y).getName() != "block"
-                            && (!LevelLoader.getTile(x + 1, y).isSolid())) {
-                        // && Block.isBlocked(x+1, y, x+2, y))): // not really sure what this is for :/
+                    if (!LevelLoader.getTile(x + 1, y).isSolid()
+                            && !((LevelLoader.getEntityWithCoords(x + 1, y) instanceof Block) && !LevelLoader.getTile(x + 2, y).isPushableBlock())) {
                         interact(x + 1, y);
                     }
                     break;
                 case LEFT:
                     // Left key was pressed. So move the player left by one cell.
-                    if (LevelLoader.getTile(x - 1, y).getName() != "block"
-                            && (!LevelLoader.getTile(x - 1, y).isSolid())) {
-                        // && Block.isBlocked(x-1, y, x-2, y))):
+                    if (!LevelLoader.getTile(x - 1, y).isSolid()
+                            && !((LevelLoader.getEntityWithCoords(x - 1, y) instanceof Block) && !LevelLoader.getTile(x - 2, y).isPushableBlock())) {
                         interact(x - 1, y);
                     }
                     break;
                 case UP:
                     // Up key was pressed. So move the player up by one cell.
-                    if (LevelLoader.getTile(x, y - 1).getName() != "block"
-                            && (!LevelLoader.getTile(x, y - 1).isSolid())) {
-                        // && Block.isBlocked(x, y-1, x, y-2))):
+                    if (!LevelLoader.getTile(x, y - 1).isSolid()
+                            && !((LevelLoader.getEntityWithCoords(x, y - 1) instanceof Block) && !LevelLoader.getTile(x, y - 2).isPushableBlock())) {
                         interact(x, y - 1);
                     }
                     break;
                 case DOWN:
                     // Down key was pressed. So move the player down by one cell.
-                    if (LevelLoader.getTile(x, y + 1).getName() != "block"
-                            && (!LevelLoader.getTile(x, y + 1).isSolid())) {
-                        // && Block.isBlocked(x, y+1, x, y+2))):
+                    if (!LevelLoader.getTile(x, y + 1).isSolid()
+                        && !((LevelLoader.getEntityWithCoords(x, y + 1) instanceof Block) && !LevelLoader.getTile(x, y + 2).isPushableBlock())) {
                         interact(x, y + 1);
                     }
                     break;
@@ -88,6 +94,18 @@ public class Player extends Entity{
     private void interact(int newX, int newY) {
         Tile currentTile = LevelLoader.getTile(newX, newY);
         Entity currentEntity = LevelLoader.getEntityWithCoords(newX, newY);
+
+        if (currentTile instanceof Button) {
+            Button button = (Button) currentTile;
+            button.press();
+        }
+
+        Tile prevTile = LevelLoader.getTile(prevX, prevY);
+        if (prevTile instanceof Button) {
+            Button prevButton = (Button) prevTile;
+            prevButton.unpress();
+        }
+
 
         if (currentEntity != null) {
             currentEntity.event(x, y, newX, newY);

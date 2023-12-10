@@ -58,22 +58,12 @@ public class GameController {
     @FXML
     private TextArea highScoresTextArea;
 
-    //player object
-    /**
-     * The player object.
-     */
-
-    /**
-     * The timeline for the game ticks.
-     */
 
     /**
      * The score for the game.
      */
     public int score = 0;
-    /**
-     * The tick count for the game.
-     */
+
     /**
      * The tick count for the game.
      */
@@ -82,13 +72,16 @@ public class GameController {
     /**
      * The level loader for the game.
      */
-    public LevelLoader levelLoader;
+//    public LevelLoader levelLoader;
 
     /**
      * The label for the time remaining.
      */
     @FXML
     private Label timeRemainingLabel;
+
+    @FXML
+    private Label scoreLabel;
 
     /**
      * The time remaining property.
@@ -204,6 +197,7 @@ public class GameController {
      */
     private final HighScore highScore = new HighScore();
 
+
     /**
      * The object property for the current level in the level choice box.
      */
@@ -267,7 +261,7 @@ public class GameController {
         }
 
         //move the monster every tick
-        for (ArrayList<Entity> entityArrayList : levelLoader.getEntityGrid()) {
+        for (ArrayList<Entity> entityArrayList : LevelLoader.getEntityGrid()) {
             for (Entity entity : entityArrayList) {
                 if (entity instanceof Monster monster) {
                     monster.tickMove(tickCount);
@@ -279,6 +273,7 @@ public class GameController {
             tickCount = 0;
         }
         drawGame();
+        updateScoreDisplay();
     }
 
     /**
@@ -318,9 +313,16 @@ public class GameController {
     private int calculateScore() {
         int score = timeLimit;
         // Add 15 points for every chip in the inventory
-        // score += 15 * player.getChips();
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        if (player != null)
+            score += 15 * player.getChips();
         return score;
     }
+
+    private void updateScoreDisplay() {
+        scoreLabel.setText("Score: " + calculateScore());
+    }
+
 
     /**
      * Sets the name of the current game level.
@@ -406,9 +408,9 @@ public class GameController {
                 throw new IllegalArgumentException("No profile selected.");
             }
 
-            if (levelLoader == null) {
-                levelLoader = new LevelLoader();
-            }
+//            if (levelLoader == null) {
+//                levelLoader = new LevelLoader();
+//            }
 
             //print all profiles
             List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
@@ -418,7 +420,7 @@ public class GameController {
 
             setCurrentLevel(currentLevel);
             levelName = currentLevel.getName();
-            levelLoader.updateLevelInformation(levelName);
+            LevelLoader.updateLevelInformation(levelName);
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -430,7 +432,7 @@ public class GameController {
             LevelLoader.linkButtonsToTraps(); // linking buttons to traps
             tickTimeline.play();
 
-            setTimeLimit(levelLoader.getTimeLimit());
+            setTimeLimit(LevelLoader.getTimeLimit());
 
             currentProfile.setScoreForLevel(levelName, timeLimit);
 
@@ -462,6 +464,16 @@ public class GameController {
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
         if (player != null) {
             player.clearInventory();
+        }
+        resetPlayerPosition();
+    }
+    private void resetPlayerPosition() {
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        if (player != null) {
+            int startX  = LevelLoader.playerStartPosition[0];
+            int startY = LevelLoader.playerStartPosition[1];
+            player.setPosition(startX, startY); // Reset player position to start
+            drawGame(); // Redraw the game to reflect the new player position
         }
     }
 
@@ -507,7 +519,7 @@ public class GameController {
 
         System.out.println("Show high scores button clicked");
 
-        highScore.addScore(levelName, currentProfile.getName(), timeLimit);
+        highScore.addScore(levelName, currentProfile.getName(), score);
 
         for (Level level : levels) {
             List<ScoreEntry> highScoresList = highScore.getHighScores(level.getName());

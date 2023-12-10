@@ -1,5 +1,7 @@
 package com.example._cs250a2;
 
+import java.io.Serializable;
+
 /**
  * The {@code ScoreEntry} class represents an entry in the high scores list,
  * containing the profile name and the corresponding score achieved.
@@ -7,7 +9,8 @@ package com.example._cs250a2;
  * @version 1.0
  * @author Ben Foord
  */
-public class ScoreEntry {
+public class ScoreEntry implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final String profileName;
     private final int score;
 

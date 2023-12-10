@@ -45,6 +45,9 @@ public class LevelLoader {
      */
     private String levelName;
 
+    static final int[] playerStartPosition = new int[2]; // [x, y] position
+
+
     /**
      * Represents the level grid.
      * This value is set during the level loading process.
@@ -57,17 +60,21 @@ public class LevelLoader {
 
     }
 
-    public void updateLevelInformation(String levelName) {
-        Scanner scanner = new Scanner(Objects.requireNonNull(getClass().getResourceAsStream("levels/"+levelName+".txt")));
+    public void readAllLevels() {
+
+    }
+
+    public static void updateLevelInformation(String levelName) {
+        Scanner scanner = new Scanner(Objects.requireNonNull(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")));
         // Read level information
-        this.levelName = scanner.nextLine().split(": ")[1];
+        levelName = scanner.nextLine().split(": ")[1];
         timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
         LevelLoader.width = width;
         LevelLoader.height = height;
-        entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
+        entityCount = countFileLines(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
     }
 
     /**
@@ -273,7 +280,11 @@ public class LevelLoader {
             case 'O':
                 return new Block(entity[1]-'0', entity[2]-'0');
             case 'Q':
-                return new Player(entity[1]-'0', entity[2]-'0', gameController);
+                int playerX = entity[1] - '0';
+                int playerY = entity[2] - '0';
+                playerStartPosition[0] = playerX; // Store player's starting X position
+                playerStartPosition[1] = playerY; // Store player's starting Y position
+                return new Player(playerX, playerY, gameController);
             default:
                 return null;
         }
@@ -401,7 +412,7 @@ public class LevelLoader {
         return width;
     }
 
-    public int getTimeLimit() {
+    public static int getTimeLimit() {
         return timeLimit;
     }
 
