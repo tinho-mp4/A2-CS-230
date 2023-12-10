@@ -70,6 +70,30 @@ public class Level {
         return name;
     }
 
+    public int getTimeLimit() {
+        return timeLimit;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public ArrayList<ArrayList<Tile>> getTileGrid() {
+        return tileGrid;
+    }
+
+    public ArrayList<ArrayList<Item>> getItemGrid() {
+        return itemGrid;
+    }
+
+    public ArrayList<ArrayList<Entity>> getEntityGrid() {
+        return entityGrid;
+    }
+
     @Override
     public String toString() {
         return name;

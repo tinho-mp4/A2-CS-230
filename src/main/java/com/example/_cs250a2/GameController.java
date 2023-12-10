@@ -428,7 +428,7 @@ public class GameController {
 
             // Clear the level before loading a new one
             LevelLoader.clearLevel();
-            LevelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"), this);
+            LevelLoader.readLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"), this);
             LevelLoader.linkButtonsToTraps(); // linking buttons to traps
             tickTimeline.play();
 

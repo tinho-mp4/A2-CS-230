@@ -53,8 +53,8 @@ public class LevelLoader {
      * This value is set during the level loading process.
      */
     private static ArrayList<ArrayList<Tile>> tileGrid = new ArrayList<>();
-    private static final ArrayList<ArrayList<Entity>> entityGrid = new ArrayList<>();
-    private static final ArrayList<ArrayList<Item>> itemGrid = new ArrayList<>();
+    private static ArrayList<ArrayList<Entity>> entityGrid = new ArrayList<>();
+    private static ArrayList<ArrayList<Item>> itemGrid = new ArrayList<>();
 
     public LevelLoader() {
 
@@ -83,7 +83,7 @@ public class LevelLoader {
      * @param gc The GraphicsContext used for drawing.
      * @param inputStream The InputStream containing the level information.
      */
-    public static void loadLevel(GraphicsContext gc, InputStream inputStream, GameController gameController) {
+    public static void readLevel(GraphicsContext gc, InputStream inputStream, GameController gameController) {
         Scanner scanner = new Scanner(inputStream);
         // Read level information
         String levelName = scanner.nextLine().split(": ")[1];
@@ -175,14 +175,20 @@ public class LevelLoader {
         currentLevel = new Level(levelName, timeLimit, width, height, tileGrid, itemGrid, entityGrid);
         levels.add(currentLevel);
 
+        loadLevel(gc, currentLevel);
+    }
+
+
+    public static void loadLevel(GraphicsContext gc, Level level) {
+        tileGrid = level.getTileGrid();
+        itemGrid = level.getItemGrid();
+        entityGrid = level.getEntityGrid();
         drawLevel(gc);
         drawEntities(gc);
         drawItems(gc);
     }
 
-
-
-    public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
+        public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
         int rows = strings.size();
         int cols = strings.get(0).size();
 
