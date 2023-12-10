@@ -39,7 +39,6 @@ public class Game extends Application {
 
     private Canvas canvas;
 
-    Player player = new Player(1,1);
 
 
     /**

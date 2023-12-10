@@ -27,8 +27,18 @@ public class Dirt extends Tile{
         }
     }
 
+    /**
+     * draws the Dirt.
+     * @param gc graphics context
+     * @param x x coordnate
+     * @param y y coordinate
+     * @param size size
+     */
     @Override
-    public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(DIRT_IMAGE, x*size, y*size);
+    public void draw(final GraphicsContext gc,
+                     final double x,
+                     final double y,
+                     final double size) {
+        gc.drawImage(DIRT_IMAGE, x * size, y * size);
     }
 }

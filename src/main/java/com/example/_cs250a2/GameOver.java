@@ -6,7 +6,6 @@ public class GameOver {
 
     public static void playerDeathDrown() {
         System.out.println("You drowned!");
-        System.exit(0);
     }
 
     public static void playerDeathMonster() {

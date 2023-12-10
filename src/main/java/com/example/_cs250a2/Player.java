@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player{
+
+    private GameController gameController;
     private boolean canMove = true;
     private boolean playerOnButton = false;
     private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
@@ -17,10 +19,11 @@ public class Player{
     private static int y;
     private final ArrayList<Item> inventory;
 
-    public Player(int x, int y) {
+    public Player(int x, int y, GameController gameController) {
         Player.x = x;
         Player.y = y;
         inventory = new ArrayList<>();
+        this.gameController = gameController;
     }
     public void move(KeyEvent event) {
         if (canMove) {
@@ -99,6 +102,7 @@ public class Player{
                 }
                 break;
             case "water":
+                gameController.clearLevel();
                 GameOver.playerDeathDrown();
                 break;
             case "chipSocket":

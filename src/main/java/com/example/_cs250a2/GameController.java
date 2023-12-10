@@ -64,12 +64,11 @@ public class GameController {
     /**
      * The player object.
      */
-    Player player = new Player(1, 1);
+    Player player = new Player(1, 1, this);
 
     /**
      * The timeline for the game ticks.
      */
-    public Timeline tickTimeline;
 
     /**
      * The score for the game.
@@ -178,6 +177,9 @@ public class GameController {
     @FXML
     private ChoiceBox<Level> levelChoiceBox;
 
+    @FXML
+    private Button loadGameButton;
+
     /**
      * The button to select the level.
      */
@@ -262,11 +264,6 @@ public class GameController {
         if (tickCount % 2 == 0) {
             updateTimer();
         }
-        //this is redundant if you call update timer
-        //if (timeLimit <= 0) {
-        //    GameOver.gameEndTime();
-        //    tickTimeline.stop();
-        //}
 
         Monster.tickMove(tickCount);
         tickCount++;
@@ -355,6 +352,7 @@ public class GameController {
         createButton.setOnAction(event -> handleCreateButton());
         selectLevelButton.setOnAction(event -> handleSelectLevelButton());
         startButton.setOnAction(event -> handleStartButton());
+        loadGameButton.setOnAction(event -> handleLoadGameButton());
         showHighScoresButton.setOnAction(event -> handleShowHighScoresButton());
 
         timeRemainingProperty = new SimpleStringProperty();
@@ -367,13 +365,13 @@ public class GameController {
                         "Selected level: \n" + (currentLevel != null ? currentLevel.getName() : ""),
                 currentLevelProperty()));
     }
+    Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
 
     /**
      * Handles the start button event, including loading the level, updating the time limit, and starting the tick timeline.
      */
     private void handleStartButton() {
-        List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
-        ProfileFileManager.printAllProfiles(loadedProfiles);
+
 
         try {
             if (currentLevel == null) {
@@ -388,6 +386,12 @@ public class GameController {
                 levelLoader = new LevelLoader();
             }
 
+            //print all profiles
+            List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
+            ProfileFileManager.printAllProfiles(loadedProfiles);
+
+            tickTimeline.setCycleCount(Animation.INDEFINITE);
+
             setCurrentLevel(currentLevel);
             levelName = currentLevel.getName();
             levelLoader.updateLevelInformation(levelName);
@@ -398,8 +402,7 @@ public class GameController {
             levelLoader.clearLevel();
             levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
             LevelLoader.linkButtonsToTraps(); // linking buttons to traps
-
-
+            tickTimeline.play();
 
             setTimeLimit(levelLoader.getTimeLimit());
 
@@ -407,14 +410,32 @@ public class GameController {
 
             System.out.println("Selected profile: " + currentProfile.getName());
             System.out.println("Selected level: " + currentLevel.getName());
-            Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
-            tickTimeline.setCycleCount(Animation.INDEFINITE);
-            tickTimeline.play();
+
 
             drawGame();
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
+    }
+
+
+
+    /**
+     * Clears the current level, stops timers, and clears the canvas.
+     */
+    public void clearLevel() {
+        // Stop the tick timeline
+        tickTimeline.stop();
+        // Clear the canvas
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        // Clear other level-related resources
+        timeLimit = 0;
+        levelLoader.clearLevel();
+    }
+
+    private void handleLoadGameButton() {
+        clearLevel();
     }
 
     /**
@@ -490,16 +511,6 @@ public class GameController {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
-    /*
-            for (Map.Entry<Integer, com.example._cs250a2.Button> entry : LevelLoader.getButtons().entrySet()) {
-            int buttonNum = entry.getKey();
-            com.example._cs250a2.Button button = entry.getValue();
-
-            button.checkIfPlayerOnButton();
-
-        }
-     */
 
     public ObjectProperty<Profile> currentProfileProperty() {
 
