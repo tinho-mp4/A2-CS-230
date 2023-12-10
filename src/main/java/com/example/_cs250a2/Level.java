@@ -39,14 +39,11 @@ public class Level {
         this.entityList = entityList;
     }
 
-
-    public static Tile checkTile(int x, int y){
-        return new Path(x,y);
-    }
-
-    public static void nextLevel(){
-    }
-
+    /**
+     * Gets the time limit for the level.
+     *
+     * @return The time limit for the level.
+     */
     public static Item getCurrentItem() {
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
         int playerX = player.getX();
@@ -74,24 +71,6 @@ public class Level {
     /**
      * Checks if the player is currently on a monster.
      *
-     * @return true if the player is on a monster, false otherwise.
-     */
-    public static boolean isOnMonster() {
-        return false;
-    }
-
-    /**
-     * Checks if the player is currently on a monster.
-     *
-     * @return true if the player is on a monster, false otherwise.
-     */
-    public static boolean isOnBlock() {
-        return false;
-    }
-
-    /**
-     * Checks if the player is currently on a monster.
-     *
      */
     public Level(String name) {
         this.name = name;
@@ -106,17 +85,7 @@ public class Level {
         return name;
     }
 
-    public int getTimeLimit() {
-        return timeLimit;
-    }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
     /**
      * Gets the time limit for the level.
      *
