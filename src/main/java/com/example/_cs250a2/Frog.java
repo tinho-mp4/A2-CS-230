@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 /**
  * The {@code Frog} class represents a Frog (monster) in the game.
- * @author idk
+ * @author Finn Pearson
  * @version 1.0
  */
 //TODO test more

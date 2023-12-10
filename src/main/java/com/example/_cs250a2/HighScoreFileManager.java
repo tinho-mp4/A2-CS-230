@@ -6,10 +6,23 @@ import java.util.List;
 
 public class HighScoreFileManager {
 
-    private static final String DIRECTORY_PATH = "src/main/resources/com/example/_cs250a2/HighScores/HighScores/";
+    /**
+     * The directory path where the high scores are stored.
+     */
+    private static final String DIRECTORY_PATH =
+            "src/main/resources/com/example/_cs250a2/HighScores/HighScores/";
+    /**
+     * The file extension for the high score files.
+     */
     private static final String FILE_EXTENSION = ".dat";
 
-    public static void saveHighScores(List<ScoreEntry> highScores, String levelName) {
+    /**
+     * Saves the high scores to a file.
+     * @param highScores the high scores to save
+     * @param levelName the name of the level
+     */
+    public static void saveHighScores(final List<ScoreEntry> highScores,
+                                      final String levelName) {
 
         try {
             // Create the directory if it doesn't exist
@@ -26,7 +39,12 @@ public class HighScoreFileManager {
         }
     }
 
-    public static List<ScoreEntry> loadHighScores(String levelName) {
+    /**
+     * Loads the high scores from a file.
+     * @param levelName the name of the level
+     * @return the high scores
+     */
+    public static List<ScoreEntry> loadHighScores(final String levelName) {
         String filePath = DIRECTORY_PATH + levelName + FILE_EXTENSION;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             return (List<ScoreEntry>) ois.readObject();
