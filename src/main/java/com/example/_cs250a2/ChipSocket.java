@@ -12,34 +12,27 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 1.0
  */
 public class ChipSocket extends Tile {
-    /**
-     * image of chip scoket.
-     */
+    private final int CHIPS_NEEDED;
     private static final Image CHIP_SOCKET_IMAGE =
     new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket.png"));
-    //other chips sprites
-    /**
-     * number of chips needed to unlock.
-     */
-    private final int chipsNeeded;
-
+    //other chips sprites.
 
     /**
-     * constructor.
-     * @param type how many chips needed
-     * @param x x
-     * @param y y
+     * Creates a computer chip at coordinates (x,y).
+     * @param chipsRequired how many chips needed.
+     * @param x x coordinate.
+     * @param y y coordinate.
      */
     public ChipSocket(
-            final int type,
+            final int chipsRequired,
             final int x,
             final int y) {
         super("chipSocket", x, y, true);
-        this.chipsNeeded = type;
+        this.CHIPS_NEEDED = chipsRequired;
     }
 
     /**
-     * resets all the locks.
+     * Resets all the locks.
      */
     public static void resetAllLocks() {
         for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
@@ -51,15 +44,14 @@ public class ChipSocket extends Tile {
         }
     }
 
-
     /**
-     * event that happens when player is on the chip socket.
-     * @param inventory
+     * Event that happens when player is on the chip socket.
+     * @param inventory player's inventory.
      */
     public void event(final ArrayList<Item> inventory) {
         if (enoughChips(inventory)) {
             LevelLoader.setTile(getX(), getY(), new Path(getX(), getY()));
-            AtomicInteger removeChips = new AtomicInteger(chipsNeeded);
+            AtomicInteger removeChips = new AtomicInteger(CHIPS_NEEDED);
             inventory.removeIf(item -> {
                 if (item instanceof Chip && removeChips.get() > 0) {
                     removeChips.getAndDecrement();
@@ -67,11 +59,14 @@ public class ChipSocket extends Tile {
                 }
                 return false;
             });
-
         }
-
     }
 
+    /**
+     * checks if the player has enough chips in inventory.
+     * @param inventory player's Inventory
+     * @return true if the player has enough chips, otherwise false.
+     */
     private boolean enoughChips(final ArrayList<Item> inventory) {
         int chipCount = 0;
         for (Item item : inventory) {
@@ -79,12 +74,12 @@ public class ChipSocket extends Tile {
                 chipCount++;
             }
         }
-        return chipCount >= chipsNeeded;
+        return chipCount >= CHIPS_NEEDED;
     }
 
     /**
-     * checks if the player has enough chips to unlock.
-     * @param inventory inventory
+     * Checks if the player has enough chips to unlock.
+     * @param inventory player's inventory.
      */
     public void checkUnlock(final ArrayList<Item> inventory) {
         if (enoughChips(inventory)) {
@@ -92,11 +87,10 @@ public class ChipSocket extends Tile {
         }
     }
 
-
     /**
-     * draws the chip socket.
+     * Draws the chip socket.
      * @param gc graphics context
-     * @param x x coordnate
+     * @param x x coordinate
      * @param y y coordinate
      * @param size size
      */
