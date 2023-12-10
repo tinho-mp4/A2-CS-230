@@ -217,6 +217,10 @@ public class GameController {
      * @param event The KeyEvent representing the key press event.
      */
     public void processKeyEvent(KeyEvent event) {
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        if (player != null) {
+            player.move(event);
+        }
 
         // Redraw game as the player may have moved.
         drawGame();
@@ -314,7 +318,7 @@ public class GameController {
     private int calculateScore() {
         int score = timeLimit;
         // Add 15 points for every chip in the inventory
-        score += 15 * player.getChips();
+        // score += 15 * player.getChips();
         return score;
     }
 
