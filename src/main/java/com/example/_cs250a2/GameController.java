@@ -91,6 +91,9 @@ public class GameController {
     @FXML
     private Label timeRemainingLabel;
 
+    @FXML
+    private Label scoreLabel;
+
     /**
      * The time remaining property.
      */
@@ -245,7 +248,8 @@ public class GameController {
 
 
         // Draw player at current location
-        player.draw(gc, Player.getX(), Player.getY(), 32);
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        player.draw(gc, player.getX(), player.getY(), 32);
         //Draw key at current location
 
     }
@@ -505,7 +509,7 @@ public class GameController {
 
         System.out.println("Show high scores button clicked");
 
-        highScore.addScore(levelName, currentProfile.getName(), timeLimit);
+        highScore.addScore(levelName, currentProfile.getName(), score);
 
         for (Level level : levels) {
             List<ScoreEntry> highScoresList = highScore.getHighScores(level.getName());
