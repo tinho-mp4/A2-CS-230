@@ -21,8 +21,13 @@ public class Player extends Entity{
     private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
 
     // X and Y coordinate of player on the grid.
-    private static int x;
-    private static int y;
+    private int x;
+    private int y;
+
+    private int prevX;
+
+    private int prevY;
+
     private final ArrayList<Item> inventory;
 
     public Player(int x, int y, GameController gameController) {
@@ -43,6 +48,11 @@ public class Player extends Entity{
                       final int newX,
                       final int newY) { }
     public void move(KeyEvent event) {
+
+        prevX = x;
+        prevY = y;
+
+
         if (canMove) {
             switch (event.getCode()) {
                 case RIGHT:
@@ -89,6 +99,18 @@ public class Player extends Entity{
         Tile currentTile = LevelLoader.getTile(newX, newY);
         Entity currentEntity = LevelLoader.getEntityWithCoords(newX, newY);
 
+        if (currentTile instanceof Button) {
+            Button button = (Button) currentTile;
+            button.press();
+        }
+
+        Tile prevTile = LevelLoader.getTile(prevX, prevY);
+        if (prevTile instanceof Button) {
+            Button prevButton = (Button) prevTile;
+            prevButton.unpress();
+        }
+
+
         if (currentEntity != null) {
             currentEntity.event(x, y, newX, newY);
         }
@@ -108,10 +130,6 @@ public class Player extends Entity{
             case "exit":
                 Exit.event();
                 gameController.clearLevel();
-                break;
-            case "button":
-                Button button = (Button) currentTile;
-                button.press();
                 break;
             case "trap":
                 Trap trap = (Trap) currentTile;
