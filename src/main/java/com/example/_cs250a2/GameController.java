@@ -273,6 +273,7 @@ public class GameController {
             tickCount = 0;
         }
         drawGame();
+        updateScoreDisplay();
     }
 
     /**
