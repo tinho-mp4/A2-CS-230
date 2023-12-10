@@ -62,7 +62,6 @@ public class GameController {
     /**
      * The player object.
      */
-    Player player = new Player(1, 1, this);
 
     /**
      * The timeline for the game ticks.
@@ -218,7 +217,6 @@ public class GameController {
      * @param event The KeyEvent representing the key press event.
      */
     public void processKeyEvent(KeyEvent event) {
-        player.move(event);
 
         // Redraw game as the player may have moved.
         drawGame();
@@ -245,7 +243,8 @@ public class GameController {
 
 
         // Draw player at current location
-        player.draw(gc, Player.getX(), Player.getY(), 32);
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        player.draw(gc, player.getX(), player.getY(), 32);
         //Draw key at current location
 
     }
@@ -405,13 +404,11 @@ public class GameController {
 
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
-            player.setPosition(1, 1);
-
 
 
             // Clear the level before loading a new one
             LevelLoader.clearLevel();
-            LevelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
+            LevelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"), this);
             LevelLoader.linkButtonsToTraps(); // linking buttons to traps
             tickTimeline.play();
 
@@ -443,10 +440,11 @@ public class GameController {
         // Clear other level-related resources
         timeLimit = 0;
         LevelLoader.clearLevel();
-        //move to positon
-        player.setPosition(1, 1);
         // Clear the inventory
-        player.clearInventory();
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        if (player != null) {
+            player.clearInventory();
+        }
     }
 
 

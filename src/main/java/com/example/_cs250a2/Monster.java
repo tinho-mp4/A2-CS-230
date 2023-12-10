@@ -38,7 +38,6 @@ public abstract class Monster extends Entity {
    public Monster(int x, int y, char direction) {
       super(x, y);
       this.direction = direction;
-
    }
 
    public int getSpeed() {

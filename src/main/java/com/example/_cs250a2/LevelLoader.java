@@ -76,7 +76,7 @@ public class LevelLoader {
      * @param gc The GraphicsContext used for drawing.
      * @param inputStream The InputStream containing the level information.
      */
-    public static void loadLevel(GraphicsContext gc, InputStream inputStream) {
+    public static void loadLevel(GraphicsContext gc, InputStream inputStream, GameController gameController) {
         Scanner scanner = new Scanner(inputStream);
         // Read level information
         String levelName = scanner.nextLine().split(": ")[1];
@@ -152,7 +152,7 @@ public class LevelLoader {
                     if (entitiesMatchesArray[j].toCharArray()[0] == 'C' || entitiesMatchesArray[j].toCharArray()[0] == 'K') {
                         itemRow.add(processItem(gc, entitiesMatchesArray[j].toCharArray()));
                     } else
-                        entityRow.add(processEntity(gc, entitiesMatchesArray[j].toCharArray()));
+                        entityRow.add(processEntity(gc, entitiesMatchesArray[j].toCharArray(), gameController));
                 }
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Index out of bounds");
@@ -262,7 +262,7 @@ public class LevelLoader {
 
     }
 
-    public static Entity processEntity(GraphicsContext gc, char[] entity) {
+    public static Entity processEntity(GraphicsContext gc, char[] entity, GameController gameController) {
         switch (entity[0]){
             case 'F':
                 return new Frog(5, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
@@ -270,9 +270,12 @@ public class LevelLoader {
                 return new PinkBall(2, 'w', new int[]{entity[1]-'0', entity[2]-'0'});
             case 'Z':
                 return new Bug(3, 'd', new int[]{entity[1]-'0', entity[2]-'0'}, false);
-            default:
             case 'O':
                 return new Block(entity[1]-'0', entity[2]-'0');
+            case 'Q':
+                return new Player(entity[1]-'0', entity[2]-'0', gameController);
+            default:
+                return null;
         }
     }
 
