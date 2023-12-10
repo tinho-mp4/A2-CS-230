@@ -19,6 +19,5 @@ public class GameOver {
 
     public static void gameEndTime(){
         System.out.println("You ran out of time!");
-        System.exit(0);
     }
 }

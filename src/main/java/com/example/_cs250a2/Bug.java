@@ -16,8 +16,9 @@ public class Bug extends Monster {
      */
     private static final Image BUG_IMAGE
     = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
-
-    //only 4 directions to move in so it doesnt want to turn more than that
+    /**
+     * only 4 directions to move in so it doesnt want to turn more than that.
+     */
     private static final int MAXTURNS = 4;
     //which wall to 'hug' when it moves
     /**
@@ -29,7 +30,9 @@ public class Bug extends Monster {
      */
     private static int speed;
 
-    //keeps track of how many times the bug has called move to stop infinite loops
+    /**
+     * keeps track of how many times the bug has called move to stop infinite loops
+     */
     private int moveCount = 0;
 
     /**

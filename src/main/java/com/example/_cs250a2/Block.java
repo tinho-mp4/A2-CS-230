@@ -107,7 +107,8 @@ public class Block extends Entity {
             button.press();
         }
 
-        Player player = (Player) LevelLoader.getEntityWithCoords(playerX, playerY);
+        Player player
+                = (Player) LevelLoader.getEntityWithCoords(playerX, playerY);
 
         if (verifyNewPosition(newX, newY, deltaX, deltaY)) {
             Block currentBlock = (Block)

@@ -5,7 +5,8 @@ import java.util.List;
 import java.nio.file.*;
 
 /**
- * The {@code ProfileFileManager} class handles the saving and loading of profiles.
+ * The {@code ProfileFileManager}
+ * class handles the saving and loading of profiles to file.
  * @author Ben Foord
  * @version 1.0
  */
@@ -15,8 +16,9 @@ public class ProfileFileManager {
      * Save all profiles to a file.
      * @param profiles The profiles to save.
      */
-    public static void saveAllProfiles(List<Profile> profiles) {
-        String directoryPath = "src/main/resources/com/example/_cs250a2/Profiles";
+    public static void saveAllProfiles(final List<Profile> profiles) {
+        String directoryPath =
+                "src/main/resources/com/example/_cs250a2/Profiles";
         String filePath = directoryPath + "/allProfiles.ser";
 
         try {
