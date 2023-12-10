@@ -45,6 +45,9 @@ public class LevelLoader {
      */
     private String levelName;
 
+    static final int[] playerStartPosition = new int[2]; // [x, y] position
+
+
     /**
      * Represents the level grid.
      * This value is set during the level loading process.
@@ -277,7 +280,11 @@ public class LevelLoader {
             case 'O':
                 return new Block(entity[1]-'0', entity[2]-'0');
             case 'Q':
-                return new Player(entity[1]-'0', entity[2]-'0', gameController);
+                int playerX = entity[1] - '0';
+                int playerY = entity[2] - '0';
+                playerStartPosition[0] = playerX; // Store player's starting X position
+                playerStartPosition[1] = playerY; // Store player's starting Y position
+                return new Player(playerX, playerY, gameController);
             default:
                 return null;
         }

@@ -323,6 +323,7 @@ public class GameController {
         scoreLabel.setText("Score: " + calculateScore());
     }
 
+
     /**
      * Sets the name of the current game level.
      *
@@ -463,6 +464,16 @@ public class GameController {
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
         if (player != null) {
             player.clearInventory();
+        }
+        resetPlayerPosition();
+    }
+    private void resetPlayerPosition() {
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        if (player != null) {
+            int startX  = LevelLoader.playerStartPosition[0];
+            int startY = LevelLoader.playerStartPosition[1];
+            player.setPosition(startX, startY); // Reset player position to start
+            drawGame(); // Redraw the game to reflect the new player position
         }
     }
 
