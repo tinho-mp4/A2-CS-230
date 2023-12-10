@@ -496,8 +496,8 @@ public class GameController {
     private void resetPlayerPosition() {
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
         if (player != null) {
-            int startX  = LevelLoader.playerStartPosition[0];
-            int startY = LevelLoader.playerStartPosition[1];
+            int startX  = LevelLoader.PLAYER_START_POSITION[0];
+            int startY = LevelLoader.PLAYER_START_POSITION[1];
             player.setPosition(startX, startY); // Reset player position to start
             drawGame(); // Redraw the game to reflect the new player position
         }

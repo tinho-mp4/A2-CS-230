@@ -3,23 +3,20 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.io.InputStream;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * The {@code LevelLoader} class handles loading of levels in the game
- * @author idk
- * @version 1.0
- */
+
 public class LevelLoader {
 
     private static final int FROG_SPEED = 5;
     private static final int PINK_BALL_SPEED = 2;
     private static final int BUG_SPEED = 3;
 
-    private static final Map<Integer, Button> buttons = new HashMap<>();
-    private static final Map<Integer, Trap> traps = new HashMap<>();
+    private static final Map<Integer, Button> BUTTONS = new HashMap<>();
+    private static final Map<Integer, Trap> TRAPS = new HashMap<>();
 
     private final static ArrayList<Level> levels = new ArrayList<>();
     private static Level currentLevel;
@@ -29,8 +26,6 @@ public class LevelLoader {
      * Represents the time limit for completing the level.
      * This value is set during the level loading process.
      */
-
-
     private static int timeLimit;
     /**
      * Represents the height of the level grid.
@@ -49,7 +44,15 @@ public class LevelLoader {
      */
     private String levelName;
 
-    static final int[] playerStartPosition = new int[2]; // [x, y] position
+    /**
+     * The starting position [x, y] of the player in the level.
+     */
+    static final int[] PLAYER_START_POSITION = new int[2]; // [x, y] position
+
+    /**
+     * The size of each tile or entity in the level.
+     */
+    private static final int SIZE = 32;
 
 
     /**
@@ -69,7 +72,8 @@ public class LevelLoader {
     }
 
     public static void updateLevelInformation(String levelName) {
-        Scanner scanner = new Scanner(Objects.requireNonNull(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")));
+        Scanner scanner =
+                new Scanner(Objects.requireNonNull(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")));
         // Read level information
         levelName = scanner.nextLine().split(": ")[1];
         timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
@@ -104,7 +108,7 @@ public class LevelLoader {
         Pattern pattern = Pattern.compile("([A-Z])([0-9])?");
         int i = 0;
         // Process tiles
-        while(i < height) {
+        while (i < height) {
             String currentLine = scanner.nextLine(); // example: PSPS
             Matcher matcher = pattern.matcher(currentLine); // example: P, S, P, S
             ArrayList<String> matchesList = new ArrayList<>(); // example: [P, S, P, S]
@@ -116,7 +120,8 @@ public class LevelLoader {
             tileMatchesGrid.add(matchesList);
             i++;
         }
-        ArrayList<ArrayList<String>> newTileMatchesGrid = flipStringsVertically(rotateStringsCounterClockwise(tileMatchesGrid));
+        ArrayList<ArrayList<String>> newTileMatchesGrid =
+                flipStringsVertically(rotateStringsCounterClockwise(tileMatchesGrid));
 
         // Process other entities (monsters, player, items, etc.)
         ArrayList<ArrayList<String>> entityMatchesGrid = new ArrayList<>();
@@ -127,14 +132,16 @@ public class LevelLoader {
             ArrayList<String> matchesList = new ArrayList<>(); // example: [F, 1, 1]
 
             while (matcher.find()) {
-                String match = matcher.group(1) + (matcher.group(2) != null ? matcher.group(2) : "") + (matcher.group(3) != null ? matcher.group(3) : "");
+                String match = matcher.group(1)
+                        + (matcher.group(2) != null ? matcher.group(2) : "")
+                        + (matcher.group(3) != null ? matcher.group(3) : "");
                 matchesList.add(match);
             }
             entityMatchesGrid.add(matchesList);
         }
 
         i = 0;
-        while(i < width) {
+        while (i < width) {
             ArrayList<String> matchesLine = newTileMatchesGrid.get(i);
             // make this be able to be null
 
@@ -160,10 +167,12 @@ public class LevelLoader {
             ArrayList<Item> itemRow = new ArrayList<>();
             try {
                 for (int j = 0; j < entitiesMatchesArray.length; j++) {
-                    if (entitiesMatchesArray[j].toCharArray()[0] == 'C' || entitiesMatchesArray[j].toCharArray()[0] == 'K') {
+                    if (entitiesMatchesArray[j].toCharArray()[0] == 'C'
+                            || entitiesMatchesArray[j].toCharArray()[0] == 'K') {
                         itemList.add(processItem(gc, entitiesMatchesArray[j].toCharArray()));
-                    } else
+                    } else  {
                         entityList.add(processEntity(gc, entitiesMatchesArray[j].toCharArray(), gameController));
+                    }
                 }
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Index out of bounds");
@@ -254,13 +263,13 @@ public class LevelLoader {
             case 'B':
                 int buttonNum = Integer.parseInt(String.valueOf(tile[1]));
                 Button button = new Button(buttonNum, x, y);
-                buttons.put(buttonNum, button);
+                BUTTONS.put(buttonNum, button);
                 return button;
 
             case 'T':
                 int trapNum = Integer.parseInt(String.valueOf(tile[1]));
                 Trap trap = new Trap(trapNum, x, y);
-                traps.put(trapNum, trap);
+                TRAPS.put(trapNum, trap);
                 return trap;
             case 'W':
                 return new Water(x, y);
@@ -294,8 +303,8 @@ public class LevelLoader {
             case 'Q':
                 int playerX = entity[1] - '0';
                 int playerY = entity[2] - '0';
-                playerStartPosition[0] = playerX; // Store player's starting X position
-                playerStartPosition[1] = playerY; // Store player's starting Y position
+                PLAYER_START_POSITION[0] = playerX; // Store player's starting X position
+                PLAYER_START_POSITION[1] = playerY; // Store player's starting Y position
                 return new Player(playerX, playerY, gameController);
             default:
                 return null;
@@ -323,7 +332,7 @@ public class LevelLoader {
     public static void drawTiles(GraphicsContext gc) {
         for (ArrayList<Tile> row : getTileGrid()) {
             for (Tile tile : row) {
-                tile.draw(gc, tile.getX(), tile.getY(), 32);
+                tile.draw(gc, tile.getX(), tile.getY(), SIZE);
             }
         }
     }
@@ -332,7 +341,7 @@ public class LevelLoader {
         System.out.println("drawing entites" + entityList);
         for (Entity entity : getEntityList()) {
             if (entity != null) {
-                entity.draw(gc, entity.getX(), entity.getY(), 32);
+                entity.draw(gc, entity.getX(), entity.getY(), SIZE);
             }
         }
     }
@@ -341,7 +350,7 @@ public class LevelLoader {
     public static void drawItems(GraphicsContext gc) {
         for (Item item : getItemList()) {
             if (item != null) {
-                item.draw(gc, item.getX(), item.getY(), 32);
+                item.draw(gc, item.getX(), item.getY(), SIZE);
             }
         }
     }
@@ -380,6 +389,7 @@ public class LevelLoader {
         return null;
     }
 
+
     public static Entity getEntityWithCoords(int x, int y) {
         for (Entity entity : entityList) {
             if (entity != null) {
@@ -415,10 +425,10 @@ public class LevelLoader {
     }
 
     public static void linkButtonsToTraps() {
-        for (Map.Entry<Integer, Button> entry : buttons.entrySet()) {
+        for (Map.Entry<Integer, Button> entry : BUTTONS.entrySet()) {
             int buttonNum = entry.getKey();
             Button button = entry.getValue();
-            Trap trap = traps.get(buttonNum);
+            Trap trap = TRAPS.get(buttonNum);
             if (trap != null) {
                 button.linkToTrap(trap);
                 trap.linkToButton(button);
@@ -427,7 +437,7 @@ public class LevelLoader {
     }
 
     public static Map<Integer, Button> getButtons() {
-        return buttons;
+        return BUTTONS;
     }
 
 
