@@ -4,17 +4,37 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * javadoc to go here
+ * wirte it.
  */
 //TODO test more
 public class Bug extends Monster {
 
-    private static final Image BUG_IMAGE = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
+    /**
+     * image of bug.
+     */
+    private static final Image BUG_IMAGE
+    = new Image(Key.class.getResourceAsStream("sprites/bug.png"));
     //which wall to 'hug' when it moves
+    /**
+     * left or right.
+     */
     private final boolean left;
+    /**
+     * speed of bug.
+     */
     private static int speed;
 
-    public Bug(int ticks, char startingDirection, int[] startingLocation, boolean side) {
+    /**
+     * constructor.
+     * @param ticks speed
+     * @param startingDirection direction
+     * @param startingLocation location
+     * @param side left or right
+     */
+    public Bug(final int ticks,
+               final char startingDirection,
+               final int[] startingLocation,
+               final boolean side) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
         direction = startingDirection;
