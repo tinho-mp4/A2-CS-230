@@ -88,22 +88,20 @@ public abstract class Monster extends Entity {
       }
       String nextTile = LevelLoader.getTile(tileLocation[0], tileLocation[1]).getName();
       for (String tile : allowedTiles) {
-         if (nextTile.equals(tile)) {
-            safeTile = true;
-         }
+          if (nextTile.equals(tile)) {
+              safeTile = true;
+              break;
+          }
       }
       //now checks that no other monster is on the tile
       for (int i = 0; i < countMonsters; i++) {
-         if (monsterLocations.get(i*2) == tileLocation[0]
-                 && monsterLocations.get(i*2+1) == tileLocation[1]) {
-            safeTile = false;
-         }
+          if (monsterLocations.get(i * 2) == tileLocation[0]
+                  && monsterLocations.get(i * 2 + 1) == tileLocation[1]) {
+              safeTile = false;
+              break;
+          }
       }
-      if (safeTile && withinBounds) {
-         return true;
-      } else {
-         return false;
-      }
+       return safeTile && withinBounds;
    }
 
    protected void playerKill() {

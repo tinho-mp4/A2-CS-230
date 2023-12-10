@@ -49,7 +49,7 @@ public class StartScreenController {
     @FXML
     private Button createButton;
 
-    private ObservableList<Profile> profiles = FXCollections.observableArrayList();
+    private final ObservableList<Profile> profiles = FXCollections.observableArrayList();
 
     private Profile currentProfile;
 
@@ -58,7 +58,7 @@ public class StartScreenController {
     @FXML
     private ChoiceBox<Level> levelChoiceBox;
 
-    private ObservableList<Level> levels = FXCollections.observableArrayList();
+    private final ObservableList<Level> levels = FXCollections.observableArrayList();
 
     @FXML
     private Button selectLevelButton;

@@ -8,7 +8,8 @@ import javafx.scene.image.Image;
  * @author idk
  * @version 1.0
  */
-enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, NONE};
+enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, NONE}
+
 public class Ice extends Tile {
     private static final Image ICE_IMAGE = new Image(Ice.class.getResourceAsStream("sprites/ice.png"));
     private static final Image ICE_TOP_LEFT_IMAGE = new Image(Ice.class.getResourceAsStream("sprites/iceTopLeft.png"));

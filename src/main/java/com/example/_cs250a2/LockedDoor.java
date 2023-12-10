@@ -17,7 +17,7 @@ public class LockedDoor extends Tile {
     private static final Image GREEN_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/greenLockedDoor.png"));
     private static final Image YELLOW_LOCKED_DOOR_IMAGE = new Image(LockedDoor.class.getResourceAsStream("sprites/yellowLockedDoor.png"));
 
-    private DoorColour doorType;
+    private final DoorColour doorType;
 
     public LockedDoor(int x, int y, char doorTypeChar) {
         super("lockedDoor", x, y, true);
@@ -32,8 +32,7 @@ public class LockedDoor extends Tile {
 
     private boolean correctKey(ArrayList<Item> inventory){
         for (Item item : inventory) {
-            if (item instanceof Key) {
-                Key key = (Key) item;
+            if (item instanceof Key key) {
                 if (key.getColour() == this.getColour()) {
                     return true;
                 }

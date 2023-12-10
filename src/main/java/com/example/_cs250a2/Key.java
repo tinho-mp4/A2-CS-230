@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
  * @author idk
  * @version 1.0
  */
-enum DoorColour {RED, GREEN, BLUE, YELLOW};
+enum DoorColour {RED, GREEN, BLUE, YELLOW}
 
 
 public class Key extends Item {
@@ -16,7 +16,7 @@ public class Key extends Item {
     private static final Image RED_KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/redKey.png"));
     private static final Image YELLOW_KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/yellowKey.png"));
     private static final Image GREEN_KEY_IMAGE = new Image(Key.class.getResourceAsStream("sprites/greenKey.png"));
-    private DoorColour colour;
+    private final DoorColour colour;
     private DoorColour doorColour;
 
     public Key(int x, int y, char keyColourChar) {

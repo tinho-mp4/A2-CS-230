@@ -19,7 +19,7 @@ public class HighScore {
      * The maximum number of scores to store for each level.
      */
     private final int MAX_SCORES = 10;
-    private Map<String, List<ScoreEntry>> highScores;
+    private final Map<String, List<ScoreEntry>> highScores;
 
     /**
      * Creates a new HighScore object.

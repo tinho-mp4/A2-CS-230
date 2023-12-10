@@ -68,9 +68,7 @@ public class Block extends Entity {
         int nextX = newX + deltaX;
         int nextY = newY + deltaY;
         if (currentBlock instanceof Block) {
-            if (LevelLoader.getTile(nextX, nextY).isPushableBlock()) {
-                return true;
-            }
+            return LevelLoader.getTile(nextX, nextY).isPushableBlock();
         }
         return false;
     }

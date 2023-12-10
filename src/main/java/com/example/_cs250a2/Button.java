@@ -3,8 +3,6 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import javax.xml.transform.Source;
-
 /**
  * The {@code Button} class represents a button in the game.
  * @author Pele
@@ -27,7 +25,7 @@ public class Button extends Tile {
         this.associatedTrap = trap;
     }
 
-    public void press() {;
+    public void press() {
         pressed = true;
         associatedTrap.inactive();
     }
