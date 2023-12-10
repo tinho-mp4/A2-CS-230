@@ -8,10 +8,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LevelLoader {
+
+    private static Map<Integer, Button> buttons = new HashMap<>();
+    private static Map<Integer, Trap> traps = new HashMap<>();
+
+
     /**
      * Represents the time limit for completing the level.
      * This value is set during the level loading process.
      */
+
 
     private static int timeLimit;
     /**
@@ -219,9 +225,16 @@ public class LevelLoader {
             case 'E':
                 return new Exit(x, y);
             case 'B':
-                return new Button(x, y, tile[1]);
+                int buttonNum = Integer.parseInt(String.valueOf(tile[1]));
+                Button button = new Button(buttonNum, x, y);
+                buttons.put(buttonNum, button);
+                return button;
+
             case 'T':
-                return new Trap(x, y);
+                int trapNum = Integer.parseInt(String.valueOf(tile[1]));
+                Trap trap = new Trap(trapNum, x, y);
+                traps.put(trapNum, trap);
+                return trap;
             case 'W':
                 return new Water(x, y);
             case 'S':
@@ -367,6 +380,22 @@ public class LevelLoader {
 
     private static void setTimeLimit(int limit) {
         timeLimit = limit;
+    }
+
+    public static void linkButtonsToTraps() {
+        for (Map.Entry<Integer, Button> entry : buttons.entrySet()) {
+            int buttonNum = entry.getKey();
+            Button button = entry.getValue();
+            Trap trap = traps.get(buttonNum);
+            if (trap != null) {
+                button.linkToTrap(trap);
+                trap.linkToButton(button);
+            }
+        }
+    }
+
+    public static Map<Integer, Button> getButtons() {
+        return buttons;
     }
 
 

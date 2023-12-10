@@ -397,7 +397,7 @@ public class GameController {
             // Clear the level before loading a new one
             levelLoader.clearLevel();
             levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
-
+            LevelLoader.linkButtonsToTraps(); // linking buttons to traps
 
 
 
@@ -490,6 +490,16 @@ public class GameController {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    /*
+            for (Map.Entry<Integer, com.example._cs250a2.Button> entry : LevelLoader.getButtons().entrySet()) {
+            int buttonNum = entry.getKey();
+            com.example._cs250a2.Button button = entry.getValue();
+
+            button.checkIfPlayerOnButton();
+
+        }
+     */
 
     public ObjectProperty<Profile> currentProfileProperty() {
 
