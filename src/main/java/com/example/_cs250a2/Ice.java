@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 /**
  * The {@code Ice} class represents an ice block in the game
- * @author idk
+ * @author Ryan Pietras
  * @version 1.0
  */
 enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, NONE}
@@ -47,7 +47,7 @@ public class Ice extends Tile {
         }
     }
 
-    public static void event(int entityX, int entityY, int newEntityX, int newEntityY) {
+    public static void event(int entityX, int entityY, int newEntityX, int newEntityY, boolean afterBlockReturn) {
         // log coords
         // System.out.println("entityX: " + entityX + " entityY: " + entityY + " newEntityX: " + newEntityX + " newEntityY: " + newEntityY);
         // delta will act as the direction in which the player is going
@@ -61,7 +61,15 @@ public class Ice extends Tile {
             // Corner checking
             if (LevelLoader.getTile(newEntityX, newEntityY).getName() == "ice") {
                 if (LevelLoader.getTile(newEntityX+deltaX, newEntityY+deltaY).isSolid()) {
-                    return;
+                    if (LevelLoader.getTile(entityX - deltaX, entityY - deltaY).getName() == "ice") {
+                        event(entityX - deltaX, entityY - deltaY, entityX - 2*deltaX, entityY - 2*deltaY, false);
+                        return;
+                    } else {
+                        if (LevelLoader.getTile(entityX-deltaX, entityY - deltaY).isSolid()) {
+                            return;
+                        }
+                        event(entityX, entityY, entityX - deltaX, entityY - deltaY, false);
+                    }
                 }
                 updateEntity(currentEntity, newEntityX, newEntityY);
 
@@ -77,7 +85,7 @@ public class Ice extends Tile {
                         return;
                     }
                     updateEntity(currentEntity, entityX - deltaX, entityY - deltaY);
-                    event(entityX, entityY, entityX - deltaX, entityY - deltaY);
+                    event(entityX, entityY, entityX - deltaX, entityY - deltaY, false);
                     return;
                 }
 
@@ -104,23 +112,26 @@ public class Ice extends Tile {
                         break;
                 }
 
-                event(newEntityX, newEntityY, targetX, targetY);
+                event(newEntityX, newEntityY, targetX, targetY, false);
             } else {
+                if (afterBlockReturn && LevelLoader.getEntityWithCoords(newEntityX, newEntityY) instanceof Block) {
+                    return;
+                }
                 if (LevelLoader.getEntityWithCoords(newEntityX, newEntityY) instanceof Block) {
                     if (LevelLoader.getTile(newEntityX + deltaX, newEntityY + deltaY).isSolid()) { // checks if the block is hitting a wall
-                        event(newEntityX- deltaX, newEntityY - deltaY, newEntityX - 2*deltaX, newEntityY - 2*deltaY);
+                        event(newEntityX- deltaX, newEntityY - deltaY, newEntityX - 2*deltaX, newEntityY - 2*deltaY, false);
                         return;
                     } else {
-                        event(newEntityX, newEntityY, newEntityX + deltaX, newEntityY + deltaY);
+                        event(newEntityX, newEntityY, newEntityX + deltaX, newEntityY + deltaY, false);
                     }
                 }
                 updateEntity(currentEntity, newEntityX, newEntityY);
             }
         } else { // Go in the reverse direction
             if (LevelLoader.getTile(entityX - 2*deltaX, entityY - 2*deltaY).getName() == "ice") {
-                event(entityX - deltaX, entityY - deltaY, entityX - 2*deltaX, entityY - 2*deltaY);
+                event(entityX - deltaX, entityY - deltaY, entityX - 2*deltaX, entityY - 2*deltaY, false);
             } else {
-                event(entityX, entityY, entityX - deltaX, entityY - deltaY);
+                event(entityX, entityY, entityX - deltaX, entityY - deltaY, false);
             }
         }
     }
