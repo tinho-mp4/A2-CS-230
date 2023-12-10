@@ -37,3 +37,5 @@ build/
 ### Mac OS ###
 .DS_Store
 /src/main/resources/com/example/_cs250a2/Profiles/allProfiles.ser
+/path/to/save/profile
+/.idea/inspectionProfiles/Project_Default.xml
