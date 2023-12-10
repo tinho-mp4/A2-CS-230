@@ -13,10 +13,17 @@ public class Trap extends Tile {
     private final int trapNum;
     private Button associatedButton;
     private boolean stuck = true;
+    public boolean isActive() {
+        return stuck;
+    }
+
+
+
 
     public Trap(int trapNum, int x, int y) {
         super("trap",x, y, false);
         this.trapNum = trapNum;
+        setPushableBlock(true);
     }
 
     public void linkToButton(Button button) {
