@@ -110,9 +110,11 @@ public class Ice extends Tile {
                 currentEntity.setY(newPlayerY);
             }
         } else if (LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) { // Go in the reverse direction
-            currentEntity.setX(playerX - deltaX);
-            currentEntity.setY(playerY - deltaY);
-            event(playerX, playerY, playerX - deltaX, playerY - deltaY);
+            if (LevelLoader.getTile(playerX - 2*deltaX, playerY - 2*deltaY).getName() == "ice") {
+                event(playerX - deltaX, playerY - deltaY, playerX - 2*deltaX, playerY - 2*deltaY);
+            } else {
+                event(playerX, playerY, playerX - deltaX, playerY - deltaY);
+            }
         }
     }
 

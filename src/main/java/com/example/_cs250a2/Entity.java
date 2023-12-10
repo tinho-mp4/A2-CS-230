@@ -8,6 +8,16 @@ import javafx.scene.canvas.GraphicsContext;
  * @version 1.0
  */
 public abstract class Entity {
+    private boolean isStuck;
+
+    public boolean isStuck() {
+        return isStuck;
+    }
+
+    public void setStuck(boolean stuck) {
+        this.isStuck = stuck;
+    }
+
 
     protected int x;
 
@@ -43,6 +53,7 @@ public abstract class Entity {
         this.x = x;
         this.y = y;
         this.location = new int[]{x, y};
+        this.isStuck = isStuck();
     }
 
     public abstract void event(int x, int y, int newX, int newY);
