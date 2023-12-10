@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * The {@code Chip} class represents the computer chip in the game
+ * The {@code Chip} class represents the computer chip in the game.
  * @author Mwenya Sikazwe
  * @version 1.0
  */

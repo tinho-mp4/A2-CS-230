@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * The {@code Frog} class represents a Frog (monster) in the game
+ * The {@code Frog} class represents a Frog (monster) in the game.
  * @author idk
  * @version 1.0
  */

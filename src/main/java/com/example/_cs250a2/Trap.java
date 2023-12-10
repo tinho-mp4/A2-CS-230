@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * The {@code Trap} class represents a trap in the game
+ * The {@code Trap} class represents a trap in the game.
  * @author idk
  * @version 1.0
  */

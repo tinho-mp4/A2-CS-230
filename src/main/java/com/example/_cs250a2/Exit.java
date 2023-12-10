@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * The {@code Exit} class handles the exiting of the game
+ * The {@code Exit} class handles the exiting of the game.
  * @author idk
  * @version 1.0
  */

@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javax.xml.transform.Source;
 
 /**
- * The {@code Button} class represents a button in the game
+ * The {@code Button} class represents a button in the game.
  * @author idk
  * @version 1.0
  */

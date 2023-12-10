@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * The {@code Dirt} class represents a dirt block in the game
+ * The {@code Dirt} class represents a dirt block in the game.
  * @author idk
  * @version 1.0
  */
