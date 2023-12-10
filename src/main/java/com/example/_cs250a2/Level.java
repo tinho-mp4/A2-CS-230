@@ -25,8 +25,9 @@ public class Level {
     }
 
     public static Item getCurrentItem() {
-        int playerX = Player.getX();
-        int playerY = Player.getY();
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        int playerX = player.getX();
+        int playerY = player.getY();
 
         for (ArrayList<Item> row : LevelLoader.getItemGrid()) {
             for (Item item : row) {

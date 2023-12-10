@@ -92,6 +92,8 @@ public class Block extends Entity {
         int deltaX = newX - playerX;
         int deltaY = newY - playerY;
 
+        Player player = (Player) LevelLoader.getEntityWithCoords(playerX, playerY);
+
         if (verifyNewPosition(newX, newY, deltaX, deltaY)) {
             Block currentBlock = (Block)
                     LevelLoader.getEntityWithCoords(newX, newY);
@@ -115,8 +117,8 @@ public class Block extends Entity {
                     }
                     break;
             }
-            Player.setX(newX);
-            Player.setY(newY);
+            player.setX(newX);
+            player.setY(newY);
         }
 
 

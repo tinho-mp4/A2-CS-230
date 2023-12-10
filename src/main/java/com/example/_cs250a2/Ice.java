@@ -51,14 +51,16 @@ public class Ice extends Tile {
         // System.out.println("playerX: " + playerX + " playerY: " + playerY + " newPlayerX: " + newPlayerX + " newPlayerY: " + newPlayerY);
         // delta will act as the direction in which the player is going
         // NOTE: deltaX -1 is left, deltaX 1 is right, deltaY 1 is up, deltaY -1 is down, this might need changing
+        Entity currentEntity = LevelLoader.getEntityWithCoords(playerX, playerY);
+
         int deltaX = newPlayerX - playerX;
         int deltaY = newPlayerY - playerY;
 
         if (!LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) {
             // Corner checking
             if (LevelLoader.getTile(newPlayerX, newPlayerY).getName() == "ice") {
-                Player.setX(newPlayerX);
-                Player.setY(newPlayerY);
+                currentEntity.setX(newPlayerX);
+                currentEntity.setY(newPlayerY);
 
                 Corner blockedCorner = ((Ice)LevelLoader.getTile(newPlayerX, newPlayerY)).getBlockedCorner();
 
@@ -68,12 +70,12 @@ public class Ice extends Tile {
                 if (hitIceWall(playerX, playerY, newPlayerX, newPlayerY, blockedCorner)) {
                     // if the player came from a path, player should stay on the path
                     if (LevelLoader.getTile(playerX, playerY).getName() != "ice") {
-                        Player.setX(playerX);
-                        Player.setY(playerY);
+                        currentEntity.setX(playerX);
+                        currentEntity.setY(playerY);
                         return;
                     }
-                    Player.setX(playerX - deltaX);
-                    Player.setY(playerY - deltaY);
+                    currentEntity.setX(playerX - deltaX);
+                    currentEntity.setY(playerY - deltaY);
                     event(playerX, playerY, playerX - deltaX, playerY - deltaY);
                     return;
                 }
@@ -103,12 +105,12 @@ public class Ice extends Tile {
 
                 event(newPlayerX, newPlayerY, targetX, targetY);
             } else {
-                Player.setX(newPlayerX);
-                Player.setY(newPlayerY);
+                currentEntity.setX(newPlayerX);
+                currentEntity.setY(newPlayerY);
             }
         } else if (LevelLoader.getTile(newPlayerX, newPlayerY).isSolid()) { // Go in the reverse direction
-            Player.setX(playerX - deltaX);
-            Player.setY(playerY - deltaY);
+            currentEntity.setX(playerX - deltaX);
+            currentEntity.setY(playerY - deltaY);
             event(playerX, playerY, playerX - deltaX, playerY - deltaY);
         }
     }

@@ -107,7 +107,8 @@ public abstract class Monster extends Entity {
    }
 
    protected void playerKill() {
-      if (this.getX() == Player.getX() && this.getY() == Player.getY()) {
+      Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+      if (this.getX() == player.getX() && this.getY() == player.getY()) {
          GameOver.playerDeathMonster();
       }
    }

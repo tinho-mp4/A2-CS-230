@@ -351,6 +351,19 @@ public class LevelLoader {
         }
     }
 
+    public static Entity getEntityByClass(Class<?> cls) {
+        for (ArrayList<Entity> row : entityGrid) {
+            for (Entity entity : row) {
+                if (entity != null) {
+                    if (entity.getClass() == cls) {
+                        return entity;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public static Entity getEntityWithCoords(int x, int y) {
         for (ArrayList<Entity> row : entityGrid) {
             for (Entity entity : row) {
