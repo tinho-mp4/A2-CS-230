@@ -6,22 +6,40 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ChipSocket extends Tile{
-    private static final Image CHIP_SOCKET_IMAGE = new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket.png"));
+public class ChipSocket extends Tile {
+    /**
+     * image of chip scoket.
+     */
+    private static final Image CHIP_SOCKET_IMAGE =
+    new Image(ChipSocket.class.getResourceAsStream("sprites/chipSocket.png"));
     //other chips sprites
+    /**
+     * number of chips needed to unlock.
+     */
     private final int chipsNeeded;
 
 
-
-    public ChipSocket(int type, int x, int y) {
+    /**
+     * constructor.
+     * @param type how many chips needed
+     * @param x x
+     * @param y y
+     */
+    public ChipSocket(
+            final int type,
+            final int x,
+            final int y) {
         super("chipSocket", x, y, true);
         this.chipsNeeded = type;
     }
 
+    /**
+     * resets all the locks.
+     */
     public static void resetAllLocks() {
-        for(ArrayList<Tile> row : LevelLoader.getTileGrid()) {
-            for(Tile t : row) {
-                if(t instanceof ChipSocket socket) {
+        for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
+            for (Tile t : row) {
+                if (t instanceof ChipSocket socket) {
                     socket.setSolid(true);
                 }
             }
@@ -29,7 +47,11 @@ public class ChipSocket extends Tile{
     }
 
 
-    public void event(ArrayList<Item> inventory) {
+    /**
+     * event that happens when player is on the chip socket.
+     * @param inventory
+     */
+    public void event(final ArrayList<Item> inventory) {
         if (enoughChips(inventory)) {
             LevelLoader.setTile(getX(), getY(), new Path(getX(), getY()));
             AtomicInteger removeChips = new AtomicInteger(chipsNeeded);
@@ -45,26 +67,39 @@ public class ChipSocket extends Tile{
 
     }
 
-    private boolean enoughChips(ArrayList<Item> inventory) {
+    private boolean enoughChips(final ArrayList<Item> inventory) {
         int chipCount = 0;
         for (Item item : inventory) {
-            if(item instanceof Chip) {
+            if (item instanceof Chip) {
                 chipCount++;
             }
         }
         return chipCount >= chipsNeeded;
     }
 
-    public void checkUnlock(ArrayList<Item> inventory) {
-        if(enoughChips(inventory)) {
+    /**
+     * checks if the player has enough chips to unlock.
+     * @param inventory inventory
+     */
+    public void checkUnlock(final ArrayList<Item> inventory) {
+        if (enoughChips(inventory)) {
             setSolid(false);
         }
     }
 
 
+    /**
+     * draws the chip socket.
+     * @param gc graphics context
+     * @param x x coordnate
+     * @param y y coordinate
+     * @param size size
+     */
     @Override
-    //case chipsneeded 1-5, draw chipsocket dependant on which it is
-    public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(CHIP_SOCKET_IMAGE, x*size, y*size);
+    public void draw(final GraphicsContext gc,
+                     final double x,
+                     final double y,
+                     final double size) {
+        gc.drawImage(CHIP_SOCKET_IMAGE, x * size, y * size);
     }
 }
