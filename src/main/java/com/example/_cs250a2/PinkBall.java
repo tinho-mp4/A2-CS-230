@@ -3,17 +3,35 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 /**
- * The {@code PinkBall} class represents a pink ball (monster) in the game
- * @author idk
- * @version 1.0
+ * Represents a pink ball (monster) in the game.
+ * This class extends {@code Monster} and manages the behavior and rendering of the pink ball.
+ *
+ * @author Finn
  */
 //TODO test
 public class PinkBall extends Monster {
 
+    /**
+     * Speed of pink ball monsters.
+     */
     private static int speed;
 
-    private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/pinkBall.png"));
+    /**
+     * Image for pink ball monsters.
+     */
+    private static final Image BALL_IMAGE =
+            new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/pinkBall.png")));
+
+    /**
+     * Constructs a PinkBall with specified speed, starting direction, and starting location.
+     *
+     * @param ticks             The speed of the pink ball.
+     * @param startingDirection The initial direction of the pink ball.
+     * @param startingLocation  The starting coordinates of the pink ball.
+     */
     public PinkBall(int ticks, char startingDirection, int[] startingLocation) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
@@ -29,14 +47,31 @@ public class PinkBall extends Monster {
         PinkBallList.add(this);
     }
 
-    public void event (int x, int y, int newX, int newY) {}
+    /**
+     * Handles the events triggered by the pink ball in the game.
+     *
+     * @param x    The current x-coordinate of the pink ball.
+     * @param y    The current y-coordinate of the pink ball.
+     * @param newX The new x-coordinate.
+     * @param newY The new y-coordinate.
+     */
+    public void event(int x, int y, int newX, int newY) {}
+
+    /**
+     * Gets the speed of the pink ball.
+     *
+     * @return The speed of the pink ball.
+     */
     public int getSpeed() {
         return speed;
     }
 
+    /**
+     * Moves the pink ball according to its logic in the game.
+     */
     public void move() {
         int[] currentTile = {this.getX(), this.getY()};
-        //w is up, s is down, a is left and d is right
+        //w is up, s is down, an is left and d is right
         if (direction == 'w') {
             //next location is 1 tile above current position
             int[] locationNext = {this.getX(), this.getY()+1};
@@ -84,6 +119,14 @@ public class PinkBall extends Monster {
         }
     }
 
+    /**
+     * Draws the pink ball on the given graphics context.
+     *
+     * @param gc   The graphics context to draw on.
+     * @param x    The x-coordinate for drawing.
+     * @param y    The y-coordinate for drawing.
+     * @param size The size of the pink ball image.
+     */
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(BALL_IMAGE, x*size, y*size);
