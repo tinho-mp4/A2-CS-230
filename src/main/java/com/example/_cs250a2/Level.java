@@ -10,10 +10,21 @@ import java.util.ArrayList;
 public class Level {
 
     private String name;
-    private int[][] levelTiles;
+    private int timeLimit;
+    private int width;
+    private int height;
+    private ArrayList<ArrayList<Tile>> tileGrid;
+    private ArrayList<ArrayList<Item>> itemGrid;
+    private ArrayList<ArrayList<Entity>> entityGrid;
 
-    public Level(int[][] levelTiles) {
-        this.levelTiles = levelTiles;
+    public Level(String name, int timeLimit, int width, int height, ArrayList<ArrayList<Tile>> tileGrid, ArrayList<ArrayList<Item>> itemGrid, ArrayList<ArrayList<Entity>> entityGrid) {
+        this.name = name;
+        this.timeLimit = timeLimit;
+        this.width = width;
+        this.height = height;
+        this.tileGrid = tileGrid;
+        this.itemGrid = itemGrid;
+        this.entityGrid = entityGrid;
     }
 
 
@@ -25,8 +36,9 @@ public class Level {
     }
 
     public static Item getCurrentItem() {
-        int playerX = Player.getX();
-        int playerY = Player.getY();
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        int playerX = player.getX();
+        int playerY = player.getY();
 
         for (ArrayList<Item> row : LevelLoader.getItemGrid()) {
             for (Item item : row) {

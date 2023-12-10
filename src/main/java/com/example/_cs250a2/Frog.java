@@ -35,7 +35,7 @@ public class Frog extends Monster {
         FrogList.add(this);
     }
 
-    public static int getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
@@ -47,8 +47,9 @@ public class Frog extends Monster {
         int[] checkRight = {x+1, y};
         int[] checkBelow = {x, y-1};
         int[] checkAbove = {x, y+1};
-        int playerX = Player.getX();
-        int playerY = Player.getY();
+        Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        int playerX = player.getX();
+        int playerY = player.getY();
         if (x > playerX && checkTile(checkLeft)) {
             x--;
             playerKill();

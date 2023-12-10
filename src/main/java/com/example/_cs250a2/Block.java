@@ -68,9 +68,7 @@ public class Block extends Entity {
         int nextX = newX + deltaX;
         int nextY = newY + deltaY;
         if (currentBlock instanceof Block) {
-            if (LevelLoader.getTile(nextX, nextY).isPushableBlock()) {
-                return true;
-            }
+            return LevelLoader.getTile(nextX, nextY).isPushableBlock();
         }
         return false;
     }
@@ -91,6 +89,8 @@ public class Block extends Entity {
             final int newY) {
         int deltaX = newX - playerX;
         int deltaY = newY - playerY;
+
+        Player player = (Player) LevelLoader.getEntityWithCoords(playerX, playerY);
 
         if (verifyNewPosition(newX, newY, deltaX, deltaY)) {
             Block currentBlock = (Block)
@@ -115,8 +115,8 @@ public class Block extends Entity {
                     }
                     break;
             }
-            Player.setX(newX);
-            Player.setY(newY);
+            player.setX(newX);
+            player.setY(newY);
         }
 
 

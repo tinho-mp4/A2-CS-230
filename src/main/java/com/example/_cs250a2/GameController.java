@@ -10,17 +10,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -163,7 +162,7 @@ public class GameController {
     /**
      * The list of profiles in the profiles choice box.
      */
-    private ObservableList<Profile> profiles = FXCollections.observableArrayList();
+    private final ObservableList<Profile> profiles = FXCollections.observableArrayList();
 
     /**
      * The current level.
@@ -182,7 +181,7 @@ public class GameController {
     /**
      * The button to select the level.
      */
-    private ObservableList<Level> levels = FXCollections.observableArrayList();
+    private final ObservableList<Level> levels = FXCollections.observableArrayList();
 
     /**
      *  The button to select the level.
@@ -204,7 +203,7 @@ public class GameController {
     /**
      * The high score object.
      */
-    private HighScore highScore = new HighScore();
+    private final HighScore highScore = new HighScore();
 
     /**
      * The object property for the current level in the level choice box.
@@ -240,13 +239,13 @@ public class GameController {
 
 
 
-        this.levelLoader.drawLevel(gc);
-        this.levelLoader.drawEntities(gc);
-        this.levelLoader.drawItems(gc);
+        LevelLoader.drawLevel(gc);
+        LevelLoader.drawEntities(gc);
+        LevelLoader.drawItems(gc);
 
 
         // Draw player at current location
-        player.draw(gc, player.getX(), player.getY(), 32);
+        player.draw(gc, Player.getX(), Player.getY(), 32);
         //Draw key at current location
 
     }
@@ -264,7 +263,14 @@ public class GameController {
             updateTimer();
         }
 
-        Monster.tickMove(tickCount);
+        //move the monster every tick
+        for (ArrayList<Entity> entityArrayList : levelLoader.getEntityGrid()) {
+            for (Entity entity : entityArrayList) {
+                if (entity instanceof Monster monster) {
+                    monster.tickMove(tickCount);
+                }
+            }
+        }
         tickCount++;
         if (tickCount >= MAXIMUMTICKS) {
             tickCount = 0;
@@ -418,8 +424,8 @@ public class GameController {
 
 
             // Clear the level before loading a new one
-            levelLoader.clearLevel();
-            levelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
+            LevelLoader.clearLevel();
+            LevelLoader.loadLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"));
             LevelLoader.linkButtonsToTraps(); // linking buttons to traps
             tickTimeline.play();
 
@@ -450,7 +456,7 @@ public class GameController {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         // Clear other level-related resources
         timeLimit = 0;
-        levelLoader.clearLevel();
+        LevelLoader.clearLevel();
         //move to positon
         player.setPosition(1, 1);
         // Clear the inventory

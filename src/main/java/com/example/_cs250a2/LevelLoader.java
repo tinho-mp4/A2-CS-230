@@ -14,8 +14,11 @@ import java.util.regex.Pattern;
  */
 public class LevelLoader {
 
-    private static Map<Integer, Button> buttons = new HashMap<>();
-    private static Map<Integer, Trap> traps = new HashMap<>();
+    private static final Map<Integer, Button> buttons = new HashMap<>();
+    private static final Map<Integer, Trap> traps = new HashMap<>();
+
+    private static ArrayList<Level> levels = new ArrayList<>();
+    private static Level currentLevel;
 
 
     /**
@@ -58,13 +61,13 @@ public class LevelLoader {
         Scanner scanner = new Scanner(Objects.requireNonNull(getClass().getResourceAsStream("levels/"+levelName+".txt")));
         // Read level information
         this.levelName = scanner.nextLine().split(": ")[1];
-        this.timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
+        timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
         String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
-        this.width = width;
-        this.height = height;
-        this.entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
+        LevelLoader.width = width;
+        LevelLoader.height = height;
+        entityCount = countFileLines(getClass().getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
     }
 
     /**
@@ -162,12 +165,15 @@ public class LevelLoader {
             }
         }
 
-
+        currentLevel = new Level(levelName, timeLimit, width, height, tileGrid, itemGrid, entityGrid);
+        levels.add(currentLevel);
 
         drawLevel(gc);
         drawEntities(gc);
         drawItems(gc);
     }
+
+
 
     public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
         int rows = strings.size();
@@ -214,7 +220,7 @@ public class LevelLoader {
      * Locked Door: L - maybe n not sure yet
      * Frog: F
      * Pink Ball: G
-     * Bug: E
+     * Bug: Z
      * Player:?
      * Computer Chip: C
      * Key: K - maybe n not sure yet
@@ -290,7 +296,7 @@ public class LevelLoader {
         }
     }
 
-    public static void drawLevel(GraphicsContext gc) {;
+    public static void drawLevel(GraphicsContext gc) {
         for (ArrayList<Tile> row : getTileGrid()) {
             for (Tile tile : row) {
                 tile.draw(gc, tile.getX(), tile.getY(), 32);
@@ -300,7 +306,7 @@ public class LevelLoader {
 
     public static void drawEntities(GraphicsContext gc) {
         System.out.println("drawing entites" + entityGrid);
-        for (ArrayList<Entity> row : getentityGrid()) {
+        for (ArrayList<Entity> row : getEntityGrid()) {
             for (Entity entity : row) {
                 if (entity != null) {
                     entity.draw(gc, entity.getX(), entity.getY(), 32);
@@ -343,12 +349,25 @@ public class LevelLoader {
         }
     }
 
-    public static Entity getEntity(int x, int y) {
+    public static Entity getEntities(int x, int y) {
         try {
             return entityGrid.get(x).get(y);
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    public static Entity getEntityByClass(Class<?> cls) {
+        for (ArrayList<Entity> row : entityGrid) {
+            for (Entity entity : row) {
+                if (entity != null) {
+                    if (entity.getClass() == cls) {
+                        return entity;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public static Entity getEntityWithCoords(int x, int y) {
@@ -408,7 +427,7 @@ public class LevelLoader {
         return tileGrid;
     }
 
-    public static ArrayList<ArrayList<Entity>> getentityGrid() {
+    public static ArrayList<ArrayList<Entity>> getEntityGrid() {
         return entityGrid;
     }
 

@@ -61,7 +61,7 @@ public class Bug extends Monster {
      * gets the speed of the bug.
      * @return speed
      */
-    public static int getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 

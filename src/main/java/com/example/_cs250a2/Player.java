@@ -12,11 +12,11 @@ import java.util.Objects;
  * @author idk
  * @version 1.0
  */
-public class Player{
+public class Player extends Entity{
 
-    private GameController gameController;
+    private final GameController gameController;
     private boolean canMove = true;
-    private boolean playerOnButton = false;
+    private final boolean playerOnButton = false;
     private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
 
     // X and Y coordinate of player on the grid.
@@ -25,11 +25,22 @@ public class Player{
     private final ArrayList<Item> inventory;
 
     public Player(int x, int y, GameController gameController) {
-        Player.x = x;
-        Player.y = y;
+        super(x, y);
         inventory = new ArrayList<>();
         this.gameController = gameController;
     }
+
+    /**
+     * event ?.
+     * @param x
+     * @param y
+     * @param newX
+     * @param newY
+     */
+    public void event(final int x,
+                      final int y,
+                      final int newX,
+                      final int newY) { }
     public void move(KeyEvent event) {
         if (canMove) {
             switch (event.getCode()) {
@@ -82,8 +93,8 @@ public class Player{
         }
 
         if (currentTile.getName() != "ice") { // Player movement on ice is handled in Ice.java
-            Player.setX(newX);
-            Player.setY(newY);
+            this.setX(newX);
+            this.setY(newY);
         }
 
 
@@ -188,8 +199,8 @@ public class Player{
     }
 
     public void setPosition(int newX, int newY) {
-        this.x = newX;
-        this.y = newY;
+        x = newX;
+        y = newY;
     }
 
 
@@ -208,20 +219,20 @@ public class Player{
         inventory.clear();
     }
 
-    public static int getX() {
+    public int getX() {
         return x;
     }
 
-    public static void setX(int x) {
-        Player.x = x;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public static int getY() {
+    public int getY() {
         return y;
     }
 
-    public static void setY(int y) {
-        Player.y = y;
+    public void setY(int y) {
+        this.y = y;
     }
 
     public void draw(GraphicsContext gc, double x, double y, double size) {
