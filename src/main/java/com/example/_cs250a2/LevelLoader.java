@@ -296,8 +296,8 @@ public class LevelLoader {
                 return new PinkBall(PINK_BALL_SPEED, 's', new int[]{entity[1]-'0', entity[2]-'0'},
                         gameController);
             case 'Z':
-                return new Bug(BUG_SPEED, 'd', new int[]{entity[1]-'0', entity[2]-'0'},
-                        false, gameController);
+                return new Bug(BUG_SPEED, 'w', new int[]{entity[1]-'0', entity[2]-'0'},
+                        true, gameController);
             case 'O':
                 return new Block(entity[1]-'0', entity[2]-'0');
             case 'Q':
