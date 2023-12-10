@@ -58,22 +58,12 @@ public class GameController {
     @FXML
     private TextArea highScoresTextArea;
 
-    //player object
-    /**
-     * The player object.
-     */
-
-    /**
-     * The timeline for the game ticks.
-     */
 
     /**
      * The score for the game.
      */
     public int score = 0;
-    /**
-     * The tick count for the game.
-     */
+
     /**
      * The tick count for the game.
      */
@@ -207,6 +197,7 @@ public class GameController {
      */
     private final HighScore highScore = new HighScore();
 
+
     /**
      * The object property for the current level in the level choice box.
      */
@@ -325,6 +316,10 @@ public class GameController {
         if (player != null)
             score += 15 * player.getChips();
         return score;
+    }
+
+    private void updateScoreDisplay() {
+        scoreLabel.setText("Score: " + calculateScore());
     }
 
     /**
