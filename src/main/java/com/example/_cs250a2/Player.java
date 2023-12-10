@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class Player extends Entity{
 
-    private final GameController gameController;
+    private final GameController GAME_CONTROLLER;
     private boolean canMove = true;
     private final boolean playerOnButton = false;
     private static final Image PLAYER_TILE = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
@@ -28,14 +28,14 @@ public class Player extends Entity{
 
     private int prevY;
 
-    private final ArrayList<Item> inventory;
+    private final ArrayList<Item> INVENTORY;
 
-    public Player(int x, int y, GameController gameController) {
+    public Player(int x, int y, GameController GAME_CONTROLLER) {
         super(x, y);
         this.x = x;
         this.y = y;
-        inventory = new ArrayList<>();
-        this.gameController = gameController;
+        INVENTORY = new ArrayList<>();
+        this.GAME_CONTROLLER = GAME_CONTROLLER;
     }
 
     /**
@@ -137,8 +137,8 @@ public class Player extends Entity{
                 break;
             case "exit":
                 Exit.event();
-                gameController.clearLevel();
-                gameController.handleShowHighScoresButton();
+                GAME_CONTROLLER.clearLevel();
+                GAME_CONTROLLER.handleShowHighScoresButton();
                 break;
             case "button":
                 Button button = (Button) currentTile;
@@ -151,17 +151,17 @@ public class Player extends Entity{
                 }
                 break;
             case "water":
-                gameController.clearLevel();
+                GAME_CONTROLLER.clearLevel();
                 GameOver.playerDeathDrown();
                 break;
             case "chipSocket":
                 ChipSocket chipSocket = (ChipSocket) currentTile;
-                chipSocket.event(inventory);
+                chipSocket.event(INVENTORY);
                 ChipSocket.resetAllLocks();
                 break;
             case "lockedDoor":
                 LockedDoor lockedDoor = (LockedDoor) currentTile;
-                lockedDoor.event(inventory);
+                lockedDoor.event(INVENTORY);
                 displayInventory();
                 break;
             case "ice":
@@ -183,7 +183,7 @@ public class Player extends Entity{
                 for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
                     for (Tile t : row) {
                         if (t instanceof ChipSocket socket) {
-                            socket.checkUnlock(inventory);
+                            socket.checkUnlock(INVENTORY);
                         }
                     }
                 }
@@ -199,7 +199,7 @@ public class Player extends Entity{
                 for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
                     for (Tile t : row) {
                         if (t instanceof LockedDoor door) {
-                            door.checkUnlock(inventory);
+                            door.checkUnlock(INVENTORY);
                         }
                     }
                 }
@@ -208,7 +208,7 @@ public class Player extends Entity{
         }
 
         if(Level.isOnMonster()) {
-            gameController.clearLevel();
+            GAME_CONTROLLER.clearLevel();
             GameOver.playerDeathMonster();
         }
 
@@ -225,7 +225,7 @@ public class Player extends Entity{
 
     private void displayInventory() {
         System.out.println("Inventory:");
-        for (Item item : inventory) {
+        for (Item item : INVENTORY) {
             System.out.println("- " + item);
         }
     }
@@ -236,15 +236,15 @@ public class Player extends Entity{
     }
 
     public void addToInventory(Item item){
-        inventory.add(item);
+        INVENTORY.add(item);
     }
 
     public void removeFromInventory(Item item){
-        inventory.remove(item);
+        INVENTORY.remove(item);
     }
 
     public void clearInventory() {
-        inventory.clear();
+        INVENTORY.clear();
     }
 
     public int getX() {
@@ -260,7 +260,7 @@ public class Player extends Entity{
     }
 
     public  int getChips() {
-        return (int) inventory.stream().filter(item -> item instanceof Chip).count();
+        return (int) INVENTORY.stream().filter(item -> item instanceof Chip).count();
     }
 
 
