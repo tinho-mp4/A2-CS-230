@@ -6,16 +6,15 @@ import javafx.scene.image.Image;
 import java.util.Objects;
 
 /**
- * The {@code Ice} class represents an ice block in the game
- * @author Ryan Pietras
- * @version 1.0
- */
-
-/**
  * The {@code Corner} enum represents the corner of a wall that is blocked
  */
 enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, NONE}
 
+/**
+ * The {@code Ice} class represents an ice block in the game
+ * @author Ryan Pietras
+ * @version 1.0
+ */
 public class Ice extends Tile {
     /**
      * Image of the ice block
@@ -156,10 +155,8 @@ public class Ice extends Tile {
                     return;
                 }
 
-                /**
-                 * Depending on the corner of the ice block and the direction the entity is going,
-                 * the entity will move in a specific direction.
-                 */
+                // Depending on the corner of the ice block and the direction the entity is going,
+                // the entity will move in a specific direction.
                 switch (blockedCorner) {
                     case TOP_LEFT:
                         targetY += (deltaX == -1) ? 1 : 0;
