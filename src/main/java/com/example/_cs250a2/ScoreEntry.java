@@ -42,4 +42,12 @@ public class ScoreEntry implements Serializable {
     public int getScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return "ScoreEntry{" +
+                "profileName='" + profileName + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }
