@@ -93,7 +93,7 @@ public class Bug extends Monster {
         if (left) {
             if (direction == 'w') {
                 //the bug wants to go forwards
-                // or to its' left (or right), checks if it can
+                // or to its left (or right), checks if it can
                 if (!checkTile(toTheLeft, currentTile) && !checkTile(above, currentTile)
                         && moveCount < MAXTURNS) {
                     //bug cant go where it wants to,
@@ -101,7 +101,7 @@ public class Bug extends Monster {
                     direction = 'd';
                     move();
                     //it can either go one way or both,
-                    // if it cant go left it goes in its' current facing
+                    // if it cant go left it goes in its current facing
                 } else if (!(checkTile(toTheLeft, currentTile))) {
                     this.setY(this.getY()+1);
                     playerKill(gameController);

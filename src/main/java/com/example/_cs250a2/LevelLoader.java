@@ -21,7 +21,7 @@ public class LevelLoader {
     private static final Map<Integer, Button> buttons = new HashMap<>();
     private static final Map<Integer, Trap> traps = new HashMap<>();
 
-    private static ArrayList<Level> levels = new ArrayList<>();
+    private final static ArrayList<Level> levels = new ArrayList<>();
     private static Level currentLevel;
 
 
@@ -216,27 +216,30 @@ public class LevelLoader {
      *  Processes a line of com.example._cs250a2.tile information and draws the tiles on the specified GraphicsContext.
      *  Each character in the line represents a com.example._cs250a2.tile, and the tiles are drawn on the specified
      *  GraphicsContext at the corresponding positions.
-     * @param gc The GraphicsContext used for drawing.
-     */
-
-    /** KEY
+     * KEY
      * Path: P
      * Dirt: D
      * Wall: U
      * Exit: E
-     * Button: B(n)
+     * Button: B(n) - n is the button number
      * Trap: T
      * Water: W
-     * Chip Socket: S
-     * Ice: I(n)
+     * Chip Socket: S(n) - n is the number of chips required
+     * Ice: I(n) - n is the ice type
      * Block: O
-     * Locked Door: L - maybe n not sure yet
+     * Locked Door: L
      * Frog: F
      * Pink Ball: G
      * Bug: Z
      * Player:?
      * Computer Chip: C
-     * Key: K - maybe n not sure yet
+     * Key: K (R, G, B, Y) - R is red, G is green, B is blue, Y is yellow
+     *
+     * @param gc The GraphicsContext used for drawing.
+     * @param tile The current tile processed.
+     * @param x The X position of the tile.
+     * @param y The Y position of the tile.
+     * @return The tile that was processed.
      */
     private static Tile processTile(GraphicsContext gc, char[] tile, int x, int y) {
         switch (tile[0]){
@@ -365,14 +368,6 @@ public class LevelLoader {
             return new Wall(x, y);
         }
     }
-
-//    public static Entity getEntities(int x, int y) {
-//        try {
-//            return entityList.get(x).get(y);
-//        } catch (IndexOutOfBoundsException e) {
-//            return null;
-//        }
-//    }
 
     public static Entity getEntityByClass(Class<?> cls) {
         for (Entity entity : entityList) {

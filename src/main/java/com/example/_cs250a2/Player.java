@@ -17,9 +17,15 @@ public class Player extends Entity{
     private final ArrayList<Item> INVENTORY;
     private static final Image PLAYER_TILE =
     new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
+    private boolean canMove = true; // Used to stop player movement when stuck in a trap.
+    /**
+     * The x and y coordinates of the player.
+     */
     private int x;
     private int y;
-    private boolean canMove = true;
+    /**
+     * The previous x and y coordinates of the player.
+     */
     private int prevX;
     private int prevY;
 
@@ -105,7 +111,7 @@ public class Player extends Entity{
     }
 
     /**
-     *Performs the player's interactions within the game.
+     * Performs the player's interactions within the game.
      * @param newX new x coordinate if the player has been moved by environment.
      * @param newY new y coordinate if the player has been moved by environment.
      */
@@ -121,9 +127,6 @@ public class Player extends Entity{
         }
 
         if (nextEntity instanceof Block block) {
-//            if (LevelLoader.getTile(newX + 2*(newX - x), newY + 2*(newY - y)).isSolid()) {
-//                return;
-//            }
             Ice.event(block.getX(), block.getY(), block.getX() + (newX - x), block.getY() + (newY - y), false);
             Ice.event(currentEntity.getX(), currentEntity.getY(), newX, newY, true);
             movedAfterBlock = true;
@@ -205,9 +208,6 @@ public class Player extends Entity{
                     }
                 }
 
-
-
-
             } else if (currentItem instanceof Key) {
                 addToInventory(currentItem);
                 LevelLoader.removeItem(currentItem);
@@ -224,28 +224,29 @@ public class Player extends Entity{
             }
         }
 
-        if (Level.isOnMonster()) {
+        if (isOnMonster()) {
             GAME_CONTROLLER.clearLevel();
             GameOver.playerDeathMonster();
         }
-
-        if (Level.isOnBlock()) {
-            Block block = new Block(x, y);
-            block.moveBlock(newX, newY);
-        }
     }
 
     /**
-     *Checks if the player is on an exit tile.
-     * @return an instance of exit
+     * Check if the player is on the same tile as a monster.
+     * @return True if the player is on the same tile as a monster, false otherwise.
      */
-    public boolean isOnExit() {
-        Tile currentTile = LevelLoader.getTile(x, y);
-        return currentTile instanceof Exit;
+    private boolean isOnMonster() {
+        for (Entity entity : LevelLoader.getEntityList()) {
+            if (entity instanceof Monster) {
+                if (entity.getX() == x && entity.getY() == y) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
-     *Prints the Player's inventory
+     * Prints the Player's inventory
      */
     private void displayInventory() {
         System.out.println("Inventory:");
@@ -254,6 +255,11 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     * Sets the player's position to the given coordinates.
+     * @param newX The new x-coordinate.
+     * @param newY The new y-coordinate.
+     */
     public void setPosition(int newX, int newY) {
         x = newX;
         y = newY;
@@ -268,7 +274,7 @@ public class Player extends Entity{
     }
 
     /**
-     *Removes an item from the player's inventory.
+     * Removes an item from the player's inventory.
      * @param item The item being removed from the inventory.
      */
     public void removeFromInventory(Item item){
@@ -283,16 +289,14 @@ public class Player extends Entity{
     }
 
     /**
-     *
-     * @return
+     * @return The player's x-coordinate.
      */
     public int getX() {
         return x;
     }
 
     /**
-     *
-     * @return
+     * @return The player's y-coordinate.
      */
     public int getY() {
         return y;
@@ -300,7 +304,6 @@ public class Player extends Entity{
 
     /**
      * Draws the player on the given graphics context at specified coordinates and size.
-     *
      * @param gc   GraphicsContext to draw on.
      * @param x    X-coordinate for drawing.
      * @param y    Y-coordinate for drawing.

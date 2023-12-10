@@ -27,7 +27,7 @@ public class Block extends Entity {
     }
 
     /**
-     * pushes the block onto a new postion.
+     * pushes the block onto a new position.
      * @param newX The new X position of the block tile
      * @param newY The new Y position of the block tile
      */

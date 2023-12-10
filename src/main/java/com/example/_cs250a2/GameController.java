@@ -79,11 +79,6 @@ public class GameController {
     private int tickCount = 0;
 
     /**
-     * The level loader for the game.
-     */
-//    public LevelLoader levelLoader;
-
-    /**
      * The label for the time remaining.
      */
     @FXML
@@ -496,6 +491,7 @@ public class GameController {
             player.clearInventory();
         }
         resetPlayerPosition();
+        Monster.clearMonsterList();
     }
     private void resetPlayerPosition() {
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);

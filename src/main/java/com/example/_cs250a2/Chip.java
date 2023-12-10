@@ -28,7 +28,7 @@ public class Chip extends Item {
     /**
      * draws the chip.
      * @param gc graphics context
-     * @param x x coordnate
+     * @param x x cooridnate
      * @param y y coordinate
      * @param size size
      */

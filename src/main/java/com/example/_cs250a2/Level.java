@@ -8,8 +8,7 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Level {
-
-    private String name;
+    private final String name;
     private int timeLimit;
     private int width;
     private int height;

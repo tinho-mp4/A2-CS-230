@@ -18,7 +18,8 @@ public abstract class Monster extends Entity {
    protected static final int MAXTURNS = 4;
    //this keeps track of how many monsters are created so they can each use their position in the ArrayList
    protected static int countMonsters = 0;
-
+   //arraylist of all monsters in the level
+   protected static ArrayList<Monster> monsterList = new ArrayList<>();
    //arraylists with references to each kind of monster present in a level
    protected static ArrayList<PinkBall> PinkBallList = new ArrayList<>();
    protected static ArrayList<Bug> BugList = new ArrayList<>();
@@ -47,12 +48,19 @@ public abstract class Monster extends Entity {
    public Monster(int x, int y, char direction) {
       super(x, y);
       this.direction = direction;
+      monsterList.add(this);
    }
 
    public int getSpeed() {
       return this.speed;
    }
 
+   public static void clearMonsterList() {
+      monsterList = new ArrayList<>();
+   }
+   public static ArrayList<Monster> getMonsterList() {
+      return monsterList;
+   }
    public static ArrayList<PinkBall> getPinkBallList() {
       return PinkBallList;
    }

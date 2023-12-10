@@ -35,7 +35,7 @@ public class Dirt extends Tile{
     /**
      * draws the Dirt.
      * @param gc graphics context
-     * @param x x coordnate
+     * @param x x coordinate
      * @param y y coordinate
      * @param size size
      */
