@@ -17,9 +17,12 @@ public class ScoreEntry implements Serializable {
     private transient SimpleStringProperty profileNameProperty;
     private transient SimpleIntegerProperty scoreProperty;
 
-    // Fields for score entry data
+    /** The profile name associated with this score entry. */
     private final String profileName;
+
+    /** The score achieved by the profile. */
     private final int score;
+
 
     /**
      * Constructs a ScoreEntry with a profile name and a score.

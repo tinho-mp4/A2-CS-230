@@ -13,21 +13,31 @@ import java.util.Objects;
  * @author Evans
  */
 public class Player extends Entity{
+    /** The game controller managing the player's interactions and game state. */
     private final GameController GAME_CONTROLLER;
+
+    /** The inventory of items collected by the player. */
     private final ArrayList<Item> INVENTORY;
+
+    /** The image representing the player's character. */
     private static final Image PLAYER_TILE =
-    new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
-    private boolean canMove = true; // Used to stop player movement when stuck in a trap.
-    /**
-     * The x and y coordinates of the player.
-     */
+            new Image(Objects.requireNonNull(Player.class.getResourceAsStream("sprites/player.png")));
+
+    /** Flag indicating whether the player can move (e.g., not stuck in a trap). */
+    private boolean canMove = true;
+
+    /** The current x-coordinate of the player's position. */
     private int x;
+
+    /** The current y-coordinate of the player's position. */
     private int y;
-    /**
-     * The previous x and y coordinates of the player.
-     */
+
+    /** The previous x-coordinate of the player's position. */
     private int prevX;
+
+    /** The previous y-coordinate of the player's position. */
     private int prevY;
+
 
     /**
      * Creates a player at specified coordinates and associates it with a game controller.
@@ -66,7 +76,10 @@ public class Player extends Entity{
     }
 
     /**
-     * Moves the player in the game.
+     * Handles player movement based on keyboard input. Moves the player in the specified direction if the
+     * destination is not blocked by solid tiles or immovable entities.
+     *
+     * @param event The KeyEvent corresponding to the player's keyboard input.
      */
     public void move(KeyEvent event) {
         prevX = x;

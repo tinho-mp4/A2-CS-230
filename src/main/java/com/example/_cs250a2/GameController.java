@@ -572,9 +572,10 @@ public class GameController {
     }
 
     /**
-     * Returns the current level.
+     * Returns the current level as a JavaFX ObjectProperty. This property is used for binding
+     * and listening to changes in the current level.
      *
-     * @return The current level.
+     * @return The current level as an ObjectProperty.
      */
     public ObjectProperty<Level> currentLevelProperty() {
         return currentLevelProperty;

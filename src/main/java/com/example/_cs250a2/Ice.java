@@ -68,6 +68,8 @@ public class Ice extends Tile {
 
     /**
      * Sets the variable for the corner of which a wall is placed
+     * @param x the x coordinate of the ice block
+     * @param y the y coordinate of the ice block
      * @param blockedCorner the blocked corner enum variable (can be null)
      */
     public Ice(int x, int y, int blockedCorner) {
