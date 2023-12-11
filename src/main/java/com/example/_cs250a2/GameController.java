@@ -284,7 +284,7 @@ public class GameController {
     public void updateTimer() {
         timeLimit--;
         if (timeLimit <= 0) {
-            GameOver.gameEndTime();
+            clearLevel();
             tickTimeline.stop();
         }
 

@@ -34,7 +34,7 @@ public class Profile implements Serializable {
      */
     public Profile(String name) {
         this.name = name;
-        this.levelReached = 0;
+        this.levelReached = 1;
         this.levelScores = new HashMap<>();
     }
 
@@ -52,11 +52,8 @@ public class Profile implements Serializable {
      * It should be called when the player successfully completes a level to update their progress.
      */
     public void nextLevel() {
-        // Check if the current level is the one immediately following the last completed level
-        if (lastCompletedLevel == levelReached) {
-            levelReached++;
+        levelReached++;
         }
-    }
 
     /**
      * Get the highest level reached by the player.
