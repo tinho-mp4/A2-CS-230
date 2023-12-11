@@ -39,7 +39,7 @@ public class GameController {
     /**
      * The maximum number of ticks.
      */
-    private static final int MAXIMUMTICKS = 5;
+    private static final int MAXIMUM_TICKS = 5;
 
     /**
      * The canvas for the game.
@@ -268,7 +268,7 @@ public class GameController {
             }
         }
         tickCount++;
-        if (tickCount >= MAXIMUMTICKS) {
+        if (tickCount >= MAXIMUM_TICKS) {
             tickCount = 0;
         }
         drawGame();

@@ -11,31 +11,26 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Bug extends Monster {
-
-    /**
-     * image of bug.
-     */
     private static final Image BUG_IMAGE
     = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/bug.png")));
-
-    //which wall to 'hug' when it moves
     /**
-     * left or right.
+     * which wall to 'hug' when bug moves, true for left or false for right
      */
     private final boolean left;
-
     private final GameController gameController;
     /**
-     * speed of bug.
+     * speed is how many ticks between movement.
      */
     private static int speed;
 
     /**
      * constructor.
-     * @param ticks speed
+     * checks the location and direction are valid, also adds location to a list of monster locations
+     * @param ticks number of ticks between movement (speed)
      * @param startingDirection direction
      * @param startingLocation location
      * @param side left or right
+     * @param gameController gameController
      */
     public Bug(final int ticks, final char startingDirection, final int[] startingLocation,
                final boolean side, GameController gameController) {
@@ -57,7 +52,6 @@ public class Bug extends Monster {
         countMonsters++;
         monsterLocations.add(this.getX());
         monsterLocations.add(this.getY());
-        monsterList.add(this);
     }
 
     /**
@@ -69,11 +63,11 @@ public class Bug extends Monster {
     }
 
     /**
-     * event ?.
-     * @param x
-     * @param y
-     * @param newX
-     * @param newY
+     * event
+     * @param x    The current x-coordinate.
+     * @param y    The current y-coordinate.
+     * @param newX The new x-coordinate after the event.
+     * @param newY The new y-coordinate after the event.
      */
     public void event(final int x,
                        final int y,
@@ -81,7 +75,7 @@ public class Bug extends Monster {
                        final int newY) { }
 
     /**
-     * moves the bug.
+     * moves the monster and calls checks to kill player.
      */
     public void move() {
         moveCount++;

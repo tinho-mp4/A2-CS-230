@@ -13,73 +13,115 @@ import java.util.Arrays;
 public abstract class Monster extends Entity {
 
    /**
-    * only 4 directions to move in so it doesn't want to turn more than that.
+    * only 4 directions to move in so a monster doesn't want to turn more than that.
+    * (this stops recursive calls turning indefinitely).
     */
    protected static final int MAXTURNS = 4;
-   //this keeps track of how many monsters are created so they can each use their position in the ArrayList
    protected static int countMonsters = 0;
-   //arraylist of all monsters in the level
    protected static ArrayList<Monster> monsterList = new ArrayList<>();
-
-   //this is an ArrayList for monsters to put their location in with LocationUpdate method (called when the monster moves)
+   /**
+    * monsters update their location for other monsters here.
+    */
    protected static ArrayList<Integer> monsterLocations = new ArrayList<>();
 
-   //Arraylist of tiles the monster cannot move onto
+   /**
+    * tiles most monsters can walk on, frog (and possible future exceptions) add and remove from their list in
+    * the constructor.
+    */
    protected ArrayList<String> allowedTiles = new ArrayList<>(Arrays.asList("path", "button", "trap"));
 
    //speed decided based on how many ticks between moves
    protected int speed;
+   /**
+    * index for the monsters' x coordinate in the monsterLocations list.
+    */
    protected int arrayLocationX;
+   /**
+    * index for the monsters' y coordinate in the monsterLocations list
+    */
    protected int arrayLocationY;
 
    /**
-    * keeps track of how many times
-    * the monster has called move to stop infinite loops
+    * keeps track of how many times the monster has called move to stop infinite loops.
     */
    protected int moveCount = 0;
    //starting direction the monster is moving with single character (W,A,S,D)
    protected char direction;
 
-
+   /**
+    * constructor that all monsters inherit
+    * @param x X coordinate for monster
+    * @param y Y coordinate for monster
+    * @param direction starting direction for monster
+    */
    public Monster(int x, int y, char direction) {
       super(x, y);
       this.direction = direction;
       monsterList.add(this);
    }
 
+   /**
+    * get the speed.
+    * @return speed.
+    */
    public int getSpeed() {
       return this.speed;
    }
 
+   /**
+    * clears the monster list
+    */
    public static void clearMonsterList() {
       monsterList = new ArrayList<>();
    }
+
+   /**
+    * returns the monster list.
+    * @return monsterList.
+    */
    public static ArrayList<Monster> getMonsterList() {
       return monsterList;
    }
 
+   /**
+    * abstract implementation of move to enforce monsters having one.
+    */
    public abstract void move();
-
-   //called by the tick method to move monsters
+   /**
+    * called by the tick method to move monsters.
+    * @param count the number of ticks between 0 and MAX_TICKS
+    */
    public void tickMove(int count) {
       if (count % this.getSpeed() == 0) {
          this.move();
       }
    }
-
-   //these check the parameters when the constructor is called for a monster
+   /**
+    * check the location is within the level when the constructor is called for a monster
+    * @param location location
+    */
    protected void checkLocation(int[] location) {
       if (!(location[0] < LevelLoader.getWidth() && location[1] < LevelLoader.getHeight()) && (location[0] >= 0 && location[1] >= 0)) {
          throw new IllegalArgumentException("the monster has to start within the coordinates of the game space");
       }
    }
+
+   /**
+    * check the direction is a character 'w' 'a' 's' or 'd'
+    * @param direction direction
+    */
    protected void checkDirection(char direction) {
       if (!(direction == 'w' || direction == 'a' || direction == 's' || direction == 'd')) {
          throw new IllegalArgumentException("starting direction must be a character w, a, s or d");
       }
    }
 
-   //method to check if monster move is legal
+   /**
+    * checks a monster can move to the tile it is trying to go to.
+    * @param tileLocation the tile monster wants to move to.
+    * @param currentTileLocation the tile monster is on.
+    * @return true if tile can be moved to false otherwise.
+    */
    protected boolean checkTile(int[] tileLocation, int[] currentTileLocation) {
       boolean safeTile = false;
       boolean withinBounds = true;
@@ -138,6 +180,10 @@ public abstract class Monster extends Entity {
        return canMove;
    }
 
+   /**
+    * checks if the monster is standing on a player and kills the player if they are, ending the game.
+    * @param gameController gameController
+    */
    protected void playerKill(GameController gameController) {
       Player player = (Player) LevelLoader.getEntityByClass(Player.class);
       if (this.getX() == player.getX() && this.getY() == player.getY()) {
@@ -145,13 +191,18 @@ public abstract class Monster extends Entity {
          gameController.clearLevel();
       }
    }
-
-   //whenever a monster moves it needs to update its location in the arraylist
+   /**
+    * updates the monsters location in the location list
+    * @param index index in the list
+    * @param newPosition new location to go in the list
+    */
    protected void locationUpdate(int index, int newPosition) {
       monsterLocations.set(index, newPosition);
    }
 
-   //completely resets monsters, just in case
+   /**
+    * completely resets the monsters to the initial state in the class, called when a level ends
+    */
    public static void clear() {
       countMonsters = 0;
       monsterList = new ArrayList<>();
@@ -159,5 +210,12 @@ public abstract class Monster extends Entity {
 
    }
 
+   /**
+    * draws the monster
+    * @param gc   The GraphicsContext on which to draw the entity.
+    * @param x    The x-coordinate on the canvas.
+    * @param y    The y-coordinate on the canvas.
+    * @param size The size to draw the entity.
+    */
    public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }

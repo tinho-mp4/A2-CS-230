@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
  * @author Finn P
  * @version 1.0
  */
-//TODO frog movement is wrong, doesnt move towards player properly
 public class Frog extends Monster {
 
     private static final Image FROG_IMAGE = new Image(Key.class.getResourceAsStream("sprites/frog.png"));
@@ -16,6 +15,14 @@ public class Frog extends Monster {
 
     private final GameController gameController;
     boolean blocked = false;
+
+    /**
+     * constructor for frog, checks location and direction as its called.
+     * @param ticks speed.
+     * @param startingDirection direction.
+     * @param startingLocation location.
+     * @param gameController gameController.
+     */
     public Frog (int ticks, char startingDirection, int[] startingLocation, GameController gameController) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         allowedTiles.remove("Trap");
@@ -34,16 +41,30 @@ public class Frog extends Monster {
         countMonsters++;
         monsterLocations.add(this.getX());
         monsterLocations.add(this.getY());
-        monsterList.add(this);
     }
 
+    /**
+     * returns the frogs' speed.
+     * @return speed.
+     */
     public int getSpeed() {
         return speed;
     }
 
+    /**
+     * event.
+     * @param x    The current x-coordinate.
+     * @param y    The current y-coordinate.
+     * @param newX The new x-coordinate after the event.
+     * @param newY The new y-coordinate after the event.
+     */
     public void event (int x, int y, int newX, int newY) {}
 
     //this move method will try and make the frog x equal to player x then do the same with y
+
+    /**
+     * moves the frog towards the player.
+     */
     public void move() {
 
         int[] currentTile = {this.getX(), this.getY()};
@@ -163,6 +184,13 @@ public class Frog extends Monster {
         }
     }
 
+    /**
+     * draws the frog.
+     * @param gc   The GraphicsContext on which to draw the entity.
+     * @param x    The x-coordinate on the canvas.
+     * @param y    The y-coordinate on the canvas.
+     * @param size The size to draw the entity.
+     */
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(FROG_IMAGE, x*size, y*size);

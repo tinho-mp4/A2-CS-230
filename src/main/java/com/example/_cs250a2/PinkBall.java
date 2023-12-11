@@ -8,13 +8,23 @@ import javafx.scene.image.Image;
  * @author Finn P
  * @version 1.0
  */
-//TODO doesnt move after dying and starting again
 public class PinkBall extends Monster {
 
     private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/pinkBall.png"));
+    /**
+     * speed is how many ticks between movement.
+     */
     private static int speed;
 
     private final GameController gameController;
+    /**
+     * constructor.
+     * checks the location and direction are valid, also adds location to a list of monster locations
+     * @param ticks number of ticks between movement (speed)
+     * @param startingDirection direction
+     * @param startingLocation location
+     * @param gameController gameController
+     */
     public PinkBall(int ticks, char startingDirection, int[] startingLocation, GameController gameController) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
@@ -28,14 +38,28 @@ public class PinkBall extends Monster {
         countMonsters++;
         monsterLocations.add(this.getX());
         monsterLocations.add(this.getY());
-        monsterList.add(this);
     }
 
+    /**
+     * event.
+     * @param x    The current x-coordinate.
+     * @param y    The current y-coordinate.
+     * @param newX The new x-coordinate after the event.
+     * @param newY The new y-coordinate after the event.
+     */
     public void event (int x, int y, int newX, int newY) {}
+
+    /**
+     * get the speed.
+     * @return speed.
+     */
     public int getSpeed() {
         return speed;
     }
 
+    /**
+     * moves the monster and calls checks to kill player.
+     */
     public void move() {
         moveCount++;
         int[] currentTile = {this.getX(), this.getY()};
@@ -99,6 +123,13 @@ public class PinkBall extends Monster {
         }
     }
 
+    /**
+     * draws the pinkBall
+     * @param gc   The GraphicsContext on which to draw the entity.
+     * @param x    The x-coordinate on the canvas.
+     * @param y    The y-coordinate on the canvas.
+     * @param size The size to draw the entity.
+     */
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(BALL_IMAGE, x*size, y*size);
