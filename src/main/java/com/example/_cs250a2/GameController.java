@@ -381,7 +381,6 @@ public class GameController {
     }
     private final Timeline tickTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> tick()));
 
-
     /**
      * Handles the start button event,
      * including loading the level,
@@ -619,5 +618,3 @@ public class GameController {
     }
 
 }
-
-
