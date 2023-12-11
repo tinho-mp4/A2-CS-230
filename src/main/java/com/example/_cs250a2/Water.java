@@ -8,6 +8,9 @@ import java.util.Objects;
 /**
  * Represents a water block in the game as a non-passable and pushable tile.
  * It utilizes a static image to render the water tile.
+ *
+ * @author RyanP
+ * @version 1.0
  */
 public class Water extends Tile {
     private static final Image WATER_TILE =
