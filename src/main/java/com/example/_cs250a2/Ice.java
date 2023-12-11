@@ -115,8 +115,9 @@ public class Ice extends Tile {
         if (!LevelLoader.getTile(newEntityX, newEntityY).isSolid()) {
             // Check if the next tile is an ice tile
             if (Objects.equals(LevelLoader.getTile(newEntityX, newEntityY).getName(), "ice")) {
-                // Check if the next tile after the ice tile is solid
-                if (LevelLoader.getTile(newEntityX+deltaX, newEntityY+deltaY).isSolid()) {
+                // Check if the next tile after the ice tile is solid and isn't a corner ice tile
+                if (LevelLoader.getTile(newEntityX+deltaX, newEntityY+deltaY).isSolid()
+                && ((Ice) LevelLoader.getTile(newEntityX, newEntityY)).getBlockedCorner() == Corner.NONE) {
                     // Check if the tile before the current position is an ice tile
                     if (Objects.equals(LevelLoader.getTile(entityX - deltaX, entityY - deltaY).getName(), "ice")) {
                         // If it is, move the entity back to the tile before the ice tile

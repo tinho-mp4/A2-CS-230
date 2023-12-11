@@ -3,6 +3,8 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 /**
  * The {@code Block} class represents a block tile in the game.
  * It is responsible for moving the block onto a new position,
@@ -15,7 +17,7 @@ public class Block extends Entity {
      * The image of the block tile.
      */
     private static final Image BLOCK_IMAGE
-    = new Image(Block.class.getResourceAsStream("sprites/block.png"));
+    = new Image(Objects.requireNonNull(Block.class.getResourceAsStream("sprites/block.png")));
 
     /**
      * Creates a new block tile.

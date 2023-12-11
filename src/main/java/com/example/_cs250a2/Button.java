@@ -3,6 +3,8 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 /**
  * The {@code Button} class represents a button in the game.
  * @author Pele
@@ -13,7 +15,7 @@ public class Button extends Tile {
      * The image of the button tile.
      */
     private static final Image BUTTON_IMAGE
-    = new Image(Button.class.getResourceAsStream("sprites/button.png"));
+    = new Image(Objects.requireNonNull(Button.class.getResourceAsStream("sprites/button.png")));
 
     /**
      * The number of the button.
@@ -58,7 +60,7 @@ public class Button extends Tile {
     }
 
     /**
-     * Unpresses the button.
+     * Unpressed the button.
      */
     public void unpress() {
         pressed = false;

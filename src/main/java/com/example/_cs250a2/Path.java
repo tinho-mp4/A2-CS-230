@@ -9,6 +9,7 @@ import java.util.Objects;
  * This class extends {@code Tile} to manage the properties and rendering of path blocks.
  *
  * @author Evans
+ * @version 1.0
  */
 public class Path extends Tile {
     private static final Image PATH_IMAGE =

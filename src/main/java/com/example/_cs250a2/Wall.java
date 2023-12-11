@@ -8,6 +8,8 @@ import java.util.Objects;
 /**
  * Represents a wall block in the game.
  * This class extends {@code Tile} and uses an image to render the wall.
+ * @Author
+ * @version 1.0
  */
 public class Wall extends Tile {
     private static final Image WALL_IMAGE = new Image(Objects.requireNonNull(Wall.class.getResourceAsStream("sprites/wall.png")));

@@ -1,14 +1,16 @@
 package com.example._cs250a2;
 
 import javafx.scene.canvas.GraphicsContext;
-
 import java.io.InputStream;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * The {@code LevelLoader} loads the levels of game
+ * @author
+ * @version 1.0
+ */
 public class LevelLoader {
 
     private static final int FROG_SPEED = 2;
@@ -28,7 +30,7 @@ public class LevelLoader {
     /**
      * Holds a list of all levels available in the game.
      */
-    private final static ArrayList<Level> levels = new ArrayList<>();
+    private final static ArrayList<Level> LEVELS = new ArrayList<>();
 
     /**
      * Represents the current level that the player is navigating through.
@@ -193,7 +195,7 @@ public class LevelLoader {
         }
 
         currentLevel = new Level(levelName, timeLimit, width, height, tileGrid, itemList, entityList);
-        levels.add(currentLevel);
+        LEVELS.add(currentLevel);
 
         drawLevel(gc, currentLevel);
     }

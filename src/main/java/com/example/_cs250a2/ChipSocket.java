@@ -72,13 +72,7 @@ public class ChipSocket extends Tile {
             new Image(Objects.requireNonNull(ChipSocket.class.getResourceAsStream(
                     "sprites/chipSocket9.png")));
 
-
-
-
-
     //other chips sprites.
-
-
 
     /**
      * Creates a computer chip at coordinates (x,y).
@@ -193,7 +187,6 @@ public class ChipSocket extends Tile {
                 break;
 
         }
-
         gc.drawImage(chipSocketImage, x*size, y*size);
     }
 }

@@ -10,7 +10,7 @@
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
-        <ConfigurationLocation id="0391cf5b-4762-45be-856e-ef757a301cd6" type="LOCAL_FILE" scope="All" description="inlinebrackets">$PROJECT_DIR$/../Subtract-A-Square-Assignment/RunTests/RunTests/inlinebrackets.xml</ConfigurationLocation>
+        <ConfigurationLocation id="bdb05f82-0ee8-4a46-9bdb-7e3412e006aa" type="LOCAL_FILE" scope="All" description="inline">$PROJECT_DIR$/../../../../HonsSoftwareEngineering/CodingWithIntelliJ/Subtract-A-Square-Assignment/RunTests/RunTests/inlinebrackets.xml</ConfigurationLocation>
       </list>
     </option>
   </component>
