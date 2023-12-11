@@ -13,10 +13,10 @@ import java.util.Arrays;
 public abstract class Monster extends Entity {
 
    /**
-    * only 4 directions to move in so it doesn't want to turn more than that.
+    * only 4 directions to move in, so it doesn't want to turn more than that.
     */
    protected static final int MAXTURNS = 4;
-   //this keeps track of how many monsters are created so they can each use their position in the ArrayList
+   //this keeps track of how many monsters are created, so they can each use their position in the ArrayList
    protected static int countMonsters = 0;
    //arraylist of all monsters in the level
    protected static ArrayList<Monster> monsterList = new ArrayList<>();
