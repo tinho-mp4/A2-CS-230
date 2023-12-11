@@ -8,6 +8,8 @@ import java.util.Objects;
 /**
  * Represents a dirt block in the game. Players can convert dirt blocks to paths by walking over them,
  * but monsters cannot unless the dirt has been converted.
+ * @author Pele Mayle
+ * @version 1.0
  */
 public class Dirt extends Tile {
     private static final Image DIRT_IMAGE = new Image(Objects.requireNonNull(Dirt.class.getResourceAsStream("sprites/dirt.png")));

@@ -9,8 +9,8 @@ import java.util.Objects;
 /**
  * Represents a locked door in the game.
  * This class extends {@code Tile} to manage the properties and rendering of locked doors.
- *
- * @author Pele
+ * @author Pele Mayle
+ * @version 1.0
  */
 public class LockedDoor extends Tile {
     private static final Image RED_LOCKED_DOOR_IMAGE =

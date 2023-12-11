@@ -10,7 +10,7 @@ import java.util.Objects;
  * A trap can be linked to a button and has states for active
  * or inactive (stuck or not stuck).
  * The class extends {@code Tile} and uses an image for its visual representation.
- * @author June
+ * @author Pele Mayle
  * @version 1.0
  */
 public class Trap extends Tile {

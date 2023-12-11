@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 /**
  * An abstract base class for all tile-like elements in the game.
  * This class provides a common framework for tile properties and behaviors.
- * @author Pele
+ * @author Pele Mayle
  * @version 1.0
  */
 public abstract class Tile {
