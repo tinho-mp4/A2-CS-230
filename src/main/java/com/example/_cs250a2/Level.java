@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * The {@code Level} class represents a level in the game,
  * including its layout, items, and entities.
- * @author
+ * @author Ben
  * @version 1.0
  */
 public class Level {

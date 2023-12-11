@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  * The {@code LevelLoader} loads the levels of game
- * @author
+ * @author Ben
  * @version 1.0
  */
 public class LevelLoader {

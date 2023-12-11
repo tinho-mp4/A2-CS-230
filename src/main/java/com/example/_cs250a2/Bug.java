@@ -63,7 +63,7 @@ public class Bug extends Monster {
     }
 
     /**
-     * event
+     * event ?.
      * @param x    The current x-coordinate.
      * @param y    The current y-coordinate.
      * @param newX The new x-coordinate after the event.
