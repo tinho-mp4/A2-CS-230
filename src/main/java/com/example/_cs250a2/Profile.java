@@ -19,8 +19,6 @@ public class Profile implements Serializable {
     /** The highest level the player has reached in the game. */
     private int levelReached;
 
-    /** The last level the player successfully completed. */
-    private String currentLevel;
 
     private int lastCompletedLevel;
 
@@ -37,7 +35,6 @@ public class Profile implements Serializable {
         this.name = name;
         this.levelReached = 0;
         this.levelScores = new HashMap<>();
-        this.currentLevel = "level1";
     }
 
     /**
@@ -83,18 +80,6 @@ public class Profile implements Serializable {
      */
     public void setScoreForLevel(String level, int score) {
         levelScores.put(level, score);
-    }
-
-    public void setLastCompletedLevel(int level) {
-        lastCompletedLevel = level;
-    }
-
-    public String getCurrentLevel() {
-        return currentLevel;
-    }
-
-    public void setCurrentLevel(String level) {
-        currentLevel = level;
     }
 
     /**
