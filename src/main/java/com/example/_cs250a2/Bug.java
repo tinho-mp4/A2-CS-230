@@ -5,10 +5,9 @@ import javafx.scene.image.Image;
 
 /**
  * The {@code Bug} class represents a bug (monster) in the game.
- * @author idk
+ * @author Finn P
  * @version 1.0
  */
-//TODO test more
 public class Bug extends Monster {
 
     /**
@@ -56,7 +55,7 @@ public class Bug extends Monster {
         countMonsters++;
         monsterLocations.add(this.getX());
         monsterLocations.add(this.getY());
-        BugList.add(this);
+        monsterList.add(this);
     }
 
     /**

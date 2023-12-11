@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 /**
  * The {@code Monster} abstract class represents a framework for all monsters in the game
- * @author idk
+ * @author Finn P
  * @version 1.0
  */
 public abstract class Monster extends Entity {
@@ -20,10 +20,6 @@ public abstract class Monster extends Entity {
    protected static int countMonsters = 0;
    //arraylist of all monsters in the level
    protected static ArrayList<Monster> monsterList = new ArrayList<>();
-   //arraylists with references to each kind of monster present in a level
-   protected static ArrayList<PinkBall> PinkBallList = new ArrayList<>();
-   protected static ArrayList<Bug> BugList = new ArrayList<>();
-   protected static ArrayList<Frog> FrogList = new ArrayList<>();
 
    //this is an ArrayList for monsters to put their location in with LocationUpdate method (called when the monster moves)
    protected static ArrayList<Integer> monsterLocations = new ArrayList<>();
@@ -60,15 +56,6 @@ public abstract class Monster extends Entity {
    }
    public static ArrayList<Monster> getMonsterList() {
       return monsterList;
-   }
-   public static ArrayList<PinkBall> getPinkBallList() {
-      return PinkBallList;
-   }
-   public static ArrayList<Frog> getFrogList() {
-      return FrogList;
-   }
-   public static ArrayList<Bug> getBugList() {
-      return BugList;
    }
 
    public abstract void move();
@@ -162,6 +149,14 @@ public abstract class Monster extends Entity {
    //whenever a monster moves it needs to update its location in the arraylist
    protected void locationUpdate(int index, int newPosition) {
       monsterLocations.set(index, newPosition);
+   }
+
+   //completely resets monsters, just in case
+   public static void clear() {
+      countMonsters = 0;
+      monsterList = new ArrayList<>();
+      monsterLocations = new ArrayList<>();
+
    }
 
    public abstract void draw(GraphicsContext gc, double x, double y, double size);

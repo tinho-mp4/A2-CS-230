@@ -315,7 +315,7 @@ public class LevelLoader {
                 return new Frog(FROG_SPEED, 'w', new int[]{entity[1]-'0', entity[2]-'0'},
                         gameController);
             case 'G':
-                return new PinkBall(PINK_BALL_SPEED, 's', new int[]{entity[1]-'0', entity[2]-'0'},
+                return new PinkBall(PINK_BALL_SPEED, 'w', new int[]{entity[1]-'0', entity[2]-'0'},
                         gameController);
             case 'Z':
                 return new Bug(BUG_SPEED, 'w', new int[]{entity[1]-'0', entity[2]-'0'},
@@ -581,5 +581,6 @@ public class LevelLoader {
         tileGrid.clear();
         entityList.clear();
         itemList.clear();
+        Monster.clear();
     }
 }

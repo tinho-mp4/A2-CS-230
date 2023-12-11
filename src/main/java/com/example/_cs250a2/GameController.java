@@ -40,21 +40,17 @@ public class GameController {
 
     private static final int LEVEL_NUMBER = 5;
 
-
-    //Constant for the maximum number of ticks
     /**
      * The maximum number of ticks.
      */
     private static final int MAXIMUMTICKS = 5;
 
-    //canvas for the game
     /**
      * The canvas for the game.
      */
     @FXML
     private Canvas canvas;
 
-    //button to show the high scores
     /**
      * The button to show the high scores.
      */
@@ -269,10 +265,8 @@ public class GameController {
     }
 
     /**
-     * This method is called periodically by the tick timeline
-     * and would for, example move, perform logic in the game,
-     * this might cause the bad guys to move (by e.g., looping
-     * over them all and calling their own tick method).
+     * The tick method is called to run code every second.
+     * Mainly the timer and monsters' movement.
      */
     public void tick() {
         //update the timer every tick if its 0 end the game

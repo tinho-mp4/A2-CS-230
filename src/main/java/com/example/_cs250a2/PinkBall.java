@@ -5,17 +5,16 @@ import javafx.scene.image.Image;
 
 /**
  * The {@code PinkBall} class represents a pink ball (monster) in the game
- * @author idk
+ * @author Finn P
  * @version 1.0
  */
-//TODO test
+//TODO doesnt move after dying and starting again
 public class PinkBall extends Monster {
 
+    private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/pinkBall.png"));
     private static int speed;
 
     private final GameController gameController;
-
-    private static final Image BALL_IMAGE = new Image(Key.class.getResourceAsStream("sprites/pinkBall.png"));
     public PinkBall(int ticks, char startingDirection, int[] startingLocation, GameController gameController) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         speed = ticks;
@@ -29,7 +28,7 @@ public class PinkBall extends Monster {
         countMonsters++;
         monsterLocations.add(this.getX());
         monsterLocations.add(this.getY());
-        PinkBallList.add(this);
+        monsterList.add(this);
     }
 
     public void event (int x, int y, int newX, int newY) {}
@@ -94,6 +93,9 @@ public class PinkBall extends Monster {
             } else {
                 moveCount = 0;
             }
+        }
+        if (moveCount == MAXTURNS+1) {
+            moveCount = 0;
         }
     }
 
