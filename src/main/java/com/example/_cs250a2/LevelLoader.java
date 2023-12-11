@@ -407,7 +407,7 @@ public class LevelLoader {
      * @param gc The GraphicsContext used for drawing entities.
      */
     public static void drawEntities(GraphicsContext gc) {
-        System.out.println("drawing entites" + entityList);
+        //System.out.println("drawing entites" + entityList);
         for (Entity entity : getEntityList()) {
             if (entity != null) {
                 entity.draw(gc, entity.getX(), entity.getY(), SIZE);

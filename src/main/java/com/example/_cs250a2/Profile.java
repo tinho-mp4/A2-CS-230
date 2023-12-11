@@ -16,6 +16,8 @@ public class Profile implements Serializable {
     private final String name;
     private int levelReached;
 
+    private String currentLevel;
+
     private int lastCompletedLevel;
 
     private final Map<String, Integer> levelScores;
@@ -30,6 +32,7 @@ public class Profile implements Serializable {
         this.name = name;
         this.levelReached = 0;
         this.levelScores = new HashMap<>();
+        this.currentLevel = "level1";
     }
 
     /**
@@ -78,6 +81,14 @@ public class Profile implements Serializable {
 
     public void setLastCompletedLevel(int level) {
         lastCompletedLevel = level;
+    }
+
+    public String getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(String level) {
+        currentLevel = level;
     }
 
     /**

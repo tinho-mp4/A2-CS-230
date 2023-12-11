@@ -204,7 +204,6 @@ public class Player extends Entity{
 
                 addToInventory(currentItem);
                 LevelLoader.removeItem(currentItem);
-                System.out.println(getChips());
 
                 for (ArrayList<Tile> row : LevelLoader.getTileGrid()) {
                     for (Tile t : row) {
@@ -259,7 +258,7 @@ public class Player extends Entity{
     private void displayInventory() {
         System.out.println("Inventory:");
         for (Item item : INVENTORY) {
-            System.out.println("- " + item);
+            //System.out.println("- " + item);
         }
     }
 

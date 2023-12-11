@@ -261,10 +261,10 @@ public class GameController {
      */
     public void tick() {
         //update the timer every tick if its 0 end the game
-        System.out.println("tick");
         updateTimer();
         //move the monster every tick
         for (Entity entity : LevelLoader.getEntityList()) {
+
             if (entity instanceof Monster monster) {
                 monster.tickMove(tickCount);
             }
@@ -280,20 +280,12 @@ public class GameController {
     /**
      * Updates the game timer, decrements the remaining time, and handles game over conditions.
      * If the time limit reaches or falls below zero, the game over sequence is initiated, and the tick timeline stops.
-     * Additionally, it prints time, score, level information, and updates the time remaining label.
      */
     public void updateTimer() {
         timeLimit--;
         if (timeLimit <= 0) {
             GameOver.gameEndTime();
             tickTimeline.stop();
-        }
-        System.out.println("Time left: " + timeLimit);
-        System.out.println("Score: " + calculateScore());
-        System.out.println("Level: " + levelName);
-        //print the profiles score for the current level
-        if (currentProfile != null) {
-            System.out.println("Score for " + levelName + ": " + currentProfile.getScoreForLevel(levelName));
         }
 
         //sets the score for the current profile
@@ -405,9 +397,6 @@ public class GameController {
                 throw new IllegalArgumentException("No profile selected.");
             }
 
-            //print all profiles
-            List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
-            ProfileFileManager.printAllProfiles(loadedProfiles);
 
             tickTimeline.setCycleCount(Animation.INDEFINITE);
 
@@ -427,9 +416,6 @@ public class GameController {
             setTimeLimit(LevelLoader.getTimeLimit());
 
             currentProfile.setScoreForLevel(levelName, timeLimit);
-
-            System.out.println("Selected profile: " + currentProfile.getName());
-            System.out.println("Selected level: " + currentLevel.getName());
 
 
             drawGame();
@@ -485,7 +471,6 @@ public class GameController {
      */
     private void handleSelectButton() {
         currentProfile = profileChoiceBox.getValue();
-        System.out.println("Selected profile: " + currentProfile.getName());
         currentProfileProperty.set(currentProfile);
     }
 
@@ -495,7 +480,6 @@ public class GameController {
     private void handleDeleteButton() {
         Profile selectedProfile = profileChoiceBox.getValue();
         profiles.remove(selectedProfile);
-        System.out.println("Deleted profile: " + selectedProfile.getName());
     }
 
     /**
@@ -505,17 +489,16 @@ public class GameController {
         String newProfileName = createName.getText();
         Profile newProfile = new Profile(newProfileName);
         profiles.add(newProfile);
-        System.out.println("Created profile: " + newProfile.getName());
 
         ProfileFileManager.saveAllProfiles(profiles);
     }
 
     /**
-     * Handles the show high scores button event, including adding the current score to the high scores list.
+     * Handles the show high scores event, including adding the current score to the high scores
+     * and saving them to file.
      */
     @FXML
     public void handleShowHighScoresButton() {
-        System.out.println("Show high scores button clicked");
 
         // Assuming highScore is an instance of HighScoreManager
         highScore.addScore(levelName, currentProfile.getName(), currentProfile.getScoreForLevel(levelName));
@@ -538,27 +521,19 @@ public class GameController {
             List<ScoreEntry> highScoresList = highScore.getHighScores(level.getName());
 
             if (!highScoresList.isEmpty()) {
-                System.out.println("High scores for " + level.getName() + ":");
                 int rank = 1;
                 for (ScoreEntry highScoreEntry : highScoresList) {
-                    System.out.println(rank + ". "
-                            + highScoreEntry.getProfileName()
-                            + " - " + highScoreEntry.getScore());
                     rank++;
                 }
-                System.out.println(currentProfile.getLevelReached());
                 currentProfile.nextLevel();
-                System.out.println(currentProfile.getLevelReached());
 
 
                 // Save the high scores for the current level
-                System.out.println("Saving high scores for " + level.getName() + ":");
                 highScore.saveHighScores(highScoresList, level.getName());
 
                 // Set the items in the TableView
                 highScoresTable.setItems(FXCollections.observableArrayList(highScoresList));
 
-                System.out.println("end");
             } else {
                 System.out.println("No high scores for " + level.getName());
             }
@@ -580,7 +555,7 @@ public class GameController {
                 throw new IllegalArgumentException("You must complete the previous level first.");
             }
             currentLevel = selectedLevel;
-            System.out.println("Selected level: " + currentLevel.getName());
+            setCurrentLevel(currentLevel);
             currentLevelProperty.set(currentLevel);
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
