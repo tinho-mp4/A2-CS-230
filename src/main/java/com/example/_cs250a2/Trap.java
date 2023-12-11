@@ -47,7 +47,7 @@ public class Trap extends Tile {
      * Sets the trap to inactive state.
      */
     public void inactive() {
-        System.out.println("Trap is inactive!");
+        //System.out.println("Trap is inactive!");
         trapImage = new Image(Objects.requireNonNull(
                 Trap.class.getResourceAsStream("sprites/trapInactive.png")));
         stuck = false;
@@ -57,7 +57,7 @@ public class Trap extends Tile {
      * Sets the trap to active state.
      */
     public void active() {
-        System.out.println("Trap is active!");
+        //System.out.println("Trap is active!");
         trapImage = new Image(Objects.requireNonNull(
                 Trap.class.getResourceAsStream("sprites/trapActive.png")));
         stuck = true;
@@ -83,6 +83,6 @@ public class Trap extends Tile {
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(trapImage, x * size, y * size);
-        System.out.println("Trap stuck? " + stuck);
+        //System.out.println("Trap stuck? " + stuck);
     }
 }

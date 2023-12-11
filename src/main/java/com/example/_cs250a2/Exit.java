@@ -24,11 +24,7 @@ public class Exit extends Tile {
         super("exit", x, y, false);
     }
 
-    /**
-     * Handles the event of the exit tile.
-     */
     public static void event() {
-        System.out.println("You win!");
     }
 
 
