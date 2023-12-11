@@ -3,11 +3,14 @@ package com.example._cs250a2;
 import java.util.ArrayList;
 
 /**
- * Represents a level in the game, including its layout, items, and entities.
+ * The {@code Level} class represents a level in the game,
+ * including its layout, items, and entities.
+ * @author
+ * @version 1.0
  */
 public class Level {
 
-    private final String name;
+    private final String NAME;
     private int timeLimit;
     private int width;
     private int height;
@@ -16,8 +19,7 @@ public class Level {
     private ArrayList<Entity> entityList;
 
     /**
-     * Constructs a new Level with specified properties.
-     *
+     * creates a new level with specified properties.
      * @param name      The name of the level.
      * @param timeLimit The time limit for completing the level.
      * @param width     The width of the level grid.
@@ -30,13 +32,16 @@ public class Level {
                  ArrayList<ArrayList<Tile>> tileGrid,
                  ArrayList<Item> itemList,
                  ArrayList<Entity> entityList) {
-        this.name = name;
+        this.NAME = name;
         this.timeLimit = timeLimit;
         this.width = width;
         this.height = height;
         this.tileGrid = tileGrid;
         this.itemList = itemList;
         this.entityList = entityList;
+    }
+    public Level(String name) {
+        this.NAME = name;
     }
 
     /**
@@ -49,7 +54,6 @@ public class Level {
         int playerX = player.getX();
         int playerY = player.getY();
 
-
         for (Item item : LevelLoader.getItemList()) {
             if (item.getX() == playerX && item.getY() == playerY) {
                 return item;
@@ -61,65 +65,53 @@ public class Level {
 
     /**
      * Checks if the player is currently on an item.
-     *
      * @return true if the player is on an item, false otherwise.
      */
     public static boolean isOnItem() {
         return getCurrentItem() != null;
     }
 
-    /**
-     * Checks if the player is currently on a monster.
-     *
-     */
-    public Level(String name) {
-        this.name = name;
-    }
+
+
 
     /**
      * Gets the name of the level.
-     *
      * @return The name of the level.
      */
     public String getName() {
-        return name;
+        return NAME;
     }
 
-
     /**
-     * Gets the time limit for the level.
-     *
-     * @return The time limit for the level.
+     * Gets the tile grid.
+     * @return The tile grid.
      */
     public ArrayList<ArrayList<Tile>> getTileGrid() {
         return tileGrid;
     }
 
     /**
-     * Gets the time limit for the level.
-     *
-     * @return The time limit for the level.
+     * Gets the item list.
+     * @return The item list.
      */
     public ArrayList<Item> getItemList() {
         return itemList;
     }
 
     /**
-     * Gets the time limit for the level.
-     *
-     * @return The time limit for the level.
+     * Gets the entity list.
+     * @return The entity list.
      */
     public ArrayList<Entity> getEntityList() {
         return entityList;
     }
 
     /**
-     * Gets the time limit for the level.
-     *
-     * @return The time limit for the level.
+     * Returns a string containing the name of the level.
+     * @return the name of the level.
      */
     @Override
     public String toString() {
-        return name;
+        return NAME;
     }
 }

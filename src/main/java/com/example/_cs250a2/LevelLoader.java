@@ -6,7 +6,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * The {@code LevelLoader} loads the levels of game
+ * @author
+ * @version 1.0
+ */
 public class LevelLoader {
 
     private static final int FROG_SPEED = 2;
