@@ -58,6 +58,9 @@ public class Level {
      */
     public static Item getCurrentItem() {
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        if (player == null) {
+            return null;
+        }
         int playerX = player.getX();
         int playerY = player.getY();
 
