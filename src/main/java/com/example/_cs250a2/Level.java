@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * The {@code Level} class represents a level in the game,
  * including its layout, items, and entities.
- * @author Ben
+ * @author Evans Bonte
  * @version 1.0
  */
 public class Level {
 
-    private final String NAME;
+    private final String name;
     private int timeLimit;
     private int width;
     private int height;
@@ -32,7 +32,7 @@ public class Level {
                  ArrayList<ArrayList<Tile>> tileGrid,
                  ArrayList<Item> itemList,
                  ArrayList<Entity> entityList) {
-        this.NAME = name;
+        this.name = name;
         this.timeLimit = timeLimit;
         this.width = width;
         this.height = height;
@@ -41,7 +41,7 @@ public class Level {
         this.entityList = entityList;
     }
     public Level(String name) {
-        this.NAME = name;
+        this.name = name;
     }
 
     /**
@@ -77,7 +77,7 @@ public class Level {
      * @return The name of the level.
      */
     public String getName() {
-        return NAME;
+        return name;
     }
 
     /**
@@ -110,6 +110,6 @@ public class Level {
      */
     @Override
     public String toString() {
-        return NAME;
+        return name;
     }
 }

@@ -14,7 +14,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Trap extends Tile {
-    private static Image TRAP_IMAGE =
+    private static Image trapImage =
             new Image(Objects.requireNonNull(Trap.class.getResourceAsStream("sprites/trapInactive.png")));
     private final int trapNum;
     private Button associatedButton;
@@ -48,7 +48,7 @@ public class Trap extends Tile {
      */
     public void inactive() {
         System.out.println("Trap is inactive!");
-        TRAP_IMAGE = new Image(Objects.requireNonNull(
+        trapImage = new Image(Objects.requireNonNull(
                 Trap.class.getResourceAsStream("sprites/trapInactive.png")));
         stuck = false;
     }
@@ -58,7 +58,7 @@ public class Trap extends Tile {
      */
     public void active() {
         System.out.println("Trap is active!");
-        TRAP_IMAGE = new Image(Objects.requireNonNull(
+        trapImage = new Image(Objects.requireNonNull(
                 Trap.class.getResourceAsStream("sprites/trapActive.png")));
         stuck = true;
     }
@@ -82,7 +82,7 @@ public class Trap extends Tile {
      */
     @Override
     public void draw(GraphicsContext gc, double x, double y, double size) {
-        gc.drawImage(TRAP_IMAGE, x * size, y * size);
+        gc.drawImage(trapImage, x * size, y * size);
         System.out.println("Trap stuck? " + stuck);
     }
 }

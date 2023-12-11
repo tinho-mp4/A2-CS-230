@@ -14,9 +14,12 @@ public class Bug extends Monster {
     private static final Image BUG_IMAGE
     = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/bug.png")));
     /**
-     * which wall to 'hug' when bug moves, true for left or false for right
+     * which wall to 'hug' when bug moves, true for left or false for right.
      */
     private final boolean left;
+    /**
+     * The Game Controller.
+     */
     private final GameController gameController;
     /**
      * speed is how many ticks between movement.

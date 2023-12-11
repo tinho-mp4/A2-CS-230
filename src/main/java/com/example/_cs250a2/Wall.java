@@ -12,7 +12,8 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Wall extends Tile {
-    private static final Image WALL_IMAGE = new Image(Objects.requireNonNull(Wall.class.getResourceAsStream("sprites/wall.png")));
+    private static final Image WALL_IMAGE
+            = new Image(Objects.requireNonNull(Wall.class.getResourceAsStream("sprites/wall.png")));
 
     /**
      * Initializes a wall tile at specified coordinates.

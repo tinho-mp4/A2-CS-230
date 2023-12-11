@@ -15,7 +15,8 @@ public class Button extends Tile {
      * The image of the button tile.
      */
     private static Image BUTTON_IMAGE
-    = new Image(Objects.requireNonNull(Button.class.getResourceAsStream("sprites/buttonInactive.png")));
+    = new Image(Objects.requireNonNull(Button.class.getResourceAsStream(
+            "sprites/buttonInactive.png")));
 
     /**
      * The number of the button.
@@ -68,7 +69,8 @@ public class Button extends Tile {
         pressed = false;
         associatedTrap.inactive();
         BUTTON_IMAGE = new Image(Objects.requireNonNull(
-                Button.class.getResourceAsStream("sprites/buttonInactive.png")));
+                Button.class.getResourceAsStream(
+                        "sprites/buttonInactive.png")));
     }
 
     /**

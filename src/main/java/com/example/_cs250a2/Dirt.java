@@ -12,7 +12,8 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Dirt extends Tile {
-    private static final Image DIRT_IMAGE = new Image(Objects.requireNonNull(Dirt.class.getResourceAsStream("sprites/dirt.png")));
+    private static final Image DIRT_IMAGE
+            = new Image(Objects.requireNonNull(Dirt.class.getResourceAsStream("sprites/dirt.png")));
     private boolean compacted;
 
     /**
