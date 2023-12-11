@@ -1,11 +1,11 @@
 Level Name: level4
-TimeLimit = 30000
+TimeLimit = 5
 Level Dimensions 6 6
 
+PPEPPP
 PPPPPP
 PPPPPP
 PPPPPP
 PPPPPP
 PPPPPP
-PPPPPE
 Q00
