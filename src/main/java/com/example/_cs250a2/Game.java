@@ -12,10 +12,10 @@ import java.io.IOException;
 
 /**
  * The {@code Game} class represents the main game window.
- * It is responsible for initializing the
- * JavaFX application and displaying the game window.
- * It also handles key presses and calls the
- * appropriate methods in the {@code Player} class.
+ * It extends the Application class from JavaFX, which is the base class for all JavaFX applications.
+ * This class is responsible for initializing the JavaFX application and displaying the game window.
+ * It also handles key presses and calls the appropriate methods in the {@code Player} class.
+ *
  * @author Liam O'Reilly
  * @version 1.1
  */

@@ -3,6 +3,8 @@ package com.example._cs250a2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 /**
  * The {@code Frog} class represents a Frog (monster) in the game.
  * @author Finn P
@@ -11,11 +13,21 @@ import javafx.scene.image.Image;
 //TODO frog movement is wrong, doesnt move towards player properly
 public class Frog extends Monster {
 
-    private static final Image FROG_IMAGE = new Image(Key.class.getResourceAsStream("sprites/frog.png"));
+    private static final Image FROG_IMAGE = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/frog.png")));
     private static int speed;
 
     private final GameController gameController;
     boolean blocked = false;
+
+    /**
+     * Constructor for the Frog class.
+     * Initializes the Frog object with the given parameters and sets up its initial state.
+     *
+     * @param ticks The speed of the frog, represented as the number of ticks between moves.
+     * @param startingDirection The initial direction of the frog.
+     * @param startingLocation The initial location of the frog, represented as an array where the first element is the x-coordinate and the second element is the y-coordinate.
+     * @param gameController The GameController object that controls the game logic.
+     */
     public Frog (int ticks, char startingDirection, int[] startingLocation, GameController gameController) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         allowedTiles.remove("Trap");

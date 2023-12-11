@@ -47,17 +47,28 @@ public abstract class Monster extends Entity {
       monsterList.add(this);
    }
 
+   /**
+    * This method is used to get the speed of the monster.
+    * The speed is determined by how many ticks between moves.
+    *
+    * @return The speed of the monster.
+    */
    public int getSpeed() {
       return this.speed;
    }
 
+   /**
+    * This method is used to clear the list of monsters.
+    * It initializes the monsterList to a new empty ArrayList.
+    */
    public static void clearMonsterList() {
       monsterList = new ArrayList<>();
    }
-   public static ArrayList<Monster> getMonsterList() {
-      return monsterList;
-   }
 
+   /**
+    * This is an abstract method that is intended to be implemented by subclasses of Monster.
+    * It is used to define the movement behavior of the monster.
+    */
    public abstract void move();
 
    //called by the tick method to move monsters

@@ -13,7 +13,7 @@ enum DoorColour {RED, GREEN, BLUE, YELLOW}
 /**
  * Represents a key item in the game, with a specific color associated with a door.
  *
- * @author Pele & Juned
+ * @author Pele
  */
 public class Key extends Item {
     private static final Image BLUE_KEY_IMAGE =

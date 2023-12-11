@@ -36,6 +36,7 @@ public class Bug extends Monster {
      * @param startingDirection direction
      * @param startingLocation location
      * @param side left or right
+     * @param gameController game controller
      */
     public Bug(final int ticks, final char startingDirection, final int[] startingLocation,
                final boolean side, GameController gameController) {
@@ -69,11 +70,13 @@ public class Bug extends Monster {
     }
 
     /**
-     * event ?.
-     * @param x
-     * @param y
-     * @param newX
-     * @param newY
+     * This method is currently empty and does not perform any actions.
+     * It appears to be intended for handling some sort of event, based on the parameters.
+     *
+     * @param x The original x-coordinate before the event.
+     * @param y The original y-coordinate before the event.
+     * @param newX The new x-coordinate after the event.
+     * @param newY The new y-coordinate after the event.
      */
     public void event(final int x,
                        final int y,

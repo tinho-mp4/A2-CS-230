@@ -10,6 +10,11 @@ public abstract class Entity {
     private boolean isStuck;
     private int x;
     private int y;
+
+    /**
+     * An array representing the location of the entity in a 2D space.
+     * The first element is the x-coordinate and the second element is the y-coordinate.
+     */
     protected int[] location = {x, y};
 
     /**
