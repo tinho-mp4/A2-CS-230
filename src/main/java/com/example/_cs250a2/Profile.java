@@ -20,6 +20,7 @@ public class Profile implements Serializable {
     private int levelReached;
 
 
+    /** The number representing the last level the player successfully completed in the game. */
     private int lastCompletedLevel;
 
     /** A map storing the player's scores for each level. */
@@ -67,7 +68,9 @@ public class Profile implements Serializable {
 
     /**
      * Get the score for the given level.
+     *
      * @param level The level to get the score for.
+     * @return The score for the given level.
      */
     public int getScoreForLevel(String level) {
         return levelScores.getOrDefault(level, 0);

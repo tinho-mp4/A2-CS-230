@@ -24,6 +24,10 @@ public class Exit extends Tile {
         super("exit", x, y, false);
     }
 
+    /**
+     * Placeholder for handling events related to the exit tile. Currently, this method does not perform any actions.
+     * It can be implemented or overridden in subclasses to define specific behaviors when an event involving the exit tile occurs.
+     */
     public static void event() {
     }
 
