@@ -39,7 +39,7 @@
                                 <Insets />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="showHighScoresButton" mnemonicParsing="false" prefHeight="18.0" prefWidth="90.0" text="HighScore" />
+
                         <Button fx:id="saveGameButton" mnemonicParsing="false" prefHeight="23.0" prefWidth="91.0" text="Save Game" />
                         <Button fx:id="loadGameButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Load Game" />
                     </children>

@@ -361,7 +361,7 @@ public class GameController {
         selectLevelButton.setOnAction(event -> handleSelectLevelButton());
         startButton.setOnAction(event -> handleStartButton());
         loadGameButton.setOnAction(event -> handleLoadGameButton());
-        showHighScoresButton.setOnAction(event -> handleShowHighScoresButton());
+
 
         timeRemainingProperty = new SimpleStringProperty();
         timeRemainingLabel.textProperty().bind(timeRemainingProperty);
@@ -497,8 +497,7 @@ public class GameController {
      * Handles the show high scores event, including adding the current score to the high scores
      * and saving them to file.
      */
-    @FXML
-    public void handleShowHighScoresButton() {
+    public void showHighScores() {
 
         // Assuming highScore is an instance of HighScoreManager
         highScore.addScore(levelName, currentProfile.getName(), currentProfile.getScoreForLevel(levelName));

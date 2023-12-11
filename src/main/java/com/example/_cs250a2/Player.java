@@ -175,7 +175,7 @@ public class Player extends Entity{
             case "exit":
                 Exit.event();
                 GAME_CONTROLLER.clearLevel();
-                GAME_CONTROLLER.handleShowHighScoresButton();
+                GAME_CONTROLLER.showHighScores();
                 break;
             case "button":
                 Button button = (Button) currentTile;
