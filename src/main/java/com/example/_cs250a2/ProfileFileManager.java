@@ -16,6 +16,7 @@ import java.nio.file.Paths;
  * This class provides static methods to manage the persistence of profile data.
  *
  * @author Ben
+ * @version 1.0
  */
 public class ProfileFileManager {
 

@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 /**
  * Represents an entry for a score in the game, including the profile name and the score.
  * This class supports JavaFX properties and is serializable for easy storage and retrieval.
+ * @author Ben Foord
+ * @version 1.0
  */
 public class ScoreEntry implements Serializable {
     @Serial

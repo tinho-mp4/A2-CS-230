@@ -5,6 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 /**
  * Represents an abstract framework for entities in the game.
  * Entities are dynamic objects that can interact with the game environment.
+ * @author Ben Foord
+ * @version 1.0
  */
 public abstract class Entity {
     private boolean isStuck;

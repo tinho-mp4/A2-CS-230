@@ -9,7 +9,7 @@ import java.util.List;
  * High scores are stored in files with a '.dat' extension in a specific directory.
  * Each level's high scores are stored in a separate file.
  *
- * @author Ben
+ * @author Ben Foord
  * @version 1.0
  */
 public class HighScoreFileManager {

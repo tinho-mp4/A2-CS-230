@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
  * that all game items share.
  *
  * @author Ryan Pietras
+ * @version 1.0
  */
 public abstract class Item {
 

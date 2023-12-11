@@ -10,6 +10,7 @@ import java.util.Map;
  * and the high scores for each level. The profile can be saved to and loaded from a file.
  *
  * @author Ben
+ * @version 1.0
  */
 public class Profile implements Serializable {
 

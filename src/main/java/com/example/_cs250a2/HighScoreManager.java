@@ -8,6 +8,8 @@ import java.util.Map;
 /**
  * Manages the high scores for different levels in the game.
  * Stores and updates scores, and provides access to the top scores.
+ * @author Ben Foord
+ * @version 1.0
  */
 public class HighScoreManager {
 

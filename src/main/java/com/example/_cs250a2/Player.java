@@ -11,6 +11,7 @@ import java.util.Objects;
  * Represents the player in the game.
  * Manages player's position, movement, interactions, and inventory.
  * @author Evans
+ * @version 1.0
  */
 public class Player extends Entity{
     /** The game controller managing the player's interactions and game state. */
