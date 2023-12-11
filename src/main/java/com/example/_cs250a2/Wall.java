@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Represents a wall block in the game.
  * This class extends {@code Tile} and uses an image to render the wall.
- * @Author
+ * @author Evans
  * @version 1.0
  */
 public class Wall extends Tile {
