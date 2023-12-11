@@ -14,8 +14,8 @@ public class Button extends Tile {
     /**
      * The image of the button tile.
      */
-    private static final Image BUTTON_IMAGE
-    = new Image(Objects.requireNonNull(Button.class.getResourceAsStream("sprites/button.png")));
+    private static Image BUTTON_IMAGE
+    = new Image(Objects.requireNonNull(Button.class.getResourceAsStream("sprites/buttonInactive.png")));
 
     /**
      * The number of the button.
@@ -28,7 +28,7 @@ public class Button extends Tile {
     /**
      *  Whether the button is pressed or not.
      */
-    private boolean pressed;
+    private boolean pressed = false;
 
 
     /**
@@ -56,7 +56,9 @@ public class Button extends Tile {
      */
     public void press() {
         pressed = true;
-        associatedTrap.inactive();
+        associatedTrap.active();
+        BUTTON_IMAGE = new Image(Objects.requireNonNull(
+                Button.class.getResourceAsStream("sprites/buttonActive.png")));
     }
 
     /**
@@ -64,8 +66,9 @@ public class Button extends Tile {
      */
     public void unpress() {
         pressed = false;
-        associatedTrap.active();
-
+        associatedTrap.inactive();
+        BUTTON_IMAGE = new Image(Objects.requireNonNull(
+                Button.class.getResourceAsStream("sprites/buttonInactive.png")));
     }
 
 /*    public void checkIfPlayerOnButton() {
@@ -83,11 +86,16 @@ public class Button extends Tile {
 
     /**
      * Checks if an entity is on the button.
-     * @param entityX The X position of the entity
-     * @param entityY The Y position of the entity
      */
-    public void checkIfEntityOnButton(final int entityX, final int entityY) {
-        if (getX() == entityX && getY() == entityY) {
+    public void checkIfEntityOnButton() {
+        boolean entityOnButton = false;
+        for (Entity entity : LevelLoader.getEntityList()) {
+            if (entity.getX() == x && entity.getY() == y) {
+                entityOnButton = true;
+                break;
+            }
+        }
+        if (!entityOnButton) {
             press();
         } else {
             unpress();

@@ -154,10 +154,10 @@ public class Block extends Entity {
             final double x,
             final double y,
             final double size) {
-        gc.drawImage(BLOCK_IMAGE, x * size, y * size);
         Tile tile = LevelLoader.getTile(getX(), getY());
         if (tile instanceof Button) {
-            ((Button) tile).checkIfEntityOnButton(getX(), getY());
+            ((Button) tile).checkIfEntityOnButton();
         }
+        gc.drawImage(BLOCK_IMAGE, x * size, y * size);
     }
 }

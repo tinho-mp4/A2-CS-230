@@ -58,7 +58,12 @@ public class Frog extends Monster {
      * @param newX The new x-coordinate after the event.
      * @param newY The new y-coordinate after the event.
      */
-    public void event (int x, int y, int newX, int newY) {}
+    public void event (int x, int y, int newX, int newY) {
+        Tile tile = LevelLoader.getTile(x, y);
+        if (tile instanceof Button) {
+            ((Button) tile).checkIfEntityOnButton();
+        }
+    }
 
     //this move method will try and make the frog x equal to player x then do the same with y
 
@@ -66,7 +71,7 @@ public class Frog extends Monster {
      * moves the frog towards the player.
      */
     public void move() {
-
+        event(this.getX(), this.getY(), this.getX(), this.getY());
         int[] currentTile = {this.getX(), this.getY()};
         int[] checkLeft = {this.getX() - 1, this.getY()};
         int[] checkRight = {this.getX() + 1, this.getY()};

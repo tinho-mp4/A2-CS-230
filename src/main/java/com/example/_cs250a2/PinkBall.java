@@ -47,7 +47,12 @@ public class PinkBall extends Monster {
      * @param newX The new x-coordinate after the event.
      * @param newY The new y-coordinate after the event.
      */
-    public void event (int x, int y, int newX, int newY) {}
+    public void event (int x, int y, int newX, int newY) {
+        Tile tile = LevelLoader.getTile(x, y);
+        if (tile instanceof Button) {
+            ((Button) tile).checkIfEntityOnButton();
+        }
+    }
 
     /**
      * get the speed.
@@ -61,6 +66,7 @@ public class PinkBall extends Monster {
      * moves the monster and calls checks to kill player.
      */
     public void move() {
+        event(this.getX(), this.getY(), this.getX(), this.getY());
         moveCount++;
         int[] currentTile = {this.getX(), this.getY()};
         //w is up, s is down, a is left and d is right

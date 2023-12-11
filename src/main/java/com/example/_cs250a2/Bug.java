@@ -69,15 +69,18 @@ public class Bug extends Monster {
      * @param newX The new x-coordinate after the event.
      * @param newY The new y-coordinate after the event.
      */
-    public void event(final int x,
-                       final int y,
-                       final int newX,
-                       final int newY) { }
+    public void event(final int x, final int y, final int newX, final int newY) {
+        Tile tile = LevelLoader.getTile(x, y);
+        if (tile instanceof Button) {
+            ((Button) tile).checkIfEntityOnButton();
+        }
+    }
 
     /**
      * moves the monster and calls checks to kill player.
      */
     public void move() {
+        event(this.getX(), this.getY(), this.getX(), this.getY());
         moveCount++;
         int[] currentTile = {this.getX(), this.getY()};
         int[] toTheLeft = {this.getX() - 1, this.getY()};

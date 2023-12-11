@@ -56,17 +56,21 @@ public class Player extends Entity{
             final int y,
             final int newX,
             final int newY) {
-
+        Tile currentTile = LevelLoader.getTile(x, y);
+        if (currentTile instanceof Trap) {
+            Trap trap = (Trap) currentTile;
+            if (trap.isStuck()) {
+                canMove = true;
+            }
+        }
     }
 
     /**
      * Moves the player in the game.
      */
     public void move(KeyEvent event) {
-
         prevX = x;
         prevY = y;
-
 
         if (canMove) {
             switch (event.getCode()) {
@@ -166,7 +170,7 @@ public class Player extends Entity{
                 break;
             case "trap":
                 Trap trap = (Trap) currentTile;
-                if (trap.isStuck()) {
+                if (!trap.isStuck()) {
                     canMove = false;
                 }
                 break;
@@ -228,6 +232,8 @@ public class Player extends Entity{
             GAME_CONTROLLER.clearLevel();
             GameOver.playerDeathMonster();
         }
+
+        this.event(this.x, this.y, this.x, this.y);
     }
 
     /**
@@ -302,6 +308,15 @@ public class Player extends Entity{
         return y;
     }
 
+
+    /**
+     * Get the chips in the player's inventory.
+     * @return The amount of chips in player's inventory.
+     */
+    public  int getChips() {
+        return (int) INVENTORY.stream().filter(item -> item instanceof Chip).count();
+    }
+
     /**
      * Draws the player on the given graphics context at specified coordinates and size.
      * @param gc   GraphicsContext to draw on.
@@ -312,13 +327,4 @@ public class Player extends Entity{
     public void draw(GraphicsContext gc, double x, double y, double size) {
         gc.drawImage(PLAYER_TILE, x * size, y * size);
     }
-
-    /**
-     * Get the chips in the player's inventory.
-     * @return The amount of chips in player's inventory.
-     */
-    public  int getChips() {
-        return (int) INVENTORY.stream().filter(item -> item instanceof Chip).count();
-    }
-
 }

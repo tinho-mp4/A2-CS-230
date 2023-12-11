@@ -72,8 +72,6 @@ public class Level {
     }
 
 
-
-
     /**
      * Gets the name of the level.
      * @return The name of the level.

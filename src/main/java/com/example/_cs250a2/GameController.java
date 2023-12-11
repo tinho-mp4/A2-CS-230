@@ -416,7 +416,6 @@ public class GameController {
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
 
-
             // Clear the level before loading a new one
             LevelLoader.clearLevel();
             LevelLoader.readLevel(gc, Game.class.getResourceAsStream("levels/" + levelName + ".txt"), this);
@@ -436,7 +435,6 @@ public class GameController {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
 
 
     /**
@@ -515,9 +513,6 @@ public class GameController {
      */
     @FXML
     public void handleShowHighScoresButton() {
-
-
-
         System.out.println("Show high scores button clicked");
 
         // Assuming highScore is an instance of HighScoreManager
