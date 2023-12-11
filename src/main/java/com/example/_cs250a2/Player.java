@@ -172,6 +172,8 @@ public class Player extends Entity{
                 Trap trap = (Trap) currentTile;
                 if (!trap.isStuck()) {
                     canMove = false;
+                } else {
+                    canMove = true;
                 }
                 break;
             case "water":

@@ -71,19 +71,6 @@ public class Button extends Tile {
                 Button.class.getResourceAsStream("sprites/buttonInactive.png")));
     }
 
-/*    public void checkIfPlayerOnButton() {
-
-         if () {
-            System.out.println("Player is on the button");
-            associatedTrap.inactive();
-         }
-
-        else {
-            System.out.println("Player is not on the button");
-            associatedTrap.active();
-        }
-    }*/
-
     /**
      * Checks if an entity is on the button.
      */
@@ -95,7 +82,7 @@ public class Button extends Tile {
                 break;
             }
         }
-        if (!entityOnButton) {
+        if (entityOnButton) {
             press();
         } else {
             unpress();
