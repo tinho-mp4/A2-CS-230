@@ -35,169 +35,56 @@ public class GameController {
     private static final int CHIP_VALUE = 15;
     private static final int PLAYER_SIZE = 32;
     private static final int LEVEL_NUMBER = 5;
+    private static final int MAXIMUM_TICKS = 5;
+    private final ObservableList<Level> LEVELS = FXCollections.observableArrayList();
+    private final HighScoreManager HIGH_SCORE = new HighScoreManager();
+    private final ObservableList<Profile> PROFILES = FXCollections.observableArrayList();
+    private final ObjectProperty<Level> CURRENT_LEVEL_PROPERTY = new SimpleObjectProperty<>();
 
-    /**
-     * The maximum number of ticks.
-     */
-    private static final int MAXIMUMTICKS = 5;
+    //Used to update the current profiles name
+    @FXML
+    private final ObjectProperty<Profile> CURRENT_PROFILE_PROPERTY = new SimpleObjectProperty<>();
 
-    /**
-     * The canvas for the game.
-     */
     @FXML
     private Canvas canvas;
-
-    /**
-     * The button to show the high scores.
-     */
     @FXML
     private Button showHighScoresButton;
-
-    /**
-     * The score for the game.
-     */
-    private int score;
-
-    /**
-     * The tick count for the game.
-     */
-    private int tickCount = 0;
-
-    /**
-     * The label for the time remaining.
-     */
     @FXML
     private Label timeRemainingLabel;
-
-    /**
-     * The label for the score.
-     */
     @FXML
     private Label scoreLabel;
-
-    /**
-     * The time remaining property.
-     */
-    private StringProperty timeRemainingProperty;
-
-    /**
-     * The current profile.
-     */
-    private Profile currentProfile;
-
-    /**
-     * The choice box for the profiles.
-     */
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
-
-    /**
-     * The button to show the high scores.
-     */
     @FXML
     private TableView<ScoreEntry> highScoresTable;
-
-
-    /**
-     * object property for the current profile. used to update the current profiles name
-     */
-    @FXML
-    private final ObjectProperty<Profile> currentProfileProperty = new SimpleObjectProperty<>();
-
-    /**
-     * The button to select the profile.
-     */
     @FXML
     private Button selectNameButton;
-
-    /**
-     * The button to start the game.
-     */
     @FXML
     private Button startButton;
-
-    /**
-     * The button to delete the profile.
-     */
     @FXML
     private Button deleteButton;
-
-    /**
-     * The text field to create a new profile.
-     */
     @FXML
     private TextField createName;
-
-    /**
-     * The button to create a new profile.
-     */
     @FXML
     private Button createButton;
-
-    /**
-     * The list of profiles in the profiles choice box.
-     */
-    private final ObservableList<Profile> profiles = FXCollections.observableArrayList();
-
-    /**
-     * The current level.
-     */
-    private Level currentLevel;
-
-    /**
-     * The name of the current level.
-     */
-    private String levelName;
-
-    /**
-     * The time limit for the game.
-     */
-    private int timeLimit;
-
-    /**
-     * The choice box for the levels.
-     */
     @FXML
     private ChoiceBox<Level> levelChoiceBox;
-
-    /**
-     * The button to load the game.
-     */
     @FXML
     private Button loadGameButton;
-
-    /**
-     * The button to select the level.
-     */
-    private final ObservableList<Level> levels = FXCollections.observableArrayList();
-
-    /**
-     *  The button to select the level.
-     */
     @FXML
     private Button selectLevelButton;
-
-    /**
-     * The label for the selected profile.
-     */
     @FXML
     private Label selectedProfileLabel;
-
-    /**
-     * The label for the selected level.
-     */
     @FXML
     private Label selectedLevelLabel;
-    /**
-     * The high score object.
-     */
-    private final HighScoreManager highScore = new HighScoreManager();
 
-
-    /**
-     * The object property for the current level in the level choice box.
-     */
-    private final ObjectProperty<Level> currentLevelProperty = new SimpleObjectProperty<>();
+    private StringProperty timeRemainingProperty;
+    private Profile currentProfile;
+    private int score;
+    private int tickCount = 0;
+    private Level currentLevel;
+    private String levelName;
+    private int timeLimit;
 
 
     /**
@@ -217,7 +104,6 @@ public class GameController {
 
     /**
      * Returns the canvas for the game.
-     *
      * @return The canvas for the game.
      */
     public Canvas getCanvas() {
@@ -268,7 +154,7 @@ public class GameController {
             }
         }
         tickCount++;
-        if (tickCount >= MAXIMUMTICKS) {
+        if (tickCount >= MAXIMUM_TICKS) {
             tickCount = 0;
         }
         drawGame();
@@ -304,7 +190,6 @@ public class GameController {
 
     /**
      * Calculates the score based on the time limit and chips in the inventory.
-     *
      * @return The calculated score.
      */
     private int calculateScore() {
@@ -324,7 +209,6 @@ public class GameController {
         scoreLabel.setText("Score: " + calculateScore());
     }
 
-
     /**
      * Sets the time limit for the game.
      *
@@ -340,9 +224,9 @@ public class GameController {
     @FXML
     public void initialize() {
         List<Profile> loadedProfiles = ProfileFileManager.loadAllProfiles();
-        profiles.addAll(loadedProfiles);
+        PROFILES.addAll(loadedProfiles);
 
-        profileChoiceBox.setItems(profiles);
+        profileChoiceBox.setItems(PROFILES);
 
         // scan the levels directory and add all the levels to the levels list
         File directory = new File("src/main/resources/com/example/_cs250a2/levels");
@@ -351,12 +235,12 @@ public class GameController {
             if (file.isFile()) {
                 String fileName = file.getName();
                 String levelName = fileName.substring(STRING_STARTING_INDEX, fileName.length() - STRING_ENDING_INDEX);
-                levels.add(new Level(levelName));
+                LEVELS.add(new Level(levelName));
             }
         }
 
         //levels.addAll(new Level("level1"), new Level("level2"), new Level("level3"));
-        levelChoiceBox.setItems(levels);
+        levelChoiceBox.setItems(LEVELS);
 
         selectNameButton.disableProperty().bind(profileChoiceBox.valueProperty().isNull());
         levelChoiceBox.disableProperty().bind(profileChoiceBox.valueProperty().isNull());
@@ -373,7 +257,7 @@ public class GameController {
         timeRemainingLabel.textProperty().bind(timeRemainingProperty);
 
 
-        selectedProfileLabel.textProperty().bind(currentProfileProperty.asString());
+        selectedProfileLabel.textProperty().bind(CURRENT_PROFILE_PROPERTY.asString());
 
         selectedLevelLabel.textProperty().bind(Bindings.createStringBinding(() ->
                         "Selected level: \n" + (currentLevel != null ? currentLevel.getName() : ""),
@@ -438,8 +322,6 @@ public class GameController {
         }
     }
 
-
-
     /**
      * Clears the current level, stops timers, and clears the canvas.
      */
@@ -487,7 +369,7 @@ public class GameController {
     private void handleSelectButton() {
         currentProfile = profileChoiceBox.getValue();
         System.out.println("Selected profile: " + currentProfile.getName());
-        currentProfileProperty.set(currentProfile);
+        CURRENT_PROFILE_PROPERTY.set(currentProfile);
     }
 
     /**
@@ -495,7 +377,7 @@ public class GameController {
      */
     private void handleDeleteButton() {
         Profile selectedProfile = profileChoiceBox.getValue();
-        profiles.remove(selectedProfile);
+        PROFILES.remove(selectedProfile);
         System.out.println("Deleted profile: " + selectedProfile.getName());
     }
 
@@ -505,10 +387,10 @@ public class GameController {
     private void handleCreateButton() {
         String newProfileName = createName.getText();
         Profile newProfile = new Profile(newProfileName);
-        profiles.add(newProfile);
+        PROFILES.add(newProfile);
         System.out.println("Created profile: " + newProfile.getName());
 
-        ProfileFileManager.saveAllProfiles(profiles);
+        ProfileFileManager.saveAllProfiles(PROFILES);
     }
 
     /**
@@ -522,7 +404,7 @@ public class GameController {
         System.out.println("Show high scores button clicked");
 
         // Assuming highScore is an instance of HighScoreManager
-        highScore.addScore(levelName, currentProfile.getName(), currentProfile.getScoreForLevel(levelName));
+        HIGH_SCORE.addScore(levelName, currentProfile.getName(), currentProfile.getScoreForLevel(levelName));
 
         // Assuming highScoresTable is your TableView
         highScoresTable.getColumns().clear(); // Clear existing columns
@@ -538,8 +420,8 @@ public class GameController {
         highScoresTable.getColumns().addAll(playerNameColumn, scoreColumn);
 
         // Load and display data
-        for (Level level : levels) {
-            List<ScoreEntry> highScoresList = highScore.getHighScores(level.getName());
+        for (Level level : LEVELS) {
+            List<ScoreEntry> highScoresList = HIGH_SCORE.getHighScores(level.getName());
 
             if (!highScoresList.isEmpty()) {
                 System.out.println("High scores for " + level.getName() + ":");
@@ -557,7 +439,7 @@ public class GameController {
 
                 // Save the high scores for the current level
                 System.out.println("Saving high scores for " + level.getName() + ":");
-                highScore.saveHighScores(highScoresList, level.getName());
+                HIGH_SCORE.saveHighScores(highScoresList, level.getName());
 
                 // Set the items in the TableView
                 highScoresTable.setItems(FXCollections.observableArrayList(highScoresList));
@@ -585,7 +467,7 @@ public class GameController {
             }
             currentLevel = selectedLevel;
             System.out.println("Selected level: " + currentLevel.getName());
-            currentLevelProperty.set(currentLevel);
+            CURRENT_LEVEL_PROPERTY.set(currentLevel);
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -606,7 +488,7 @@ public class GameController {
      * @return The current level.
      */
     public ObjectProperty<Level> currentLevelProperty() {
-        return currentLevelProperty;
+        return CURRENT_LEVEL_PROPERTY;
     }
 
     /**
@@ -615,7 +497,7 @@ public class GameController {
      * @param level The level to be set.
      */
     public void setCurrentLevel(Level level) {
-        currentLevelProperty.set(level);
+        CURRENT_LEVEL_PROPERTY.set(level);
     }
 
 }
