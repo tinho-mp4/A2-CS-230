@@ -6,53 +6,70 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * The {@code Monster} abstract class represents a framework for all monsters in the game
- * @author Finn P
+ * Represents an abstract framework for monsters in the game. This class defines the common properties
+ * and behaviors of all monsters, such as movement and interactions with game elements.
+ *
  * @version 1.0
+ * @author Finn P
  */
 public abstract class Monster extends Entity {
 
    /**
-    * only 4 directions to move in so a monster doesn't want to turn more than that.
-    * (this stops recursive calls turning indefinitely).
+    * The maximum number of turns a monster can take. Useful for movement logic to prevent excessive turning.
     */
    protected static final int MAXTURNS = 4;
-   protected static int countMonsters = 0;
-   protected static ArrayList<Monster> monsterList = new ArrayList<>();
+
    /**
-    * monsters update their location for other monsters here.
+    * Keeps track of the total number of monsters created. Used for managing their positions and interactions.
+    */
+   protected static int countMonsters = 0;
+
+   /**
+    * A list of all monsters present in the current level.
+    */
+   protected static ArrayList<Monster> monsterList = new ArrayList<>();
+
+   /**
+    * A list of coordinates representing the locations of all monsters. Updated with each movement.
     */
    protected static ArrayList<Integer> monsterLocations = new ArrayList<>();
 
    /**
-    * tiles most monsters can walk on, frog (and possible future exceptions) add and remove from their list in
-    * the constructor.
+    * A list of tile names that the monster is allowed to move onto.
     */
    protected ArrayList<String> allowedTiles = new ArrayList<>(Arrays.asList("path", "button", "trap"));
 
-   //speed decided based on how many ticks between moves
-   protected int speed;
    /**
-    * index for the monsters' x coordinate in the monsterLocations list.
+    * The speed of the monster, determined by the number of ticks between movements.
+    */
+   protected int speed;
+
+   /**
+    * The X-coordinate of the monster's position in the level grid.
     */
    protected int arrayLocationX;
+
    /**
-    * index for the monsters' y coordinate in the monsterLocations list
+    * The Y-coordinate of the monster's position in the level grid.
     */
    protected int arrayLocationY;
 
    /**
-    * keeps track of how many times the monster has called move to stop infinite loops.
+    * Counter for the number of moves made by the monster to prevent infinite loops in movement logic.
     */
    protected int moveCount = 0;
-   //starting direction the monster is moving with single character (W,A,S,D)
+
+   /**
+    * The initial direction of the monster, represented by a single character (W, A, S, D).
+    */
    protected char direction;
 
    /**
-    * constructor that all monsters inherit
-    * @param x X coordinate for monster
-    * @param y Y coordinate for monster
-    * @param direction starting direction for monster
+    * Constructs a Monster with specified coordinates and direction.
+    *
+    * @param x         The initial X-coordinate of the monster.
+    * @param y         The initial Y-coordinate of the monster.
+    * @param direction The initial direction of the monster.
     */
    public Monster(int x, int y, char direction) {
       super(x, y);
@@ -61,44 +78,44 @@ public abstract class Monster extends Entity {
    }
 
    /**
-    * get the speed.
-    * @return speed.
+    * Retrieves the speed of the monster. Speed is defined by the number of game ticks between each movement.
+    *
+    * @return The speed of the monster.
     */
    public int getSpeed() {
       return this.speed;
    }
 
    /**
-    * clears the monster list
+    * Clears the list of all monsters. This method resets the monsterList to an empty state.
     */
    public static void clearMonsterList() {
       monsterList = new ArrayList<>();
    }
 
    /**
-    * returns the monster list.
-    * @return monsterList.
-    */
-   public static ArrayList<Monster> getMonsterList() {
-      return monsterList;
-   }
-
-   /**
-    * abstract implementation of move to enforce monsters having one.
+    * An abstract method that defines the movement behavior of a monster.
+    * This method should be implemented by subclasses to specify how a monster moves.
     */
    public abstract void move();
+
    /**
-    * called by the tick method to move monsters.
-    * @param count the number of ticks between 0 and MAX_TICKS
+    * Updates the monster's position based on the game tick count.
+    * The monster moves if the current count is a multiple of its speed.
+    *
+    * @param count The current game tick count.
     */
    public void tickMove(int count) {
       if (count % this.getSpeed() == 0) {
          this.move();
       }
    }
+
    /**
-    * check the location is within the level when the constructor is called for a monster
-    * @param location location
+    * Validates the provided location to ensure it is within the game space boundaries.
+    *
+    * @param location The location to check, represented as an array [x, y].
+    * @throws IllegalArgumentException if the location is outside the game space.
     */
    protected void checkLocation(int[] location) {
       if (!(location[0] < LevelLoader.getWidth()
@@ -109,8 +126,10 @@ public abstract class Monster extends Entity {
    }
 
    /**
-    * check the direction is a character 'w' 'a' 's' or 'd'
-    * @param direction direction
+    * Validates the starting direction of the monster.
+    *
+    * @param direction The initial direction of the monster (W, A, S, D).
+    * @throws IllegalArgumentException if the direction is not one of the allowed values.
     */
    protected void checkDirection(char direction) {
       if (!(direction == 'w' || direction == 'a' || direction == 's' || direction == 'd')) {
@@ -119,10 +138,12 @@ public abstract class Monster extends Entity {
    }
 
    /**
-    * checks a monster can move to the tile it is trying to go to.
-    * @param tileLocation the tile monster wants to move to.
-    * @param currentTileLocation the tile monster is on.
-    * @return true if tile can be moved to false otherwise.
+    * Checks if a monster's move to a new tile location is permissible.
+    * The method checks tile bounds, other monsters' positions, and specific tile restrictions.
+    *
+    * @param tileLocation        The intended new tile location of the monster.
+    * @param currentTileLocation The current tile location of the monster.
+    * @return true if the move is permissible, false otherwise.
     */
    protected boolean checkTile(int[] tileLocation, int[] currentTileLocation) {
       boolean safeTile = false;
@@ -183,8 +204,9 @@ public abstract class Monster extends Entity {
    }
 
    /**
-    * checks if the monster is standing on a player and kills the player if they are, ending the game.
-    * @param gameController gameController
+    * Checks for a collision with the player and triggers game over if a collision occurs.
+    *
+    * @param gameController The controller managing game logic and state.
     */
    protected void playerKill(GameController gameController) {
       Player player = (Player) LevelLoader.getEntityByClass(Player.class);
@@ -193,17 +215,20 @@ public abstract class Monster extends Entity {
          gameController.clearLevel();
       }
    }
+
    /**
-    * updates the monsters location in the location list
-    * @param index index in the list
-    * @param newPosition new location to go in the list
+    * Updates the monster's location in the monsterLocations list after it moves.
+    *
+    * @param index        The index of the monster in the monsterLocations list.
+    * @param newPosition  The new position of the monster.
     */
    protected void locationUpdate(int index, int newPosition) {
       monsterLocations.set(index, newPosition);
    }
 
    /**
-    * completely resets the monsters to the initial state in the class, called when a level ends
+    * Resets all monsters by clearing the monster list and their locations.
+    * This method is useful for resetting the game state.
     */
    public static void clear() {
       countMonsters = 0;
@@ -213,11 +238,12 @@ public abstract class Monster extends Entity {
    }
 
    /**
-    * draws the monster
-    * @param gc   The GraphicsContext on which to draw the entity.
-    * @param x    The x-coordinate on the canvas.
-    * @param y    The y-coordinate on the canvas.
-    * @param size The size to draw the entity.
+    * Abstract method to draw the monster on the canvas.
+    *
+    * @param gc   The GraphicsContext on which to draw the monster.
+    * @param x    The x-coordinate on the canvas where the monster should be drawn.
+    * @param y    The y-coordinate on the canvas where the monster should be drawn.
+    * @param size The size of the monster.
     */
    public abstract void draw(GraphicsContext gc, double x, double y, double size);
 }

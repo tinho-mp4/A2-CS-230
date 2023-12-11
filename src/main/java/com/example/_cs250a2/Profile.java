@@ -39,6 +39,10 @@ public class Profile implements Serializable {
         return name;
     }
 
+    /**
+     * Advances the player's progress to the next level. This method increments the level reached by the player.
+     * It should be called when the player successfully completes a level to update their progress.
+     */
     public void nextLevel() {
         // Check if the current level is the one immediately following the last completed level
         if (lastCompletedLevel + 1 == levelReached) {

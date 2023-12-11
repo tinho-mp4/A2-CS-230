@@ -41,14 +41,30 @@ public class ScoreEntry implements Serializable {
         this.scoreProperty = new SimpleIntegerProperty(score);
     }
 
+    /**
+     * Gets the name of the profile associated with this score entry.
+     *
+     * @return The profile name.
+     */
     public String getProfileName() {
         return profileName;
     }
 
+    /**
+     * Gets the score value associated with this score entry.
+     *
+     * @return The score.
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Provides the property wrapper for the profile name. This is useful for JavaFX bindings and UI updates.
+     * The property is lazily initialized on first access to ensure it exists even after deserialization.
+     *
+     * @return A SimpleStringProperty object representing the profile name.
+     */
     public SimpleStringProperty profileNameProperty() {
         if (profileNameProperty == null) {
             initializeProperties();
@@ -56,6 +72,12 @@ public class ScoreEntry implements Serializable {
         return profileNameProperty;
     }
 
+    /**
+     * Provides the property wrapper for the score. This is useful for JavaFX bindings and UI updates.
+     * The property is lazily initialized on first access to ensure it exists even after deserialization.
+     *
+     * @return A SimpleIntegerProperty object representing the score.
+     */
     public SimpleIntegerProperty scoreProperty() {
         if (scoreProperty == null) {
             initializeProperties();
@@ -63,6 +85,14 @@ public class ScoreEntry implements Serializable {
         return scoreProperty;
     }
 
+    /**
+     * Custom serialization method for ScoreEntry. Writes the default object state,
+     * and then writes the additional properties for profile name and score.
+     * This method is necessary to serialize JavaFX properties which are not serializable by default.
+     *
+     * @param out The ObjectOutputStream to write the object to.
+     * @throws IOException If an I/O error occurs while writing the object.
+     */
     @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -70,6 +100,15 @@ public class ScoreEntry implements Serializable {
         out.writeObject(scoreProperty.get());
     }
 
+    /**
+     * Custom deserialization method for ScoreEntry. Reads the default object state,
+     * and then reads the additional properties for profile name and score.
+     * Initializes JavaFX properties after deserialization.
+     *
+     * @param in The ObjectInputStream to read the object from.
+     * @throws IOException            If an I/O error occurs while reading the object.
+     * @throws ClassNotFoundException If the class of a serialized object cannot be found.
+     */
     @Serial
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
@@ -80,6 +119,12 @@ public class ScoreEntry implements Serializable {
         scoreProperty.set(scoreValue);
     }
 
+    /**
+     * Returns a string representation of the ScoreEntry, including the profile name and score.
+     * Useful for logging and displaying the score entry in a text-based format.
+     *
+     * @return A string in the format "ScoreEntry{profileName='[profileName]', score=[score]}".
+     */
     @Override
     public String toString() {
         return "ScoreEntry{"

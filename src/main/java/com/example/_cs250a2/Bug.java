@@ -6,34 +6,43 @@ import javafx.scene.image.Image;
 import java.util.Objects;
 
 /**
- * The {@code Bug} class represents a bug (monster) in the game.
- * @author Finn P
+ * The {@code Bug} class represents a bug monster in the game. It extends the {@code Monster} class,
+ * inheriting its basic properties and behaviors. This class specifically handles the appearance and
+ * behavior of the bug monster within the game environment.
+ *
  * @version 1.0
+ * @author Finn P
  */
 public class Bug extends Monster {
-    private static final Image BUG_IMAGE
-    = new Image(Objects.requireNonNull(Key.class.getResourceAsStream("sprites/bug.png")));
-    /**
-     * which wall to 'hug' when bug moves, true for left or false for right.
-     */
-    private final boolean left;
-    /**
-     * The Game Controller.
-     */
-    private final GameController gameController;
-    /**
-     * speed is how many ticks between movement.
-     */
-    private static int speed;
 
     /**
-     * constructor.
-     * checks the location and direction are valid, also adds location to a list of monster locations
-     * @param ticks number of ticks between movement (speed)
-     * @param startingDirection direction
-     * @param startingLocation location
-     * @param side left or right
-     * @param gameController gameController
+     * The image representation of the bug. This static final field holds the graphical representation
+     * of the bug, used for rendering on the game canvas.
+     */
+    private static final Image BUG_IMAGE
+            = new Image(Objects.requireNonNull(Bug.class.getResourceAsStream("sprites/bug.png")));
+
+    /**
+     * Indicates the wall-following behavior of the bug. If true, the bug 'hugs' the left wall;
+     * if false, it 'hugs' the right wall.
+     */
+    private final boolean left;
+
+    /**
+     * The controller managing the game logic and state, used for interactions within the game.
+     */
+    private final GameController gameController;
+
+    /**
+     * Constructs a Bug monster with specified parameters. Initializes the monster with a speed (ticks),
+     * starting direction, location, wall-following behavior, and a reference to the game controller.
+     * It also checks the validity of the starting direction and location, and updates the monster management lists.
+     *
+     * @param ticks            The speed of the bug, defined as the number of ticks between movements.
+     * @param startingDirection The initial direction of the bug (W, A, S, D).
+     * @param startingLocation  An array containing the starting x and y coordinates of the bug in the game grid.
+     * @param side             Indicates the wall-following behavior (true for left, false for right).
+     * @param gameController   The GameController instance managing game logic and state.
      */
     public Bug(final int ticks, final char startingDirection, final int[] startingLocation,
                final boolean side, GameController gameController) {
@@ -55,20 +64,25 @@ public class Bug extends Monster {
         countMonsters++;
         monsterLocations.add(this.getX());
         monsterLocations.add(this.getY());
+        monsterList.add(this);
     }
 
     /**
-     * gets the speed of the bug.
-     * @return speed
+     * Retrieves the speed of the monster. Speed is defined by the number of game ticks between each movement.
+     *
+     * @return The speed of the monster.
      */
     public int getSpeed() {
         return speed;
     }
 
     /**
-     * event ?.
-     * @param x    The current x-coordinate.
-     * @param y    The current y-coordinate.
+     * Placeholder or unimplemented method intended for handling events involving a change in position.
+     * Currently, this method is empty and does not perform any actions. It should be overridden or
+     * implemented in subclasses to provide specific event handling logic based on the provided coordinates.
+     *
+     * @param x    The original x-coordinate before the event.
+     * @param y    The original y-coordinate before the event.
      * @param newX The new x-coordinate after the event.
      * @param newY The new y-coordinate after the event.
      */
@@ -80,7 +94,14 @@ public class Bug extends Monster {
     }
 
     /**
-     * moves the monster and calls checks to kill player.
+     * Moves the bug according to its movement algorithm. The bug's movement is determined by its current direction,
+     * the side it 'hugs' (left or right), and the surrounding environment. It checks for possible moves and adjusts
+     * its direction and position accordingly. The method also handles interactions with the player and updates
+     * the bug's location in the game.
+
+     * The movement logic involves checking adjacent tiles based on the current direction and the side the bug
+     * is 'hugging'. If a move is not possible in the desired direction, the bug turns and tries a different direction.
+     * This process is repeated until a valid move is made or the maximum number of turns is reached.
      */
     public void move() {
         event(this.getX(), this.getY(), this.getX(), this.getY());
@@ -244,11 +265,14 @@ public class Bug extends Monster {
     }
 
     /**
-     * draws the bug.
-     * @param gc graphics context
-     * @param x location x
-     * @param y location y
-     * @param size size
+     * Draws the bug on the provided GraphicsContext. The bug is rendered at the specified
+     * coordinates and scaled to the given size. This method utilizes the BUG_IMAGE to visually
+     * represent the bug on the game canvas.
+     *
+     * @param gc   The GraphicsContext used for drawing the bug.
+     * @param x    The x-coordinate on the canvas where the bug will be drawn, multiplied by the size for scaling.
+     * @param y    The y-coordinate on the canvas where the bug will be drawn, multiplied by the size for scaling.
+     * @param size The size to which the bug image will be scaled. This adjusts the bug's size relative to the game grid.
      */
     @Override
     public void draw(final GraphicsContext gc,

@@ -12,6 +12,7 @@ enum DoorColour {RED, GREEN, BLUE, YELLOW}
 
 /**
  * Represents a key item in the game, with a specific color associated with a door.
+ *
  * @author Pele Mayle
  * @version 1.0
  */

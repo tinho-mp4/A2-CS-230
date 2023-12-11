@@ -11,8 +11,22 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public abstract class Item {
 
+    /**
+     * The name of the item, used to identify it within the game.
+     * This field holds the unique or descriptive name of the item.
+     */
     protected String name;
+
+    /**
+     * The X-coordinate of the item's position in the game world or grid.
+     * This field represents the item's horizontal location.
+     */
     protected int x;
+
+    /**
+     * The Y-coordinate of the item's position in the game world or grid.
+     * This field represents the item's vertical location.
+     */
     protected int y;
 
     /**

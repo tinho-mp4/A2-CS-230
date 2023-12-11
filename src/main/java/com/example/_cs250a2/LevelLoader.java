@@ -205,7 +205,13 @@ public class LevelLoader {
         drawLevel(gc, currentLevel);
     }
 
-
+    /**
+     * Draws the entire level on the canvas. This includes tiles, entities, and items.
+     * It retrieves the current level's layout from the level object and renders them using the GraphicsContext.
+     *
+     * @param gc    The GraphicsContext used for drawing the level on the canvas.
+     * @param level The Level object containing the layout and elements of the level to be drawn.
+     */
     public static void drawLevel(GraphicsContext gc, Level level) {
         tileGrid = level.getTileGrid();
         itemList = level.getItemList();
@@ -215,8 +221,13 @@ public class LevelLoader {
         drawItems(gc);
     }
 
-
-
+    /**
+     * Rotates the given list of string lists counterclockwise. This rotation changes the orientation
+     * of the data, moving the top row to the left column, right column to the top row, and so on.
+     *
+     * @param strings The ArrayList of Strings to be rotated.
+     * @return The rotated list.
+     */
     public static ArrayList<ArrayList<String>> rotateStringsCounterClockwise(ArrayList<ArrayList<String>> strings) {
         int rows = strings.size();
         int cols = strings.get(0).size();
@@ -236,6 +247,13 @@ public class LevelLoader {
         return result;
     }
 
+    /**
+     * Flips the given list of string lists vertically. This operation inverts the order of the lists,
+     * effectively mirroring the data along a horizontal axis.
+     *
+     * @param strings The ArrayList of Strings to be flipped.
+     * @return The vertically flipped list.
+     */
     public static ArrayList<ArrayList<String>> flipStringsVertically(ArrayList<ArrayList<String>> strings) {
         Collections.reverse(strings);
         return strings;

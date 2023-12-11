@@ -9,11 +9,31 @@ import javafx.scene.canvas.GraphicsContext;
  * @version 1.0
  */
 public abstract class Tile {
+    /**
+     * The name of the tile, identifying its type or unique characteristics.
+     */
     protected String name;
+
+    /**
+     * The X-coordinate of the tile's position in the game world or grid.
+     */
     protected int x;
+
+    /**
+     * The Y-coordinate of the tile's position in the game world or grid.
+     */
     protected int y;
+
+    /**
+     * Indicates whether the tile is solid. A solid tile is not passable by the player or other entities.
+     */
     protected boolean solid;
+
+    /**
+     * Indicates whether the tile is a pushable block. A pushable block can be moved by the player or other entities.
+     */
     protected boolean pushableBlock;
+
 
     /**
      * Constructs a Tile with a specified name, position, and solidity.

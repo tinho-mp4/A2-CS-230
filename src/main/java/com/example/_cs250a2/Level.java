@@ -40,6 +40,13 @@ public class Level {
         this.itemList = itemList;
         this.entityList = entityList;
     }
+
+    /**
+     * Constructs a new Level with the specified name.
+     * This constructor initializes a level with a given name, setting the NAME property of the level.
+     *
+     * @param name The name of the level to be created.
+     */
     public Level(String name) {
         this.name = name;
     }

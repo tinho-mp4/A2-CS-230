@@ -4,6 +4,14 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.List;
 
+/**
+ * Manages high score data for levels in a game, including saving and loading scores.
+ * High scores are stored in files with a '.dat' extension in a specific directory.
+ * Each level's high scores are stored in a separate file.
+ *
+ * @author Ben
+ * @version 1.0
+ */
 public class HighScoreFileManager {
 
     /**
