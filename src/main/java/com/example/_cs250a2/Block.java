@@ -17,7 +17,8 @@ public class Block extends Entity {
      * The image of the block tile.
      */
     private static final Image BLOCK_IMAGE
-    = new Image(Objects.requireNonNull(Block.class.getResourceAsStream("sprites/block.png")));
+    = new Image(Objects.requireNonNull(Block.class.getResourceAsStream(
+            "sprites/block.png")));
 
     /**
      * Creates a new block tile.

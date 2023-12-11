@@ -10,7 +10,8 @@ import java.util.Objects;
  * It utilizes a static image to render the water tile.
  */
 public class Water extends Tile {
-    private static final Image WATER_TILE = new Image(Objects.requireNonNull(Water.class.getResourceAsStream("sprites/water.png")));
+    private static final Image WATER_TILE =
+            new Image(Objects.requireNonNull(Water.class.getResourceAsStream("sprites/water.png")));
 
     /**
      * Constructor to initialize a water tile with specific coordinates.

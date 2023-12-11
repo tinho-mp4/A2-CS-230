@@ -14,7 +14,7 @@ public class Frog extends Monster {
     private static int speed;
 
     private final GameController gameController;
-    boolean blocked = false;
+    private boolean blocked = false;
 
     /**
      * constructor for frog, checks location and direction as its called.
@@ -23,7 +23,7 @@ public class Frog extends Monster {
      * @param startingLocation location.
      * @param gameController gameController.
      */
-    public Frog (int ticks, char startingDirection, int[] startingLocation, GameController gameController) {
+    public Frog(int ticks, char startingDirection, int[] startingLocation, GameController gameController) {
         super(startingLocation[0], startingLocation[1], startingDirection);
         allowedTiles.remove("Trap");
         speed = ticks;
@@ -58,7 +58,7 @@ public class Frog extends Monster {
      * @param newX The new x-coordinate after the event.
      * @param newY The new y-coordinate after the event.
      */
-    public void event (int x, int y, int newX, int newY) {
+    public void event(int x, int y, int newX, int newY) {
         Tile tile = LevelLoader.getTile(x, y);
         if (tile instanceof Button) {
             ((Button) tile).checkIfEntityOnButton();

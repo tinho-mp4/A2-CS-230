@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public class HighScoreManager {
 
+    public static final int MAX_SCORES = 10;
+
     private final Map<String, List<ScoreEntry>> highScores;
 
     /**
@@ -31,7 +33,7 @@ public class HighScoreManager {
     public void addScore(final String levelName, final String profileName, final int score) {
         List<ScoreEntry> scores = highScores.computeIfAbsent(levelName, k -> new ArrayList<>());
 
-        int maxScores = 10;
+        int maxScores = MAX_SCORES;
         if (scores.size() < maxScores || score > getLowestScore(scores)) {
             scores.add(new ScoreEntry(profileName, score));
 

@@ -17,6 +17,10 @@ public class LevelLoader {
     private static final int PINK_BALL_SPEED = 1;
     private static final int BUG_SPEED = 1;
 
+    private static final int CHAR_INDEX_FOUR = 4;
+
+    private static final int CHAR_INDEX_THREE = 3;
+
     /**
      * Stores a mapping of buttons in the game, where each button is identified by an integer key.
      */
@@ -30,7 +34,7 @@ public class LevelLoader {
     /**
      * Holds a list of all levels available in the game.
      */
-    private final static ArrayList<Level> LEVELS = new ArrayList<>();
+    private static final ArrayList<Level> LEVELS = new ArrayList<>();
 
     /**
      * Represents the current level that the player is navigating through.
@@ -92,12 +96,13 @@ public class LevelLoader {
         // Read level information
         levelName = scanner.nextLine().split(": ")[1];
         timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
-        String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
+        String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, CHAR_INDEX_FOUR);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
         LevelLoader.width = width;
         LevelLoader.height = height;
-        entityCount = countFileLines(LevelLoader.class.getResourceAsStream("levels/"+levelName+".txt")) - 4 - height;
+        entityCount = countFileLines(LevelLoader.class.getResourceAsStream(
+                "levels/"+levelName+".txt")) - CHAR_INDEX_FOUR - height;
     }
 
     /**
@@ -112,7 +117,7 @@ public class LevelLoader {
         String levelName = scanner.nextLine().split(": ")[1];
         int timeLimit = Integer.parseInt(scanner.nextLine().split("= ")[1]);
         setTimeLimit(timeLimit);
-        String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, 4);
+        String[] dimensions = Arrays.copyOfRange(scanner.nextLine().split(" "), 2, CHAR_INDEX_FOUR);
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
         scanner.nextLine(); // Skip empty line
@@ -149,7 +154,7 @@ public class LevelLoader {
             while (matcher.find()) {
                 String match = matcher.group(1)
                         + (matcher.group(2) != null ? matcher.group(2) : "")
-                        + (matcher.group(3) != null ? matcher.group(3) : "");
+                        + (matcher.group(CHAR_INDEX_THREE) != null ? matcher.group(CHAR_INDEX_THREE) : "");
                 matchesList.add(match);
             }
             entityMatchesGrid.add(matchesList);
@@ -350,7 +355,7 @@ public class LevelLoader {
             case 'C':
                 return new Chip(x, y);
             case 'K':
-                char colourCode = item[3];
+                char colourCode = item[CHAR_INDEX_THREE];
                 return new Key(x, y, colourCode);
             default:
                 return null;

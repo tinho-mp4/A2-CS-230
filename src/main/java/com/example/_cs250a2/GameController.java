@@ -249,7 +249,9 @@ public class GameController {
 
         // Draw player at current location
         Player player = (Player) LevelLoader.getEntityByClass(Player.class);
+        if (player != null){
         player.draw(gc, player.getX(), player.getY(), PLAYER_SIZE);
+        }
         //Draw key at current location
     }
 
