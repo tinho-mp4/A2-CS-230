@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 /**
  * Handles the saving, loading, and printing of profiles to and from a file.
  * This class provides static methods to manage the persistence of profile data.
+ *
  * @author Ben
  */
 public class ProfileFileManager {

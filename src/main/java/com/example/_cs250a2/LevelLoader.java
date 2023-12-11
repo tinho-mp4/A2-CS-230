@@ -7,7 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The {@code LevelLoader} loads the levels of game
+ * Loads and manages game levels, including their layout, entities, and items.
+ * This class handles the parsing of level data from files, setting up the game environment,
+ * and maintaining the state of various level components like tiles, entities, and items.
+ *
  * @author Ben
  * @version 1.0
  */
@@ -110,6 +113,7 @@ public class LevelLoader {
      * level layout, including tiles and other entities.
      * @param gc The GraphicsContext used for drawing.
      * @param inputStream The InputStream containing the level information.
+     * @param gameController The GameController handling the game logic.
      */
     public static void readLevel(GraphicsContext gc, InputStream inputStream, GameController gameController) {
         Scanner scanner = new Scanner(inputStream);

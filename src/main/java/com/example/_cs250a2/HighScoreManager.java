@@ -11,9 +11,17 @@ import java.util.Map;
  */
 public class HighScoreManager {
 
+    /**
+     * The maximum number of high scores to be stored for each level.
+     */
     public static final int MAX_SCORES = 10;
 
+    /**
+     * A map that stores lists of high scores for each level, with the level name as the key.
+     * Each list contains ScoreEntry objects representing the top scores for that level.
+     */
     private final Map<String, List<ScoreEntry>> highScores;
+
 
     /**
      * Constructs a new HighScoreManager.

@@ -13,15 +13,20 @@ import java.util.Map;
  */
 public class Profile implements Serializable {
 
+    /** The name of the player associated with this profile. */
     private final String name;
+
+    /** The highest level the player has reached in the game. */
     private int levelReached;
 
+    /** The last level the player successfully completed. */
     private String currentLevel;
 
     private int lastCompletedLevel;
 
+    /** A map storing the player's scores for each level. */
     private final Map<String, Integer> levelScores;
-    public static final int MAX_LEVEL = 5;
+
 
     /**
      * Creates a new profile with the given name.
@@ -37,6 +42,8 @@ public class Profile implements Serializable {
 
     /**
      *  Create a new profile with the given name and load it from the given file.
+     *
+     * @return The name of the profile.
      */
     public String getName() {
         return name;
