@@ -25,7 +25,7 @@ public class Frog extends Monster {
      */
     public Frog(int ticks, char startingDirection, int[] startingLocation, GameController gameController) {
         super(startingLocation[0], startingLocation[1], startingDirection);
-        allowedTiles.remove("Trap");
+        allowedTiles.remove("trap");
         speed = ticks;
         direction = startingDirection;
         location = startingLocation;

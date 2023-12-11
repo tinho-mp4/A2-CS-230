@@ -64,7 +64,6 @@ public class Bug extends Monster {
         countMonsters++;
         monsterLocations.add(this.getX());
         monsterLocations.add(this.getY());
-        monsterList.add(this);
     }
 
     /**
