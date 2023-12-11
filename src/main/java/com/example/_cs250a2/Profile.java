@@ -50,7 +50,6 @@ public class Profile implements Serializable {
         // Check if the current level is the one immediately following the last completed level
         if (lastCompletedLevel == levelReached) {
             levelReached++;
-            lastCompletedLevel = levelReached - 1; // Update the last completed level
         }
     }
 
